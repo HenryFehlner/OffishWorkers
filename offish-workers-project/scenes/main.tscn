@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3 uid="uid://c3h7ftnp27g3q"]
+
+[ext_resource type="PackedScene" uid="uid://mn5jjpdibtdn" path="res://scenes/player.tscn" id="1_o5qli"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_0wfyh"]
+
+[sub_resource type="Gradient" id="Gradient_o5qli"]
+colors = PackedColorArray(0.7607843, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0wfyh"]
+gradient = SubResource("Gradient_o5qli")
+
+[sub_resource type="QuadMesh" id="QuadMesh_sugp2"]
+
+[sub_resource type="Gradient" id="Gradient_jyhfs"]
+colors = PackedColorArray(0, 0, 0, 1, 0.29954746, 0.29954746, 0.29954743, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tbgi4"]
+gradient = SubResource("Gradient_jyhfs")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Floor" type="MeshInstance2D" parent="."]
+scale = Vector2(500, 500)
+mesh = SubResource("QuadMesh_0wfyh")
+texture = SubResource("GradientTexture2D_0wfyh")
+
+[node name="Player" parent="." instance=ExtResource("1_o5qli")]
+z_index = 1
+scale = Vector2(5, 5)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(-261, -1)
+scale = Vector2(1, 27)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Wall"]
+scale = Vector2(20, 20)
+mesh = SubResource("QuadMesh_sugp2")
+texture = SubResource("GradientTexture2D_tbgi4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2(256, -2)
+scale = Vector2(1, 27)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Wall2"]
+scale = Vector2(20, 20)
+mesh = SubResource("QuadMesh_sugp2")
+texture = SubResource("GradientTexture2D_tbgi4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="Wall3" type="StaticBody2D" parent="."]
+position = Vector2(-2, -261)
+rotation = 1.5707964
+scale = Vector2(1, 27)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Wall3"]
+scale = Vector2(20, 20)
+mesh = SubResource("QuadMesh_sugp2")
+texture = SubResource("GradientTexture2D_tbgi4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3"]
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="Wall4" type="StaticBody2D" parent="."]
+position = Vector2(0, 257)
+rotation = 1.5707964
+scale = Vector2(1, 27)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Wall4"]
+scale = Vector2(20, 20)
+mesh = SubResource("QuadMesh_sugp2")
+texture = SubResource("GradientTexture2D_tbgi4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4"]
+shape = SubResource("RectangleShape2D_tefeu")
