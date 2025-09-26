@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://6xto0rj1dc0k"
-path="res://.godot/imported/punching bag.png-8c7d21cfaf44fd9c6ee4f9054b687942.ctex"
+path="res://.godot/imported/punching bag.png-fb846b7fd9fc9529560e541d69c363ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://punching bag.png"
-dest_files=["res://.godot/imported/punching bag.png-8c7d21cfaf44fd9c6ee4f9054b687942.ctex"]
+source_file="res://assets/sprites/punching bag.png"
+dest_files=["res://.godot/imported/punching bag.png-fb846b7fd9fc9529560e541d69c363ab.ctex"]
 
 [params]
 
