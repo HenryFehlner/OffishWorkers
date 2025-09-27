@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3h7ftnp27g3q"]
+[gd_scene load_steps=10 format=3 uid="uid://c3h7ftnp27g3q"]
 
 [ext_resource type="PackedScene" uid="uid://mn5jjpdibtdn" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://cjj22ar46xc3m" path="res://scenes/Enemies/BaseEnemy.tscn" id="2_0wfyh"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_0wfyh"]
 
@@ -30,6 +31,8 @@ texture = SubResource("GradientTexture2D_0wfyh")
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 z_index = 1
 scale = Vector2(5, 5)
+collision_layer = 2
+collision_mask = 21
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
@@ -82,3 +85,7 @@ texture = SubResource("GradientTexture2D_tbgi4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4"]
 shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="BaseEnemy" parent="." instance=ExtResource("2_0wfyh")]
+position = Vector2(90, -81)
+maxHp = 5
