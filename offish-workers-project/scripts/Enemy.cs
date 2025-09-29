@@ -17,7 +17,7 @@ public partial class Enemy : CharacterBody2D
 		AddToGroup("enemies");
 		//set collision layer and masks
 		CollisionLayer = Layers.Bit(Layers.ENEMIES);
-		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.PLAYER) | Layers.Bit(Layers.PLAYER_ATTACKS);
+		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.PLAYER_ATTACKS);
 
 		currentHp = maxHp;
 	}
