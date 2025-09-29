@@ -10,7 +10,7 @@ public partial class Player : CharacterBody2D
 	[Export] protected int friction = 20;
 	//stats
 	[Export] protected int maxHp = 100;
-    protected int currentHp;
+	protected int currentHp;
 	//primary attack
 	[Export] protected int primaryDamage = 1;
 	[Export] protected float primaryDuration = .4f;
@@ -26,8 +26,8 @@ public partial class Player : CharacterBody2D
 		//add to group for registering attacks
 		AddToGroup("player");
 		//set collision layer and masks
-        CollisionLayer = Layers.Bit(Layers.PLAYER);
-        CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
+		CollisionLayer = Layers.Bit(Layers.PLAYER);
+		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
 
 		currentHp = maxHp;
 	}
@@ -125,5 +125,11 @@ public partial class Player : CharacterBody2D
 		{
 			//player dies and enters some game over state
 		}
-    }
+	}
+	
+	//Reduces hydration by a specific amount every tick
+	public void HydrationTick()
+	{
+		
+	}
 }
