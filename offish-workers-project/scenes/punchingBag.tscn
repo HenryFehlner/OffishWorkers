@@ -1,3 +1,3 @@
-[gd_scene format=3 uid="uid://bus4njcrn1sj0"]
+[gd_scene load_steps=0 format=3 uid="uid://bus4njcrn1sj0"]
 
 [node name="PunchingBag" type="Node2D"]

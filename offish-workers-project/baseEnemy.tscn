@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1j5xwwri0s7e"]
+[gd_scene load_steps=4 format=3 uid="uid://d1j5xwwri0s7e"]
 
-[ext_resource type="Texture2D" path="res://punching bag.png" id="1_qebfc"]
+[ext_resource type="Script" uid="uid://bul8v6i4yuw6s" path="res://BaseEnemy.cs" id="1_nrknc"]
+[ext_resource type="Texture2D" uid="uid://6xto0rj1dc0k" path="res://assets/sprites/punching bag.png" id="1_qebfc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s7bn3"]
 size = Vector2(20, 54)
 
 [node name="baseEnemy" type="RigidBody2D"]
 collision_mask = 0
+script = ExtResource("1_nrknc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_qebfc")
@@ -14,6 +16,3 @@ texture = ExtResource("1_qebfc")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_s7bn3")
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-rect = Rect2(-10, -23, 20, 54)
