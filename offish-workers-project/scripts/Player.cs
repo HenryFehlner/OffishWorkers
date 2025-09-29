@@ -131,6 +131,6 @@ public partial class Player : CharacterBody2D
 	//Reduces hydration by a specific amount every tick
 	public void HydrationTick()
 	{
-		health -= hydrationTickLoss; 
+		currentHp -= hydrationTickLoss; 
 	}
 }
