@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bag2dg6opl2m8"]
+
+[ext_resource type="PackedScene" uid="uid://mn5jjpdibtdn" path="res://scenes/player.tscn" id="1_y8y7q"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_y8y7q")]
+
+[node name="Timer" type="Timer" parent="Player"]
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0

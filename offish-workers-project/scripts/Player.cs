@@ -15,6 +15,7 @@ public partial class Player : CharacterBody2D
 	[Export] protected int primaryDamage = 1;
 	[Export] protected float primaryDuration = .4f;
 	[Export] protected float primaryKnockbackAmount = 4000;
+	[Export] protected int hydrationTickLoss = 2; 
 
 
 	private bool isAttacking = false;
@@ -130,6 +131,6 @@ public partial class Player : CharacterBody2D
 	//Reduces hydration by a specific amount every tick
 	public void HydrationTick()
 	{
-		
+		health -= hydrationTickLoss; 
 	}
 }
