@@ -13,7 +13,7 @@ public partial class Player : CharacterBody2D
 	protected int currentHp;
 	//primary attack
 	[Export] protected int primaryDamage = 1;
-	[Export] protected float primaryDuration = .4f;
+	[Export] protected float primaryDuration = .2f;
 	[Export] protected float primaryKnockbackAmount = 4000;
 	[Export] protected int hydrationTickLoss = 2; 
 

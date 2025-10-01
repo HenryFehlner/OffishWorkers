@@ -52,7 +52,6 @@ public partial class AttackHitbox : Area2D
 
         //add collision shape
         AddChild(new CollisionShape2D { Shape = (Shape2D)config.Shape.Duplicate(true) });
-
         //layer
         if (parentNode.IsInGroup("player"))
         {
