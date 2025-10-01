@@ -10,9 +10,9 @@ public partial class Player : CharacterBody2D
 	[Export] protected int friction = 20;
 	// Dodging
 	[Export] protected float dodgeForce = 3000;
-	[Export] protected float dodgeCooldown = 0.5f;	// Millisecondsdw
+	[Export] protected float invincibilityCooldown = 0.3f;	// Milliseconds
+	[Export] protected float dodgeCooldown = 0.5f;	// Milliseconds
 	private bool isDodging = false;
-	private Vector2 lastDirection = Vector2.Zero;
 	//stats
 	[Export] protected int maxHp = 100;
 	protected int currentHp;
@@ -34,6 +34,7 @@ public partial class Player : CharacterBody2D
 		//set collision layer and masks
 		CollisionLayer = Layers.Bit(Layers.PLAYER);
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
+		//CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMY_ATTACKS);
 
 		currentHp = maxHp;
 	}
@@ -78,9 +79,6 @@ public partial class Player : CharacterBody2D
 
 		//GD.Print(Velocity);
 		MoveAndSlide();
-		
-		// Set lastDirection for the dodge roll if the player becomes stationary
-		lastDirection = Velocity.Normalized();
 	}
 
 	private async Task PrimaryAttack()
@@ -127,13 +125,21 @@ public partial class Player : CharacterBody2D
 		}
 		isDodging = true;
 		
-		//GD.Print("Dodge cooldown started");
-
-		Velocity += lastDirection * dodgeForce;
+		// Player becomes invincible and is pushed forwards
+		CollisionMask = Layers.Bit(Layers.ENVIRONMENT);
+		Velocity += facingDirection * dodgeForce;
+		GD.Print("Invincible");
 		
+		// Wait for invincibility cooldown
+		await ToSignal(GetTree().CreateTimer(invincibilityCooldown), SceneTreeTimer.SignalName.Timeout);
+		
+		// Player is no longer invincible
+		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
+		//CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMY_ATTACKS);
+		GD.Print("Not invincible");
+		
+		// Player is able to dodge again
 		await ToSignal(GetTree().CreateTimer(dodgeCooldown), SceneTreeTimer.SignalName.Timeout);
-		
-		//GD.Print("Dodge cooldown ended");
 		
 		isDodging = false;
 	}
@@ -145,7 +151,7 @@ public partial class Player : CharacterBody2D
 	/// <param name="impulse">knockback force</param>
 	/// <param name="attacker">source of the attack</param>
 	public void TakeHit(int damage, Vector2 impulse, Node attacker)
-	{
+	{	
 		//prevent negative damage from healing
 		Math.Max(damage, 0);
 		//reduce health
