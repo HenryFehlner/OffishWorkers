@@ -16,9 +16,10 @@ gradient = SubResource("Gradient_3vyb7")
 script = ExtResource("1_3vyb7")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-scale = Vector2(20, 20)
+scale = Vector2(15, 15)
 mesh = SubResource("SphereMesh_sh265")
 texture = SubResource("GradientTexture2D_g2els")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.75, 0.75)
 shape = SubResource("CircleShape2D_4flbx")

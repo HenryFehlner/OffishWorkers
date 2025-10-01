@@ -8,6 +8,11 @@ public partial class Player : CharacterBody2D
 	[Export] protected int maxSpeed = 600;
 	[Export] protected int acceleration = 10;
 	[Export] protected int friction = 20;
+	// Dodging
+	[Export] protected float dodgeForce = 3000;
+	[Export] protected float dodgeCooldown = 0.5f;	// Millisecondsdw
+	private bool isDodging = false;
+	private Vector2 lastDirection = Vector2.Zero;
 	//stats
 	[Export] protected int maxHp = 100;
 	protected int currentHp;
@@ -44,7 +49,12 @@ public partial class Player : CharacterBody2D
 		{
 			_ = PrimaryAttack();
 		}
-
+		// Check for dodge input
+		else if (Input.IsActionJustPressed("dodge_roll"))
+		{
+			_ = DodgeRoll();
+		}
+		
 		//movement
 		MovePlayer(delta);
 	}
@@ -68,6 +78,9 @@ public partial class Player : CharacterBody2D
 
 		//GD.Print(Velocity);
 		MoveAndSlide();
+		
+		// Set lastDirection for the dodge roll if the player becomes stationary
+		lastDirection = Velocity.Normalized();
 	}
 
 	private async Task PrimaryAttack()
@@ -104,6 +117,25 @@ public partial class Player : CharacterBody2D
 
 		//end attack
 		isAttacking = false;
+	}
+	
+	private async Task DodgeRoll()
+	{
+		if (isDodging)
+		{
+			return;
+		}
+		isDodging = true;
+		
+		//GD.Print("Dodge cooldown started");
+
+		Velocity += lastDirection * dodgeForce;
+		
+		await ToSignal(GetTree().CreateTimer(dodgeCooldown), SceneTreeTimer.SignalName.Timeout);
+		
+		//GD.Print("Dodge cooldown ended");
+		
+		isDodging = false;
 	}
 
 	/// <summary>
