@@ -50,15 +50,6 @@ public partial class AttackHitbox : Area2D
         //calculate knockback impulse
         knockbackImpulse = config.KnockbackDirection * config.KnockbackStength;
 
-        //visible rectangle for attack feedback during playtest
-        ColorRect visRect = new ColorRect
-        {
-            Color = new Color(1, 1, 1, .3f),
-            Size = new Vector2(25, 15),
-            Position = new Vector2(25, 15)/-2f
-        };
-        AddChild(visRect);
-
         //add collision shape
         AddChild(new CollisionShape2D { Shape = (Shape2D)config.Shape.Duplicate(true) });
         //layer
