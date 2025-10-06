@@ -24,6 +24,8 @@ public partial class Player : CharacterBody2D
 
 
 	private bool isAttacking = false;
+	private Timer chainTimerPrimary = new Timer();
+	private int currentChainPrimary = 0;
 	private Vector2 facingDirection = Vector2.Right; //default value so player can never face Vector2.zero
 
 	public override void _Ready()
@@ -83,11 +85,28 @@ public partial class Player : CharacterBody2D
 
 	private async Task PrimaryAttack()
 	{
+		//dash attack takes priority, then dodge, then regular attack
+		//windup, duration, winddown
+		//player should still be able to turn during windup phase
 		if (isAttacking)
 		{
 			return;
 		}
 		isAttacking = true;
+		//if timer is stopped, reset chain
+		if (chainTimerPrimary.IsStopped())
+		{
+			currentChainPrimary = 0;
+		}
+		//else, continue chaining
+		else
+		{
+			currentChainPrimary = (currentChainPrimary + 1) % 3;//3 different attacks in chain
+		}
+		//start chain timer
+		chainTimerPrimary.Start(1f);
+
+		//choose correct attack here
 
 		//to have attacking move the player, add an impulse here
 
