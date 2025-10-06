@@ -1,10 +1,10 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cywi2uo8iphw3"]
 
-[ext_resource type="Texture2D" uid="uid://cm5klyi6kao24" path="res://assets/tiles/tileset_office.png" id="1_63vng"]
+[ext_resource type="Texture2D" uid="uid://cm5klyi6kao24" path="res://assets/tiles/tileset_office.png" id="1_nqlqi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_crku5"]
 resource_name = "Office"
-texture = ExtResource("1_63vng")
+texture = ExtResource("1_nqlqi")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
@@ -26,14 +26,6 @@ texture_region_size = Vector2i(32, 32)
 3:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:3/0 = 0
 1:3/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-0:4/0 = 0
-3:4/0 = 0
-0:5/0 = 0
-3:5/0 = 0
-1:6/0 = 0
-2:6/0 = 0
-1:7/0 = 0
-2:7/0 = 0
 2:3/0 = 0
 2:3/0/physics_layer_1/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
