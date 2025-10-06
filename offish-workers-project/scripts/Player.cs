@@ -26,6 +26,8 @@ public partial class Player : CharacterBody2D
 	[Export] protected int hydrationTickLoss = 2; 
 	[Export] protected Timer hydrationTimer; 
 
+	private StyleBoxFlat normalHydrationStyle = new StyleBoxFlat(); 
+	private StyleBoxFlat lowHydrationStyle = new StyleBoxFlat(); 
 
 	private bool isAttacking = false;
 	private Timer chainTimerPrimary = new Timer();
@@ -50,6 +52,9 @@ public partial class Player : CharacterBody2D
 		hydrationBar = GetNode<ProgressBar>("HydrationBar");
 		hydrationBar.MaxValue = maxHp; 
 		hydrationBar.Value = currentHp;
+		
+		normalHydrationStyle.BgColor = new Color("51b5e6"); 
+		lowHydrationStyle.BgColor = new Color("e06452"); 
 		
 		hydrationTimer = GetNode<Timer>("HydrationTimer");
 		hydrationTimer.Timeout += OnHydrationTimeout;
@@ -199,6 +204,8 @@ public partial class Player : CharacterBody2D
 		currentHp -= damage;
 		//apply knockback
 		Velocity += impulse;
+		
+		
 	}
 	
 	//Reduces hydration by a specific amount every tick
@@ -208,11 +215,11 @@ public partial class Player : CharacterBody2D
 		hydrationBar.Value = currentHp; 
 		GD.Print("Lost hydration!");
 		
-		if ((currentHp / maxHp) <= 0.25){
-			hydrationBar.style
+		if (((float)currentHp / (float)maxHp) <= 0.25){
+			hydrationBar.AddThemeStyleboxOverride("fill", lowHydrationStyle);
 		}
 		else {
-			
+			hydrationBar.AddThemeStyleboxOverride("fill", normalHydrationStyle);
 		}
 	}
 	
@@ -225,6 +232,18 @@ public partial class Player : CharacterBody2D
 		if (currentHp > maxHp)
 		{
 			currentHp = maxHp; 
+		}
+		
+		hydrationBar.Value = currentHp; 
+	}
+	
+	private void DamageHydration(int amount)
+	{
+		currentHp -= amount; 
+		
+		if (currentHp <= 0){
+			currentHp = 0; 
+			GD.Print("DEAD");
 		}
 		
 		hydrationBar.Value = currentHp; 
