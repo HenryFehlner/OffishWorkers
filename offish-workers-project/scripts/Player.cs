@@ -81,6 +81,13 @@ public partial class Player : CharacterBody2D
 		//movement
 		MovePlayer(delta);
 		
+		//PRESS 0: DEBUG HEALING
+		if (Input.IsActionJustPressed("debug_heal"))
+		{
+			RestoreHydration(30);
+			GD.Print("Debug: Healing 30 hp");
+		}
+		
 		//check for death
 		if (currentHp <= 0)
 		{
