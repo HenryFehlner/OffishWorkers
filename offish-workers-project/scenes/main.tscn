@@ -17,6 +17,14 @@ collision_mask = 21
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
+[node name="HydrationBar" type="ProgressBar" parent="Player"]
+offset_left = -110.399994
+offset_top = -58.599995
+offset_right = -104.399994
+offset_bottom = -16.400005
+fill_mode = 1
+show_percentage = false
+
 [node name="BaseEnemy" parent="." instance=ExtResource("2_0wfyh")]
 position = Vector2(196, 228)
 maxHp = 5

@@ -21,6 +21,8 @@ public partial class Player : CharacterBody2D
 	[Export] protected float primaryDuration = .2f;
 	[Export] protected float primaryKnockbackAmount = 4000;
 	[Export] protected int hydrationTickLoss = 2; 
+	
+	[Export] protected ProgressBar hydrationBar;
 
 
 	private bool isAttacking = false;
@@ -32,11 +34,17 @@ public partial class Player : CharacterBody2D
 		//add to group for registering attacks
 		AddToGroup("player");
 		//set collision layer and masks
+		
 		CollisionLayer = Layers.Bit(Layers.PLAYER);
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
 		//CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMY_ATTACKS);
-
+		
+		//Updates currentHP
 		currentHp = maxHp;
+				
+		hydrationBar = GetNode<ProgressBar>("HydrationBar");
+		hydrationBar.MaxValue = maxHp; 
+		hydrationBar.Value = currentHp;
 	}
 
 
