@@ -20,9 +20,11 @@ public partial class Player : CharacterBody2D
 	[Export] protected int primaryDamage = 1;
 	[Export] protected float primaryDuration = .2f;
 	[Export] protected float primaryKnockbackAmount = 4000;
-	[Export] protected int hydrationTickLoss = 2; 
 	
+	//Hydration relevant fields
 	[Export] protected ProgressBar hydrationBar;
+	[Export] protected int hydrationTickLoss = 2; 
+	[Export] protected Timer hydrationTimer; 
 
 
 	private bool isAttacking = false;
@@ -44,9 +46,14 @@ public partial class Player : CharacterBody2D
 		//Updates currentHP
 		currentHp = maxHp;
 				
+		//Setting up hydration relevant stuff
 		hydrationBar = GetNode<ProgressBar>("HydrationBar");
 		hydrationBar.MaxValue = maxHp; 
 		hydrationBar.Value = currentHp;
+		
+		hydrationTimer = GetNode<Timer>("HydrationTimer");
+		hydrationTimer.Timeout += OnHydrationTimeout;
+		hydrationTimer.Start(); 
 	}
 
 
@@ -68,6 +75,13 @@ public partial class Player : CharacterBody2D
 		
 		//movement
 		MovePlayer(delta);
+		
+		//check for death
+		if (currentHp <= 0)
+		{
+			//player dies and enters some game over state
+			GD.Print("DEAD");
+		}
 	}
 
 	private void MovePlayer(double delta)
@@ -185,17 +199,34 @@ public partial class Player : CharacterBody2D
 		currentHp -= damage;
 		//apply knockback
 		Velocity += impulse;
-
-		//check for death
-		if (currentHp <= 0)
-		{
-			//player dies and enters some game over state
-		}
 	}
 	
 	//Reduces hydration by a specific amount every tick
-	public void HydrationTick()
+	private void OnHydrationTimeout()
 	{
 		currentHp -= hydrationTickLoss; 
+		hydrationBar.Value = currentHp; 
+		GD.Print("Lost hydration!");
+		
+		if ((currentHp / maxHp) <= 0.25){
+			hydrationBar.style
+		}
+		else {
+			
+		}
+	}
+	
+	//Restores hydration by a specified amount, usually called when
+	//interacting with breakable hydration object
+	private void RestoreHydration(int amount)
+	{
+		currentHp += amount;
+		
+		if (currentHp > maxHp)
+		{
+			currentHp = maxHp; 
+		}
+		
+		hydrationBar.Value = currentHp; 
 	}
 }

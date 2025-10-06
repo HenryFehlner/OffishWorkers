@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=4 uid="uid://c3h7ftnp27g3q"]
+[gd_scene load_steps=6 format=4 uid="uid://c3h7ftnp27g3q"]
 
 [ext_resource type="PackedScene" uid="uid://mn5jjpdibtdn" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://c86a2e638er2u" path="res://scenes/grayboxMap.tscn" id="1_sugp2"]
 [ext_resource type="PackedScene" uid="uid://cjj22ar46xc3m" path="res://scenes/Enemies/BaseEnemy.tscn" id="2_0wfyh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
+bg_color = Color(0.18000486, 0.1800049, 0.18000478, 0.39215687)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sugp2"]
+bg_color = Color(0.31653386, 0.71156234, 0.90137845, 1)
 
 [node name="Node2D" type="Node2D"]
 
@@ -22,8 +28,12 @@ offset_left = -110.399994
 offset_top = -58.599995
 offset_right = -104.399994
 offset_bottom = -16.400005
-fill_mode = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_jyhfs")
+theme_override_styles/fill = SubResource("StyleBoxFlat_sugp2")
+fill_mode = 3
 show_percentage = false
+
+[node name="HydrationTimer" type="Timer" parent="Player"]
 
 [node name="BaseEnemy" parent="." instance=ExtResource("2_0wfyh")]
 position = Vector2(196, 228)
