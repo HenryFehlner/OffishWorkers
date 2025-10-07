@@ -44,17 +44,16 @@ show_percentage = false
 position = Vector2(196, 228)
 maxHp = 5
 
-[node name="Puddle" type="Area2D" parent="."]
+[node name="hydrationRestoreObject" type="Area2D" parent="."]
+position = Vector2(152, -88)
 collision_mask = 3
 script = ExtResource("4_jyhfs")
 
-[node name="Sprite2D" type="Sprite2D" parent="Puddle"]
-position = Vector2(353, -158)
+[node name="Sprite2D" type="Sprite2D" parent="hydrationRestoreObject"]
 scale = Vector2(2, 2)
 texture = ExtResource("5_tbgi4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Puddle"]
-position = Vector2(352.75, -158)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hydrationRestoreObject"]
 shape = SubResource("RectangleShape2D_tbgi4")
 
-[node name="RestoreTimer" type="Timer" parent="Puddle"]
+[node name="RestoreTimer" type="Timer" parent="hydrationRestoreObject"]
