@@ -35,6 +35,7 @@ public partial class Player : CharacterBody2D
 	private int currentChainPrimary = 0;
 	private Vector2 movementFacingDirection = Vector2.Right; //default value so player can never face Vector2.zero
 	private Vector2 attackFacingDirection = Vector2.Right;
+	//private Vector2 savedFacingDirection = Vector2.Right;
 
 	public override void _Ready()
 	{
@@ -97,6 +98,22 @@ public partial class Player : CharacterBody2D
 			GD.Print("DEAD");
 		}
 	}
+	
+	// Called on every frame with an input
+	// Used here to switch between gamepad and MnK controls
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventMouseMotion mouseMotion 
+			&& controlMode == "gamepad")
+		{
+			controlMode = "mouse_and_keyboard";
+		}
+		else if (Input.GetVector("face_left", "face_right", "face_up", "face_down") != Vector2.Zero 
+			&& controlMode == "mouse_and_keyboard")
+		{
+			controlMode = "gamepad";
+		}
+	}
 
 	private void MovePlayer(double delta)
 	{
@@ -104,27 +121,36 @@ public partial class Player : CharacterBody2D
 		Vector2 moveDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		
 		// Get attack input (either mouse or right stick)
-		// Mouse aiming input will always be detected and overwritten if gamepad input is detected
-		// Get the player object's screen position while accounting for camera position
-		Vector2 globalPos = GlobalPosition;
-		Viewport viewport = GetViewport();
-		Camera2D camera = viewport.GetCamera2D();
-		Transform2D cameraTransform = camera.GetCanvasTransform();
-		Vector2 playerViewportPos = cameraTransform * globalPos;
-		
-		// Get the mouse position
-		Vector2 mousePos = viewport.GetMousePosition();
-		
-		// Set the player's facing direction
-		attackFacingDirection = (mousePos - playerViewportPos).Normalized();
-		
-		// Overwrite attackFacingDirection with gamepad stick if an input is detected on it
-		if (Input.GetVector("face_left", "face_right", "face_up", "face_down") != Vector2.Zero)
+		if (controlMode == "mouse_and_keyboard")
 		{
-			attackFacingDirection = Input.GetVector("face_left", "face_right", "face_up", "face_down");
+			// Get the player object's screen position while accounting for camera position
+			Vector2 globalPos = GlobalPosition;
+			Viewport viewport = GetViewport();
+			Camera2D camera = viewport.GetCamera2D();
+			Transform2D cameraTransform = camera.GetCanvasTransform();
+			Vector2 playerViewportPos = cameraTransform * globalPos;
+			
+			// Get the mouse position
+			Vector2 mousePos = viewport.GetMousePosition();
+			
+			// Set the player's facing direction by subtracting the vectors
+			attackFacingDirection = (mousePos - playerViewportPos).Normalized();
 		}
+		else if (controlMode == "gamepad")
+		{
+			// Cancel input if no stick direction, this saves the last facing direction and prevents it from being Vector2.Zero
+			if (Input.GetVector("face_left", "face_right", "face_up", "face_down") == Vector2.Zero)
+			{
+				goto NoControllerAimInput;
+			}
+			
+			// Get right stick input
+			attackFacingDirection = Input.GetVector("face_left", "face_right", "face_up", "face_down");
+			//savedFacingDirection = attackFacingDirection;
+		}
+		NoControllerAimInput:
 		
-		// TODO: use attackFacingDirection to visualize the attack direction
+		// TODO: use attackFacingDirection to visualize the attack direction (probably put it somewhere else)
 
 		// Apply acceleration
 		if (moveDirection != Vector2.Zero && !isAttacking)
