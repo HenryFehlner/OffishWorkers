@@ -27,6 +27,16 @@ public partial class Player : CharacterBody2D
 	[Export] protected int hydrationTickLoss = 2; 
 	[Export] protected Timer hydrationTimer; 
 
+	//Able to be get and set
+	[Export] private bool onHydrationRestore = false;
+	
+	public bool OnHydrationRestore
+	{
+		set {
+			onHydrationRestore = value; 
+		}
+	}
+	
 	private StyleBoxFlat normalHydrationStyle = new StyleBoxFlat(); 
 	private StyleBoxFlat lowHydrationStyle = new StyleBoxFlat(); 
 
@@ -243,21 +253,24 @@ public partial class Player : CharacterBody2D
 	//Reduces hydration by a specific amount every tick
 	private void OnHydrationTimeout()
 	{
-		currentHp -= hydrationTickLoss; 
-		hydrationBar.Value = currentHp; 
-		GD.Print("Lost hydration!");
-		
-		if (((float)currentHp / (float)maxHp) <= 0.25){
-			hydrationBar.AddThemeStyleboxOverride("fill", lowHydrationStyle);
-		}
-		else {
-			hydrationBar.AddThemeStyleboxOverride("fill", normalHydrationStyle);
+		if (onHydrationRestore == false)
+		{
+			currentHp -= hydrationTickLoss; 
+			hydrationBar.Value = currentHp; 
+			GD.Print("Lost hydration!");
+			
+			if (((float)currentHp / (float)maxHp) <= 0.25){
+				hydrationBar.AddThemeStyleboxOverride("fill", lowHydrationStyle);
+			}
+			else {
+				hydrationBar.AddThemeStyleboxOverride("fill", normalHydrationStyle);
+			}
 		}
 	}
 	
 	//Restores hydration by a specified amount, usually called when
 	//interacting with breakable hydration object
-	private void RestoreHydration(int amount)
+	public void RestoreHydration(int amount)
 	{
 		currentHp += amount;
 		

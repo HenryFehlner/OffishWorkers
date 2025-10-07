@@ -1,14 +1,19 @@
-[gd_scene load_steps=6 format=4 uid="uid://c3h7ftnp27g3q"]
+[gd_scene load_steps=9 format=4 uid="uid://c3h7ftnp27g3q"]
 
 [ext_resource type="PackedScene" uid="uid://mn5jjpdibtdn" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://c86a2e638er2u" path="res://scenes/grayboxMap.tscn" id="1_sugp2"]
 [ext_resource type="PackedScene" uid="uid://cjj22ar46xc3m" path="res://scenes/Enemies/BaseEnemy.tscn" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://bou5nvbr6rsg1" path="res://scenes/hydrationRestoreObject.cs" id="4_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://btrik7hwwd1kp" path="res://assets/sprites/sprite-puddle.png" id="5_tbgi4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
 bg_color = Color(0.18000486, 0.1800049, 0.18000478, 0.39215687)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sugp2"]
 bg_color = Color(0.31653386, 0.71156234, 0.90137845, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
+size = Vector2(52.5, 52)
 
 [node name="Node2D" type="Node2D"]
 
@@ -38,3 +43,18 @@ show_percentage = false
 [node name="BaseEnemy" parent="." instance=ExtResource("2_0wfyh")]
 position = Vector2(196, 228)
 maxHp = 5
+
+[node name="Puddle" type="Area2D" parent="."]
+collision_mask = 3
+script = ExtResource("4_jyhfs")
+
+[node name="Sprite2D" type="Sprite2D" parent="Puddle"]
+position = Vector2(353, -158)
+scale = Vector2(2, 2)
+texture = ExtResource("5_tbgi4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Puddle"]
+position = Vector2(352.75, -158)
+shape = SubResource("RectangleShape2D_tbgi4")
+
+[node name="RestoreTimer" type="Timer" parent="Puddle"]
