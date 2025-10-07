@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 public partial class Player : CharacterBody2D
 {
 	//movement
+	private string controlMode = "mouse_and_keyboard";
 	[Export] protected int maxSpeed = 600;
 	[Export] protected int acceleration = 10;
 	[Export] protected int friction = 20;
@@ -32,7 +33,8 @@ public partial class Player : CharacterBody2D
 	private bool isAttacking = false;
 	private Timer chainTimerPrimary = new Timer();
 	private int currentChainPrimary = 0;
-	private Vector2 facingDirection = Vector2.Right; //default value so player can never face Vector2.zero
+	private Vector2 movementFacingDirection = Vector2.Right; //default value so player can never face Vector2.zero
+	private Vector2 attackFacingDirection = Vector2.Right;
 
 	public override void _Ready()
 	{
@@ -67,7 +69,7 @@ public partial class Player : CharacterBody2D
 		// Called every frame. Delta is time since the last frame.
 		// Update game logic here.
 
-		//check for attacks
+		// Check for attacks
 		if (Input.IsActionJustPressed("primary_attack"))
 		{
 			_ = PrimaryAttack();
@@ -78,34 +80,57 @@ public partial class Player : CharacterBody2D
 			_ = DodgeRoll();
 		}
 		
-		//movement
+		// Movement
 		MovePlayer(delta);
 		
-		//PRESS 0: DEBUG HEALING
+		// PRESS 0: DEBUG HEALING
 		if (Input.IsActionJustPressed("debug_heal"))
 		{
 			RestoreHydration(30);
 			GD.Print("Debug: Healing 30 hp");
 		}
 		
-		//check for death
+		// Check for death
 		if (currentHp <= 0)
 		{
-			//player dies and enters some game over state
+			// Player dies and enters some game over state
 			GD.Print("DEAD");
 		}
 	}
 
 	private void MovePlayer(double delta)
 	{
-		// Get input
+		// Get move input
 		Vector2 moveDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+		
+		// Get attack input (either mouse or right stick)
+		// Mouse aiming input will always be detected and overwritten if gamepad input is detected
+		// Get the player object's screen position while accounting for camera position
+		Vector2 globalPos = GlobalPosition;
+		Viewport viewport = GetViewport();
+		Camera2D camera = viewport.GetCamera2D();
+		Transform2D cameraTransform = camera.GetCanvasTransform();
+		Vector2 playerViewportPos = cameraTransform * globalPos;
+		
+		// Get the mouse position
+		Vector2 mousePos = viewport.GetMousePosition();
+		
+		// Set the player's facing direction
+		attackFacingDirection = (mousePos - playerViewportPos).Normalized();
+		
+		// Overwrite attackFacingDirection with gamepad stick if an input is detected on it
+		if (Input.GetVector("face_left", "face_right", "face_up", "face_down") != Vector2.Zero)
+		{
+			attackFacingDirection = Input.GetVector("face_left", "face_right", "face_up", "face_down");
+		}
+		
+		// TODO: use attackFacingDirection to visualize the attack direction
 
 		// Apply acceleration
 		if (moveDirection != Vector2.Zero && !isAttacking)
 		{
 			Velocity = Velocity.Lerp(moveDirection * maxSpeed, (float)delta * acceleration);
-			facingDirection = moveDirection.Normalized();
+			movementFacingDirection = moveDirection.Normalized();
 		}
 		// Apply friciton
 		else
@@ -151,11 +176,11 @@ public partial class Player : CharacterBody2D
 		{
 			ParentNode = this,
 			LocalOffset = new Vector2(15, 0),
-			HitboxDirection = facingDirection,
+			HitboxDirection = attackFacingDirection,
 			Damage = primaryDamage,
 			Duration = primaryDuration,
 			Shape = rect,
-			KnockbackDirection = facingDirection,
+			KnockbackDirection = attackFacingDirection,
 			KnockbackStength = primaryKnockbackAmount,
 			AffectsTargets = Targets.EnemiesOnly,
 		});
@@ -180,7 +205,7 @@ public partial class Player : CharacterBody2D
 		
 		// Player becomes invincible and is pushed forwards
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT);
-		Velocity += facingDirection * dodgeForce;
+		Velocity += movementFacingDirection * dodgeForce;
 		GD.Print("Invincible");
 		
 		// Wait for invincibility cooldown
