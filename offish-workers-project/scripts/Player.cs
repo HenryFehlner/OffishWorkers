@@ -17,7 +17,7 @@ public partial class Player : CharacterBody2D
 	//stats
 	[Export] protected int maxHp = 100;
 	protected int currentHp;
-	//primary attack
+	//primary attack (unused for now)
 	[Export] protected int primaryDamage = 1;
 	[Export] protected float primaryDuration = .2f;
 	[Export] protected float primaryKnockbackAmount = 4000;
@@ -41,7 +41,7 @@ public partial class Player : CharacterBody2D
 	private StyleBoxFlat lowHydrationStyle = new StyleBoxFlat(); 
 
 	private bool isAttacking = false;
-	private Timer chainTimerPrimary = new Timer();
+	private Timer chainTimerPrimary;
 	private int currentChainPrimary = 0;
 	private Vector2 movementFacingDirection = Vector2.Right; //default value so player can never face Vector2.zero
 	private Vector2 attackFacingDirection = Vector2.Right;
@@ -53,10 +53,16 @@ public partial class Player : CharacterBody2D
 		//add to group for registering attacks
 		AddToGroup("player");
 		//set collision layer and masks
-		
 		CollisionLayer = Layers.Bit(Layers.PLAYER);
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
-		//CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMY_ATTACKS);
+		//setup attack combo timer
+		chainTimerPrimary = new Timer
+		{
+			OneShot = true,
+			Autostart = false,
+			ProcessMode = ProcessModeEnum.Inherit
+		};
+		AddChild(chainTimerPrimary);
 		
 		//Updates currentHP
 		currentHp = maxHp;
@@ -189,8 +195,9 @@ public partial class Player : CharacterBody2D
 		}
 		isAttacking = true;
 		//if timer is stopped, reset chain
-		if (chainTimerPrimary.IsStopped())
+		if (chainTimerPrimary.TimeLeft <= 0f)
 		{
+			GD.Print($"Starting new chain");
 			currentChainPrimary = 0;
 		}
 		//else, continue chaining
@@ -198,28 +205,92 @@ public partial class Player : CharacterBody2D
 		{
 			currentChainPrimary = (currentChainPrimary + 1) % 3;//3 different attacks in chain
 		}
-		//start chain timer
-		chainTimerPrimary.Start(1f);
-
+		
+		GD.Print($"Attack #{currentChainPrimary}");
 		//choose correct attack here
+		Shape2D hitboxShape;
+		AttackHitboxConfig attackConfig;
+		switch (currentChainPrimary)
+		{
+			default:
+				//start chain timer
+				chainTimerPrimary.Start(.4f);
+				//apply impulse
+				Velocity += attackFacingDirection * 1000;
+				//shape
+				hitboxShape = new RectangleShape2D
+				{
+					Size = new Vector2(20, 15)
+				};
+				//attack config
+				attackConfig = new AttackHitboxConfig
+				{
+					ParentNode = this,
+					LocalOffset = new Vector2(15, 0),
+					HitboxDirection = attackFacingDirection,
+					Damage = 1,
+					Duration = .2f,
+					Shape = hitboxShape,
+					KnockbackDirection = attackFacingDirection,
+					KnockbackStength = 500,
+					AffectsTargets = Targets.EnemiesOnly,
+				};
+				break;
+			case 1:
+				//start chain timer
+				chainTimerPrimary.Start(.4f);
+				//apply impulse
+				Velocity += attackFacingDirection * 1000;
+				//shape
+				hitboxShape = new RectangleShape2D
+				{
+					Size = new Vector2(25, 15)
+				};
+				//attack config
+				attackConfig = new AttackHitboxConfig
+				{
+					ParentNode = this,
+					LocalOffset = new Vector2(15, 0),
+					HitboxDirection = attackFacingDirection,
+					Damage = 1,
+					Duration = .2f,
+					Shape = hitboxShape,
+					KnockbackDirection = attackFacingDirection,
+					KnockbackStength = 500,
+					AffectsTargets = Targets.EnemiesOnly,
+				};
+				break;
+			case 2:
+				//start chain timer
+				chainTimerPrimary.Start(.4f);
+				//apply impulse
+
+				//shape
+				hitboxShape = new RectangleShape2D
+				{
+					Size = new Vector2(25, 25)
+				};
+				//attack config
+				attackConfig = new AttackHitboxConfig
+				{
+					ParentNode = this,
+					LocalOffset = new Vector2(15, 0),
+					HitboxDirection = attackFacingDirection,
+					Damage = 1,
+					Duration = .4f,
+					Shape = hitboxShape,
+					KnockbackDirection = attackFacingDirection,
+					KnockbackStength = 6000,
+					AffectsTargets = Targets.EnemiesOnly,
+				};
+				break;
+		}
 
 		//to have attacking move the player, add an impulse here
-
-		RectangleShape2D rect = new RectangleShape2D();
-		rect.Size = new Vector2(25, 15);
-
-		AttackHitbox hitbox = AttackHitbox.Create(new AttackHitboxConfig
-		{
-			ParentNode = this,
-			LocalOffset = new Vector2(15, 0),
-			HitboxDirection = attackFacingDirection,
-			Damage = primaryDamage,
-			Duration = primaryDuration,
-			Shape = rect,
-			KnockbackDirection = attackFacingDirection,
-			KnockbackStength = primaryKnockbackAmount,
-			AffectsTargets = Targets.EnemiesOnly,
-		});
+		AttackHitbox hitbox = AttackHitbox.Create(attackConfig);
+		
+		
+		
 
 		//keep alive for duration
 		await hitbox.Run();
@@ -230,7 +301,9 @@ public partial class Player : CharacterBody2D
 		//end attack
 		isAttacking = false;
 	}
-	
+
+
+		
 	private async Task DodgeRoll()
 	{
 		if (isDodging)
@@ -238,23 +311,23 @@ public partial class Player : CharacterBody2D
 			return;
 		}
 		isDodging = true;
-		
+
 		// Player becomes invincible and is pushed forwards
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT);
 		Velocity += movementFacingDirection * dodgeForce;
 		GD.Print("Invincible");
-		
+
 		// Wait for invincibility cooldown
 		await ToSignal(GetTree().CreateTimer(invincibilityCooldown), SceneTreeTimer.SignalName.Timeout);
-		
+
 		// Player is no longer invincible
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
 		//CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMY_ATTACKS);
 		GD.Print("Not invincible");
-		
+
 		// Player is able to dodge again
 		await ToSignal(GetTree().CreateTimer(dodgeCooldown), SceneTreeTimer.SignalName.Timeout);
-		
+
 		isDodging = false;
 	}
 
