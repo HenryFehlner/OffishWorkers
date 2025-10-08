@@ -1,6 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://mn5jjpdibtdn"]
+[gd_scene load_steps=10 format=3 uid="uid://mn5jjpdibtdn"]
 
 [ext_resource type="Script" uid="uid://c0i11isk21cbo" path="res://scripts/Player.cs" id="1_3vyb7"]
+[ext_resource type="Shader" uid="uid://bx5bqlm4lu1tr" path="res://shaders/flash.gdshader" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://bml8quh8esr3w" path="res://assets/sprites/placeholder-fish.png" id="3_qhqgy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3vyb7"]
+shader = ExtResource("1_g2els")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
+shader = ExtResource("1_g2els")
 
 [sub_resource type="SphereMesh" id="SphereMesh_sh265"]
 
@@ -13,9 +21,20 @@ gradient = SubResource("Gradient_3vyb7")
 [sub_resource type="CircleShape2D" id="CircleShape2D_4flbx"]
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
+material = SubResource("ShaderMaterial_3vyb7")
+scale = Vector2(5, 5)
+collision_layer = 2
+collision_mask = 21
 script = ExtResource("1_3vyb7")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_dqkch")
+scale = Vector2(0.23125, 0.23125)
+texture = ExtResource("3_qhqgy")
+
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+visible = false
 scale = Vector2(15, 15)
 mesh = SubResource("SphereMesh_sh265")
 texture = SubResource("GradientTexture2D_g2els")
