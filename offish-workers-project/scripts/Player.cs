@@ -86,16 +86,20 @@ public partial class Player : CharacterBody2D
 		// Called every frame. Delta is time since the last frame.
 		// Update game logic here.
 
-		// Check for attacks
-		if (Input.IsActionJustPressed("primary_attack"))
-		{
-			_ = PrimaryAttack();
-		}
 		// Check for dodge input
-		else if (Input.IsActionJustPressed("dodge_roll"))
+		if (Input.IsActionJustPressed("dodge_roll"))
 		{
 			_ = DodgeRoll();
 		}
+		// Check for primary attack
+		else if (Input.IsActionJustPressed("primary_attack"))
+		{
+			_ = PrimaryAttack();
+		}
+		else if (Input.IsActionJustPressed("secondary_attack"))
+        {
+			SecondaryAttack();
+        }
 		
 		// Movement
 		MovePlayer(delta);
@@ -214,7 +218,7 @@ public partial class Player : CharacterBody2D
 		{
 			default:
 				//start chain timer
-				chainTimerPrimary.Start(.4f);
+				chainTimerPrimary.Start(.6f);
 				//apply impulse
 				Velocity += attackFacingDirection * 1000;
 				//shape
@@ -225,6 +229,7 @@ public partial class Player : CharacterBody2D
 				//attack config
 				attackConfig = new AttackHitboxConfig
 				{
+					Owner = this,
 					ParentNode = this,
 					LocalOffset = new Vector2(15, 0),
 					HitboxDirection = attackFacingDirection,
@@ -238,7 +243,7 @@ public partial class Player : CharacterBody2D
 				break;
 			case 1:
 				//start chain timer
-				chainTimerPrimary.Start(.4f);
+				chainTimerPrimary.Start(.6f);
 				//apply impulse
 				Velocity += attackFacingDirection * 1000;
 				//shape
@@ -249,6 +254,7 @@ public partial class Player : CharacterBody2D
 				//attack config
 				attackConfig = new AttackHitboxConfig
 				{
+					Owner = this,
 					ParentNode = this,
 					LocalOffset = new Vector2(15, 0),
 					HitboxDirection = attackFacingDirection,
@@ -262,7 +268,7 @@ public partial class Player : CharacterBody2D
 				break;
 			case 2:
 				//start chain timer
-				chainTimerPrimary.Start(.4f);
+				chainTimerPrimary.Start(.6f);
 				//apply impulse
 
 				//shape
@@ -273,6 +279,7 @@ public partial class Player : CharacterBody2D
 				//attack config
 				attackConfig = new AttackHitboxConfig
 				{
+					Owner = this,
 					ParentNode = this,
 					LocalOffset = new Vector2(15, 0),
 					HitboxDirection = attackFacingDirection,
@@ -303,7 +310,33 @@ public partial class Player : CharacterBody2D
 	}
 
 
-		
+	private void SecondaryAttack()
+	{
+		//Firing the projectile doesn't really need to lock the player down, so no need for async
+		Shape2D hitboxShape = new RectangleShape2D
+				{
+					Size = new Vector2(50, 50)
+				};
+		Projectile proj = Projectile.Create(new ProjectileConfig
+		{
+			Owner = this,
+			ParentNode = this,
+			HitboxDirection = attackFacingDirection,
+			Damage = 1,
+			Duration = 5,
+			Shape = hitboxShape,
+			KnockbackDirection = attackFacingDirection,
+			KnockbackStength = 500,
+			AffectsTargets = Targets.EnemiesOnly,
+			StartPosition = new Vector2(GlobalPosition.X, GlobalPosition.Y),
+			Speed = 1000,
+			MovementDirection = attackFacingDirection,
+			Pierce = 0,
+			stopsOnEnvironment = true
+		});
+		//add projectile to scene
+		GetTree().CurrentScene.AddChild(proj);
+    }
 	private async Task DodgeRoll()
 	{
 		if (isDodging)

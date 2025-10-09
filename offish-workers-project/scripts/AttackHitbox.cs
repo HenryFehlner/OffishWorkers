@@ -6,7 +6,12 @@ public enum Targets { EnemiesOnly, PlayerOnly, AllButParent, All }
 
 public partial class AttackHitbox : Area2D
 {
+	//event handler to allow projectiles to register their hits
+	[Signal] public delegate void HitEventHandler(Node target);
+
 	//config stats
+	//owner node
+	protected Node owner;
 	//parent node
 	protected Node parentNode;
 	//where to place relative to parent node
@@ -41,8 +46,9 @@ public partial class AttackHitbox : Area2D
 	public void Configure(AttackHitboxConfig config)
 	{
 		//set field data
+		owner = config.Owner;
 		parentNode = config.ParentNode;
-		parentNode.AddChild(this);//could probably use this and take node param out of create method
+		parentNode.AddChild(this);
 		damage = config.Damage;
 		duration = config.Duration;
 		affectsTargets = config.AffectsTargets;
@@ -62,7 +68,7 @@ public partial class AttackHitbox : Area2D
 		//add collision shape
 		AddChild(new CollisionShape2D { Shape = (Shape2D)config.Shape.Duplicate(true) });
 		//layer
-		if (parentNode.IsInGroup("player"))
+		if (owner.IsInGroup("player"))
 		{
 			CollisionLayer = Layers.Bit(Layers.PLAYER_ATTACKS);
 		}
@@ -101,7 +107,7 @@ public partial class AttackHitbox : Area2D
 	{
 		GD.Print($"Trying hit on {target}");
 		//return if target is null, OR target is the parent and the parent should not be able to be hit by the attack, OR this node has already been hit
-		if (target == null || (target == parentNode && affectsTargets != Targets.All) || hitNodes.Contains(target))
+		if (target == null || (target == owner && affectsTargets != Targets.All) || hitNodes.Contains(target))
 		{
 			return;
 		}
@@ -119,13 +125,19 @@ public partial class AttackHitbox : Area2D
 		if (target.HasMethod("TakeHit"))
 		{
 			//call TakeHit method
-			target.Call("TakeHit", damage, knockbackImpulse, parentNode);
+			target.Call("TakeHit", damage, knockbackImpulse, owner);
+			EmitSignal(SignalName.Hit, target);
 		}
 
 	}
 
 	public async Task Run()
 	{
+		//timer override for projectiles/independent despawning timers
+		if(duration<=0)
+        {
+			return;
+        }
 		//timer
 		SceneTreeTimer timer = GetTree().CreateTimer(duration);
 		await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
@@ -136,6 +148,8 @@ public partial class AttackHitbox : Area2D
 
 public struct AttackHitboxConfig
 {
+	//owner (will not hit self with own attack)
+	public Node Owner;
 	//parent node
 	public Node ParentNode;
 	//where to place relative to parent node
