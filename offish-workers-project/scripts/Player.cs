@@ -30,6 +30,8 @@ public partial class Player : CharacterBody2D
 	//Able to be get and set
 	[Export] private bool onHydrationRestore = false;
 	
+	[Signal] public delegate void PlayerDeathEventHandler();
+	
 	public bool OnHydrationRestore
 	{
 		set {
@@ -97,9 +99,9 @@ public partial class Player : CharacterBody2D
 			_ = PrimaryAttack();
 		}
 		else if (Input.IsActionJustPressed("secondary_attack"))
-        {
+		{
 			SecondaryAttack();
-        }
+		}
 		
 		// Movement
 		MovePlayer(delta);
@@ -116,6 +118,7 @@ public partial class Player : CharacterBody2D
 		{
 			// Player dies and enters some game over state
 			GD.Print("DEAD");
+			EmitDeathSignal(); 
 		}
 	}
 	
@@ -336,7 +339,7 @@ public partial class Player : CharacterBody2D
 		});
 		//add projectile to scene
 		GetTree().CurrentScene.AddChild(proj);
-    }
+	}
 	private async Task DodgeRoll()
 	{
 		if (isDodging)
@@ -424,5 +427,10 @@ public partial class Player : CharacterBody2D
 		}
 		
 		hydrationBar.Value = currentHp; 
+	}
+	
+	private void EmitDeathSignal()
+	{
+		EmitSignal(SignalName.PlayerDeath);
 	}
 }
