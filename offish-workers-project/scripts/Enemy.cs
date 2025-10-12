@@ -9,10 +9,14 @@ public partial class Enemy : CharacterBody2D
 	[Export] protected int maxHp = 100;
 	[Export] protected float knockbackMultiplier = 1.0f;
 	protected int currentHp;
+	
+	[Export] public Vector2 spawnPosition; 
+	[Export] public string enemyType; 
 
 	public override void _Ready()
 	{
 		base._Ready();
+		
 		//add to group for registering attacks
 		AddToGroup("enemies");
 		//set collision layer and masks
