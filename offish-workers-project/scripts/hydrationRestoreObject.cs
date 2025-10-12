@@ -21,7 +21,7 @@ public partial class hydrationRestoreObject : Area2D
 	private bool timeToHeal = false;
 	
 	//Storage for player's Player.cs
-	Player playerScript;
+	private Player playerScript;
 	
 	public override void _Ready()
 	{

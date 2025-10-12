@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 public partial class Enemy : CharacterBody2D
-{
+{	
 	[Export] protected int maxSpeed = 0;
 	[Export] protected int acceleration = 0;
 	[Export] protected int friction = 20;
@@ -11,7 +11,12 @@ public partial class Enemy : CharacterBody2D
 	protected int currentHp;
 	
 	[Export] public Vector2 spawnPosition; 
-	[Export] public string enemyType; 
+	[Export] private string enemyType; 
+	
+	public string EnemyType
+	{
+		get { return enemyType; }
+	}
 
 	public override void _Ready()
 	{
@@ -23,6 +28,11 @@ public partial class Enemy : CharacterBody2D
 		CollisionLayer = Layers.Bit(Layers.ENEMIES);
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.PLAYER_ATTACKS);
 
+		if (enemyType == null)
+		{
+			enemyType = "punchingBag";
+		}
+		spawnPosition = this.Position; 
 		currentHp = maxHp;
 	}
 

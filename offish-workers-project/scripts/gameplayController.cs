@@ -14,54 +14,96 @@ public partial class gameplayController : Node2D
 
 	[Export] private PackedScene currentLevel;
 	[Export] private int currentLevelNumber; 
+	
+	//Number of levels we have implemented
+	private int levelAmount = 1;
+	
 	[Export] private Level currentLevelScript;
 
 	private List<Enemy> currentEnemiesList; 
 	
-	private Dictionary<string, PackedScene> enemyPrefabs; 
-	private Dictionary<int, PackedScene> levelPrefabs; 
+	private Dictionary<string, PackedScene> enemyPrefabs = new Dictionary<string, PackedScene>(); 
+	private Dictionary<int, PackedScene> levelPrefabs = new Dictionary<int, PackedScene>();
 	
 	public override void _Ready()
 	{
-		LoadLevel(0);
+		LoadEnemyInfo(); 
+		
+		currentLevelScript = GetNode("../Level") as Level;
+		
+		LoadTestLevel(); 
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
 		if (Input.IsActionJustPressed("debug_respawn"))
 		{
-			
+			RespawnEnemies(); 
 		}
 	}
 
-	private void LoadLevel(int levelNum){
-	//instantiate new level
-	//set references to new level
-	//including references to enemy list and such
+	private void LoadLevel(int levelNum)
+	{
+		currentEnemiesList = currentLevelScript.EnemiesList; 
+	
 	}
 	
+	private void LoadTestLevel(){
+		
+	}
+	
+	//Only touch this when we have new enemies to add
+	private void LoadEnemyInfo()
+	{
+		enemyPrefabs["punchingBag"] = GD.Load<PackedScene>("res://scenes/Enemies/BaseEnemy.tscn");
+	}
+	
+	//Only touch this when we have new levels to add
+	private void LoadLevelInfo(){
+		//levelPrefabs[0] = GD.Load<PackedScene>("res://scenes/levels/levelX.tscn");
+	}
 	private void NextLevelReached()
 	{
 		currentLevelNumber++; 
+		
 		//Delete old level
 		//Call load level on new one
 	}
 	
 	//Called when player dies
-	private void OnPlayerDeath(){
+	private void OnPlayerDeath()
+	{
 		//Change gamestate to game over
 	}
 	
+	private void LoadEnemyPrefabs()
+	{
+		
+	}
+	
+	//Called to respawn all enemies in a level
 	public void RespawnEnemies()
 	{
+		if (currentEnemiesList == null)
+		{
+			currentEnemiesList = currentLevelScript.EnemiesList; 
+		}
+		
 		foreach (Enemy enemyData in currentEnemiesList)
 		{
 			SpawnEnemy(enemyData);
 		}
 	}
 	
-	public void SpawnEnemy(Enemy enemyData)
+	//Only call this when spawning a new version of enemies
+	//They should come prespawned with the level
+	private void SpawnEnemy(Enemy enemyData)
 	{
+		PackedScene enemyScene = enemyPrefabs[enemyData.EnemyType];
+		CharacterBody2D enemyInstance = (CharacterBody2D)enemyScene.Instantiate(); 
+		GetNode<Node2D>("../Level/Enemy Container").AddChild(enemyInstance);
+		enemyInstance.GlobalPosition = enemyData.spawnPosition; 
 		
 	}
+
 }

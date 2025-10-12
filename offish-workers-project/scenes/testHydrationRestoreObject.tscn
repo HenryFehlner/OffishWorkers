@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://motp06sj1kia"]
+
+[ext_resource type="Script" uid="uid://bou5nvbr6rsg1" path="res://scripts/hydrationRestoreObject.cs" id="1_lhjrn"]
+[ext_resource type="Texture2D" uid="uid://btrik7hwwd1kp" path="res://assets/sprites/sprite-puddle.png" id="2_msl55"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
+size = Vector2(52.5, 52)
+
+[node name="hydrationRestoreObject" type="Area2D"]
+collision_mask = 3
+script = ExtResource("1_lhjrn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_msl55")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tbgi4")
+
+[node name="RestoreTimer" type="Timer" parent="."]
