@@ -14,6 +14,7 @@ bg_color = Color(0.18000486, 0.1800049, 0.18000478, 0.39215687)
 bg_color = Color(0.31653386, 0.71156234, 0.90137845, 1)
 
 [node name="Node2D" type="Node2D"]
+position = Vector2(40, -16)
 
 [node name="Level" type="Node2D" parent="."]
 script = ExtResource("7_o6xl0")
@@ -50,5 +51,3 @@ show_percentage = false
 
 [node name="Gameplay Controller" type="Node2D" parent="."]
 script = ExtResource("6_tefeu")
-
-[connection signal="PlayerDeath" from="Player" to="Gameplay Controller" method="OnPlayerDeath"]

@@ -30,6 +30,10 @@ public partial class Player : CharacterBody2D
 	//Able to be get and set
 	[Export] private bool onHydrationRestore = false;
 	
+	//Shows the direction indicator
+	[Export] public NodePath DirectionIndicatorPath;  
+	//reference to the indicator
+	private Sprite2D directionIndicator; 
 	[Signal] public delegate void PlayerDeathEventHandler();
 	
 	public bool OnHydrationRestore
@@ -80,6 +84,16 @@ public partial class Player : CharacterBody2D
 		hydrationTimer = GetNode<Timer>("HydrationTimer");
 		hydrationTimer.Timeout += OnHydrationTimeout;
 		hydrationTimer.Start(); 
+		
+		//Direction indicator setup
+		if (DirectionIndicatorPath != null && DirectionIndicatorPath.ToString() != "")
+		{
+			directionIndicator = GetNode<Sprite2D>(DirectionIndicatorPath);
+		}
+		else
+		{
+			GD.PrintErr("DirectionIndicatorPath not set in Inspector.");
+		}
 	}
 
 
@@ -106,6 +120,9 @@ public partial class Player : CharacterBody2D
 		// Movement
 		MovePlayer(delta);
 		
+		//Updates movement based direction indicator
+		UpdateDirectionIndicator();
+
 		// PRESS 0: DEBUG HEALING
 		if (Input.IsActionJustPressed("debug_heal"))
 		{
@@ -432,5 +449,23 @@ public partial class Player : CharacterBody2D
 	private void EmitDeathSignal()
 	{
 		EmitSignal(SignalName.PlayerDeath);
+	}
+	
+	private void UpdateDirectionIndicator()
+	{
+		if (directionIndicator == null)
+			return;
+
+		//Use movement direction for indicator
+		Vector2 facing = movementFacingDirection;
+
+		if (!facing.IsZeroApprox())
+		{
+			directionIndicator.Rotation = facing.Angle();
+
+			//Adjust if needed
+			float offset = 12f;
+			directionIndicator.Position = facing * offset;
+		}
 	}
 }
