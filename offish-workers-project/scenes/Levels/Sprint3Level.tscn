@@ -51,3 +51,31 @@ scale = Vector2(0.75, 0.75)
 maxHp = 50
 spawnPosition = Vector2(184, 46)
 enemyType = "punchingBag"
+
+[node name="BaseEnemy2" parent="Enemy Container" instance=ExtResource("4_5euty")]
+position = Vector2(918, 13)
+scale = Vector2(0.75, 0.75)
+maxHp = 50
+spawnPosition = Vector2(184, 46)
+enemyType = "punchingBag"
+
+[node name="BaseEnemy3" parent="Enemy Container" instance=ExtResource("4_5euty")]
+position = Vector2(293, -887)
+scale = Vector2(0.75, 0.75)
+maxHp = 50
+spawnPosition = Vector2(184, 46)
+enemyType = "punchingBag"
+
+[node name="BaseEnemy4" parent="Enemy Container" instance=ExtResource("4_5euty")]
+position = Vector2(296, -1346)
+scale = Vector2(0.75, 0.75)
+maxHp = 50
+spawnPosition = Vector2(184, 46)
+enemyType = "punchingBag"
+
+[node name="BaseEnemy5" parent="Enemy Container" instance=ExtResource("4_5euty")]
+position = Vector2(529, -1948)
+scale = Vector2(0.75, 0.75)
+maxHp = 50
+spawnPosition = Vector2(184, 46)
+enemyType = "punchingBag"

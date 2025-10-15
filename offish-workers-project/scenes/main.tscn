@@ -15,6 +15,7 @@ bg_color = Color(0.31653386, 0.71156234, 0.90137845, 1)
 script = ExtResource("1_jyhfs")
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
+primaryKnockbackAmount = 6000.0
 DirectionIndicatorPath = null
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
