@@ -88,7 +88,10 @@ public partial class Player : CharacterBody2D
 		hydrationTimer.Timeout += OnHydrationTimeout;
 		hydrationTimer.Start(); 
 		
+		directionIndicator = GetNode<Sprite2D>("DirectionIndicator");
+		
 		//Direction indicator setup
+/*
 		if (DirectionIndicatorPath != null && DirectionIndicatorPath.ToString() != "")
 		{
 			directionIndicator = GetNode<Sprite2D>(DirectionIndicatorPath);
@@ -96,7 +99,7 @@ public partial class Player : CharacterBody2D
 		else
 		{
 			GD.PrintErr("DirectionIndicatorPath not set in Inspector.");
-		}
+		}*/
 		
 		// Get the player sprite
 		playerSprite = GetNode<Sprite2D>("Sprite2D");
@@ -462,8 +465,9 @@ public partial class Player : CharacterBody2D
 	
 	private void UpdateDirectionIndicator()
 	{
-		if (directionIndicator == null)
+		if (directionIndicator == null){
 			return;
+		}
 
 		//Use movement direction for indicator
 		Vector2 facing = movementFacingDirection;
@@ -471,7 +475,6 @@ public partial class Player : CharacterBody2D
 		if (!facing.IsZeroApprox())
 		{
 			directionIndicator.Rotation = facing.Angle();
-
 			//Adjust if needed
 			float offset = 12f;
 			directionIndicator.Position = facing * offset;
