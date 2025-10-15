@@ -52,6 +52,9 @@ public partial class Player : CharacterBody2D
 	private Vector2 movementFacingDirection = Vector2.Right; //default value so player can never face Vector2.zero
 	private Vector2 attackFacingDirection = Vector2.Right;
 	//private Vector2 savedFacingDirection = Vector2.Right;
+	
+	// Player sprite (should become an AnimatedSprite2D in the future)
+	private Sprite2D playerSprite;
 
 	public override void _Ready()
 	{
@@ -94,6 +97,9 @@ public partial class Player : CharacterBody2D
 		{
 			GD.PrintErr("DirectionIndicatorPath not set in Inspector.");
 		}
+		
+		// Get the player sprite
+		playerSprite = GetNode<Sprite2D>("Sprite2D");
 	}
 
 
@@ -206,6 +212,9 @@ public partial class Player : CharacterBody2D
 
 		//GD.Print(Velocity);
 		MoveAndSlide();
+		
+		// Update the sprite/animation
+		playerSprite.FlipH = Velocity.X > 0;
 	}
 
 	private async Task PrimaryAttack()

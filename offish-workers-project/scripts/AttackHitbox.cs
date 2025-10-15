@@ -135,9 +135,9 @@ public partial class AttackHitbox : Area2D
 	{
 		//timer override for projectiles/independent despawning timers
 		if(duration<=0)
-        {
+		{
 			return;
-        }
+		}
 		//timer
 		SceneTreeTimer timer = GetTree().CreateTimer(duration);
 		await ToSignal(timer, SceneTreeTimer.SignalName.Timeout);
