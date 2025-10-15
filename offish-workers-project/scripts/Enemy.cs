@@ -3,12 +3,13 @@ using System;
 
 public partial class Enemy : CharacterBody2D
 {	
-	[Export] protected int maxSpeed = 0;
-	[Export] protected int acceleration = 0;
+	[Export] protected int maxSpeed = 1;
+	[Export] protected int acceleration = 1;
 	[Export] protected int friction = 20;
 	[Export] protected int maxHp = 100;
 	[Export] protected float knockbackMultiplier = 1.0f;
 	protected int currentHp;
+	private CharacterBody2D _player;
 	
 	[Export] public Vector2 spawnPosition; 
 	[Export] private string enemyType; 
@@ -16,6 +17,11 @@ public partial class Enemy : CharacterBody2D
 	public string EnemyType
 	{
 		get { return enemyType; }
+	}
+
+	public void SetPlayer(CharacterBody2D player)
+	{
+    	_player = player;
 	}
 
 	public override void _Ready()
@@ -34,6 +40,7 @@ public partial class Enemy : CharacterBody2D
 		}
 		spawnPosition = this.Position; 
 		currentHp = maxHp;
+
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -44,7 +51,11 @@ public partial class Enemy : CharacterBody2D
 
 	protected virtual void Move(double delta)
 	{
-		Velocity = Velocity.Lerp(Vector2.Zero, (float)delta * friction);
+		if(_player == null) return;
+		// Get the direction from enemy to player
+		Vector2 direction = (_player.GlobalPosition - this.GlobalPosition);
+		// Calculate velocity, accounting for acceleration and max speed
+		Velocity = Velocity.Lerp(direction * maxSpeed, (float)delta * acceleration);
 		MoveAndSlide();
 	}
 

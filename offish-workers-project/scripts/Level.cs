@@ -26,6 +26,7 @@ public partial class Level : Node2D
 	{
 		get { return enemiesList; }
 	}
+
 	
 	public override void _Ready()
 	{

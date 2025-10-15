@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3h7ftnp27g3q"]
+[gd_scene load_steps=7 format=3 uid="uid://c3h7ftnp27g3q"]
 
+[ext_resource type="Script" uid="uid://d1tat4axj1qmg" path="res://scripts/Main.cs" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://mn5jjpdibtdn" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://dnmc1yxx66u8f" path="res://scenes/Levels/Sprint3Level.tscn" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://5b32vrmggbif" path="res://scripts/gameplayController.cs" id="6_tefeu"]
@@ -11,6 +12,7 @@ bg_color = Color(0.18000486, 0.1800049, 0.18000478, 0.39215687)
 bg_color = Color(0.31653386, 0.71156234, 0.90137845, 1)
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_jyhfs")
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 DirectionIndicatorPath = null
