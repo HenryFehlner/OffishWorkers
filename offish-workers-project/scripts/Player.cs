@@ -213,7 +213,7 @@ public partial class Player : CharacterBody2D
 		//GD.Print(Velocity);
 		MoveAndSlide();
 		
-		// Update the sprite/animation
+		// Update the sprite look direction
 		playerSprite.FlipH = Velocity.X > 0;
 	}
 
