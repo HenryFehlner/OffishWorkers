@@ -22,7 +22,7 @@ public partial class Enemy : CharacterBody2D
 
 	public void SetPlayer(CharacterBody2D player)
 	{
-    	_player = player;
+		_player = player;
 	}
 
 	public override void _Ready()
