@@ -23,8 +23,6 @@ public partial class Enemy : CharacterBody2D
 	public void SetPlayer(CharacterBody2D player)
 	{
 		_player = player;
-		if (player == null) 
-		 GD.Print("Can't find player");
 	}
 
 	public override void _Ready()

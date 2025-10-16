@@ -54,8 +54,8 @@ public partial class Player : CharacterBody2D
 	private Vector2 attackFacingDirection = Vector2.Right;
 	//private Vector2 savedFacingDirection = Vector2.Right;
 	
-	// Player sprite (should become an AnimatedSprite2D in the future)
-	private Sprite2D playerSprite;
+	// Player sprite
+	private AnimatedSprite2D playerSprite;
 
 	public override void _Ready()
 	{
@@ -103,7 +103,7 @@ public partial class Player : CharacterBody2D
 		}*/
 		
 		// Get the player sprite
-		playerSprite = GetNode<Sprite2D>("Sprite2D");
+		playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 	}
 
 
