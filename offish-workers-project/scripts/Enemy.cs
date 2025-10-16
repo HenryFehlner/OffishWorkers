@@ -21,6 +21,10 @@ public partial class Enemy : CharacterBody2D
 	protected bool isInAttackRadius = false;
 	[Export] protected float attackCooldown = 1.5f;
 	protected Timer attackCooldownTimer;
+	
+	private StyleBoxFlat healthStyle = new StyleBoxFlat(); 
+	
+	private ProgressBar healthBar; 
 
 	public string EnemyType
 	{
@@ -54,6 +58,14 @@ public partial class Enemy : CharacterBody2D
 		{
 			enemyType = "punchingBag";
 		}
+		
+		healthBar = GetNode<ProgressBar>("HealthBar");
+		healthBar.MaxValue = maxHp; 
+		healthBar.Value = currentHp;
+		
+		healthStyle.BgColor = new Color("e06452"); 
+		healthBar.AddThemeStyleboxOverride("fill", healthStyle);
+			
 		spawnPosition = this.Position; 
 		currentHp = maxHp;
 
@@ -66,19 +78,20 @@ public partial class Enemy : CharacterBody2D
 		{
 			//reset attack timer if entering attack radius for the first time
 			if(!isInAttackRadius)
-            {
+			{
 				attackCooldownTimer.Start(attackCooldown);
 				isInAttackRadius = true;
-            }
+			}
 			_ = Attack();
 		}
 		else
-        {
-            isInAttackRadius = false;
-        }
+		{
+			isInAttackRadius = false;
+		}
 
 		//movement
 		Move(delta);
+		UpdateHealthBar(); 
 	}
 
 	protected virtual void Move(double delta)
@@ -132,11 +145,11 @@ public partial class Enemy : CharacterBody2D
 			QueueFree();
 		}
 
-        //apply interrupt effects (very basic for now, can implement damage thresholds or num hits taken systems later)
-        if (attackCooldownTimer.TimeLeft < .5f)
-        {
-            attackCooldownTimer.Start(.5f);
-        }
+		//apply interrupt effects (very basic for now, can implement damage thresholds or num hits taken systems later)
+		if (attackCooldownTimer.TimeLeft < .5f)
+		{
+			attackCooldownTimer.Start(.5f);
+		}
 	}
 
 	private async Task Attack()
@@ -197,6 +210,15 @@ public partial class Enemy : CharacterBody2D
 
 		//end attack
 		isAttacking = false;
-    }
+	}
+	
+	public void UpdateHealthBar()
+	{
+		if (currentHp <= 0){
+			healthBar.Value = 0; 
+		}
+		
+		healthBar.Value = currentHp; 
+	}
 
 }
