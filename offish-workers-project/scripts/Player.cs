@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 
 public partial class Player : CharacterBody2D
 {
+	//masks
+	private uint defaultCollisionLayer = Layers.Bit(Layers.PLAYER);
+	private uint defaultCollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
+
 	//movement
 	private string controlMode = "mouse_and_keyboard";
 	[Export] protected int maxSpeed = 600;
@@ -31,9 +35,9 @@ public partial class Player : CharacterBody2D
 	[Export] private bool onHydrationRestore = false;
 	
 	//Shows the direction indicator
-	[Export] public NodePath DirectionIndicatorPath;  
+	[Export] public NodePath DirectionIndicatorPath;
 	//reference to the indicator
-	private Sprite2D directionIndicator; 
+	private Sprite2D directionIndicator;
 	
 	[Signal] public delegate void PlayerDeathEventHandler();
 	
@@ -52,6 +56,10 @@ public partial class Player : CharacterBody2D
 	private int currentChainPrimary = 0;
 	private Vector2 movementFacingDirection = Vector2.Right; //default value so player can never face Vector2.zero
 	private Vector2 attackFacingDirection = Vector2.Right;
+
+	//secondary attack stuff
+	[Export] private float secondaryCooldown = 1;
+	private Timer secondaryCooldownTimer;
 	
 	// Player sprite and its shader material
 	private AnimatedSprite2D playerSprite;
@@ -63,8 +71,8 @@ public partial class Player : CharacterBody2D
 		//add to group for registering attacks
 		AddToGroup("player");
 		//set collision layer and masks
-		CollisionLayer = Layers.Bit(Layers.PLAYER);
-		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
+		CollisionLayer = defaultCollisionLayer;
+		CollisionMask = defaultCollisionMask;
 		//setup attack combo timer
 		chainTimerPrimary = new Timer
 		{
@@ -73,6 +81,14 @@ public partial class Player : CharacterBody2D
 			ProcessMode = ProcessModeEnum.Inherit
 		};
 		AddChild(chainTimerPrimary);
+		//secondary attack cooldown timer
+		secondaryCooldownTimer = new Timer
+		{
+			OneShot = true,
+			Autostart = false,
+			ProcessMode = ProcessModeEnum.Inherit
+		};
+		AddChild(secondaryCooldownTimer);
 		
 		//Updates currentHP
 		currentHp = maxHp;
@@ -170,7 +186,8 @@ public partial class Player : CharacterBody2D
 	{
 		// Get move input
 		Vector2 moveDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-		
+		movementFacingDirection = moveDirection.Normalized();
+
 		// Get attack input (either mouse or right stick)
 		if (controlMode == "mouse_and_keyboard")
 		{
@@ -207,7 +224,6 @@ public partial class Player : CharacterBody2D
 		if (moveDirection != Vector2.Zero && !isAttacking)
 		{
 			Velocity = Velocity.Lerp(moveDirection * maxSpeed, (float)delta * acceleration);
-			movementFacingDirection = moveDirection.Normalized();
 		}
 		// Apply friciton
 		else
@@ -271,7 +287,7 @@ public partial class Player : CharacterBody2D
 					Duration = .2f,
 					Shape = hitboxShape,
 					KnockbackDirection = attackFacingDirection,
-					KnockbackStength = 500,
+					KnockbackStength = 250,
 					AffectsTargets = Targets.EnemiesOnly,
 				};
 				break;
@@ -296,7 +312,7 @@ public partial class Player : CharacterBody2D
 					Duration = .2f,
 					Shape = hitboxShape,
 					KnockbackDirection = attackFacingDirection,
-					KnockbackStength = 500,
+					KnockbackStength = 250,
 					AffectsTargets = Targets.EnemiesOnly,
 				};
 				break;
@@ -321,7 +337,7 @@ public partial class Player : CharacterBody2D
 					Duration = .4f,
 					Shape = hitboxShape,
 					KnockbackDirection = attackFacingDirection,
-					KnockbackStength = 6000,
+					KnockbackStength = 3000,
 					AffectsTargets = Targets.EnemiesOnly,
 				};
 				break;
@@ -346,6 +362,11 @@ public partial class Player : CharacterBody2D
 
 	private void SecondaryAttack()
 	{
+		if (secondaryCooldownTimer.TimeLeft > 0)
+		{
+			return;
+		}
+		secondaryCooldownTimer.Start(secondaryCooldown);
 		//Firing the projectile doesn't really need to lock the player down, so no need for async
 		Shape2D hitboxShape = new RectangleShape2D
 				{
@@ -378,9 +399,12 @@ public partial class Player : CharacterBody2D
 			return;
 		}
 		isDodging = true;
+		//dodging cancels attacks
+		isAttacking = false;
 
 		// Player becomes invincible and is pushed forwards
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT);
+		CollisionLayer = Layers.Bit(Layers.DODGE);
 		Velocity += movementFacingDirection * dodgeForce;
 		playerShaderMat.SetShaderParameter("is_white", true);
 		//GD.Print("Invincible");
@@ -389,7 +413,8 @@ public partial class Player : CharacterBody2D
 		await ToSignal(GetTree().CreateTimer(invincibilityCooldown), SceneTreeTimer.SignalName.Timeout);
 
 		// Player is no longer invincible
-		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
+		CollisionMask = defaultCollisionMask;
+		CollisionLayer = defaultCollisionLayer;
 		playerShaderMat.SetShaderParameter("is_white", false);
 		//GD.Print("Not invincible");
 
@@ -413,7 +438,10 @@ public partial class Player : CharacterBody2D
 		currentHp -= damage;
 		//apply knockback
 		Velocity += impulse;
-		
+		//find velocity cap
+		float cap = Math.Max(impulse.Length(), maxSpeed);
+		//cap velocity to limit knockback stacking
+		Velocity.Clamp(-cap, cap);
 		
 	}
 	

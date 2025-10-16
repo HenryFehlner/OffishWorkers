@@ -7,7 +7,7 @@ public partial class Enemy : CharacterBody2D
 	[Export] protected int maxSpeed = 1;
 	[Export] protected int acceleration = 1;
 	[Export] protected int friction = 20;
-	[Export] protected int maxHp = 100;
+	[Export] protected int maxHp = 15;
 	[Export] protected float knockbackMultiplier = 1.0f;
 	[Export] protected int detectionRadius = 500;
 	protected int currentHp;
@@ -40,7 +40,7 @@ public partial class Enemy : CharacterBody2D
 		AddToGroup("enemies");
 		//set collision layer and masks
 		CollisionLayer = Layers.Bit(Layers.ENEMIES);
-		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.PLAYER_ATTACKS);
+		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.PLAYER_ATTACKS) | Layers.Bit(Layers.PLAYER) | Layers.Bit(Layers.ENEMIES);
 		//init attack timer
 		attackCooldownTimer = new Timer
 		{
