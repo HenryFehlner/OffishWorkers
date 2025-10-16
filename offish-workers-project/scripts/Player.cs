@@ -34,6 +34,7 @@ public partial class Player : CharacterBody2D
 	[Export] public NodePath DirectionIndicatorPath;  
 	//reference to the indicator
 	private Sprite2D directionIndicator; 
+	
 	[Signal] public delegate void PlayerDeathEventHandler();
 	
 	public bool OnHydrationRestore

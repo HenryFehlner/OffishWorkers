@@ -11,6 +11,7 @@ public partial class gameplayController : Node2D
 	
 	[Export] public CharacterBody2D player; 
 	private Player playerScript; 
+	
 
 	[Export] private PackedScene currentLevel;
 	[Export] private int currentLevelNumber; 
@@ -30,6 +31,7 @@ public partial class gameplayController : Node2D
 		LoadEnemyInfo(); 
 		
 		currentLevelScript = GetNode("../Level") as Level;
+		player = GetNode<CharacterBody2D>("../Player");
 		
 		LoadTestLevel(); 
 	}
@@ -104,6 +106,11 @@ public partial class gameplayController : Node2D
 		GetNode<Node2D>("../Level/Enemy Container").AddChild(enemyInstance);
 		enemyInstance.GlobalPosition = enemyData.spawnPosition; 
 		
+		Enemy newEnemyScript = enemyInstance as Enemy; 
+		GD.Print("Enemy Script: " + newEnemyScript);
+		newEnemyScript.SetPlayer(player);
+		
 	}
+	
 
 }
