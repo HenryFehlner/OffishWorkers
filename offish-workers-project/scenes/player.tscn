@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://mn5jjpdibtdn"]
+[gd_scene load_steps=11 format=3 uid="uid://mn5jjpdibtdn"]
 
 [ext_resource type="Script" uid="uid://c0i11isk21cbo" path="res://scripts/Player.cs" id="1_3vyb7"]
 [ext_resource type="Shader" uid="uid://bx5bqlm4lu1tr" path="res://shaders/flash.gdshader" id="1_g2els"]
@@ -20,11 +20,6 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
-shader = ExtResource("1_g2els")
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-shader_parameter/is_white = false
 
 [sub_resource type="SphereMesh" id="SphereMesh_sh265"]
 
@@ -49,12 +44,6 @@ material = SubResource("ShaderMaterial_qlg0r")
 scale = Vector2(0.231, 0.231)
 sprite_frames = SubResource("SpriteFrames_dqkch")
 frame_progress = 0.79793316
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_dqkch")
-scale = Vector2(0.23125, 0.23125)
-texture = ExtResource("3_qhqgy")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 visible = false
