@@ -12,6 +12,7 @@ public partial class Enemy : CharacterBody2D
 	[Export] protected int detectionRadius = 500;
 	protected int currentHp;
 	private CharacterBody2D _player;
+	[Export] private bool isDead = false;
 	
 	[Export] public Vector2 spawnPosition;
 	[Export] private string enemyType;
@@ -31,6 +32,11 @@ public partial class Enemy : CharacterBody2D
 		get { return enemyType; }
 	}
 
+	public bool IsDead
+	{
+		get { return isDead; }
+	}
+	
 	public void SetPlayer(CharacterBody2D player)
 	{
 		_player = player;
@@ -68,6 +74,7 @@ public partial class Enemy : CharacterBody2D
 			
 		spawnPosition = this.Position; 
 		currentHp = maxHp;
+		isDead = false;
 
 	}
 
@@ -142,6 +149,7 @@ public partial class Enemy : CharacterBody2D
 		if (currentHp <= 0)
 		{
 			//delete enemy
+			isDead = true; 
 			QueueFree();
 		}
 

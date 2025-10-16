@@ -93,7 +93,10 @@ public partial class gameplayController : Node2D
 		
 		foreach (Enemy enemyData in currentEnemiesList)
 		{
+			if (enemyData.IsDead == true)
+			{
 			SpawnEnemy(enemyData);
+			}
 		}
 	}
 	
