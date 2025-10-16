@@ -52,7 +52,10 @@ public partial class Enemy : CharacterBody2D
 
 	protected virtual void Move(double delta)
 	{
-		if(_player == null) return;
+		if(_player == null)
+		{
+			 return;
+		}
 		// Get the direction from enemy to player
 		Vector2 direction = (_player.GlobalPosition - this.GlobalPosition);
 		// Only move towards the player if the player is within the detection radius
