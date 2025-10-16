@@ -34,6 +34,7 @@ public partial class Player : CharacterBody2D
 	[Export] public NodePath DirectionIndicatorPath;  
 	//reference to the indicator
 	private Sprite2D directionIndicator; 
+	
 	[Signal] public delegate void PlayerDeathEventHandler();
 	
 	public bool OnHydrationRestore
@@ -51,10 +52,10 @@ public partial class Player : CharacterBody2D
 	private int currentChainPrimary = 0;
 	private Vector2 movementFacingDirection = Vector2.Right; //default value so player can never face Vector2.zero
 	private Vector2 attackFacingDirection = Vector2.Right;
-	//private Vector2 savedFacingDirection = Vector2.Right;
 	
-	// Player sprite (should become an AnimatedSprite2D in the future)
-	private Sprite2D playerSprite;
+	// Player sprite and its shader material
+	private AnimatedSprite2D playerSprite;
+	private ShaderMaterial playerShaderMat;
 
 	public override void _Ready()
 	{
@@ -101,8 +102,9 @@ public partial class Player : CharacterBody2D
 			GD.PrintErr("DirectionIndicatorPath not set in Inspector.");
 		}*/
 		
-		// Get the player sprite
-		playerSprite = GetNode<Sprite2D>("Sprite2D");
+		// Get the player sprite and its material for use with flashing
+		playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		playerShaderMat = (ShaderMaterial)playerSprite.Material;
 	}
 
 
@@ -380,15 +382,16 @@ public partial class Player : CharacterBody2D
 		// Player becomes invincible and is pushed forwards
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT);
 		Velocity += movementFacingDirection * dodgeForce;
-		GD.Print("Invincible");
+		playerShaderMat.SetShaderParameter("is_white", true);
+		//GD.Print("Invincible");
 
 		// Wait for invincibility cooldown
 		await ToSignal(GetTree().CreateTimer(invincibilityCooldown), SceneTreeTimer.SignalName.Timeout);
 
 		// Player is no longer invincible
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
-		//CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMY_ATTACKS);
-		GD.Print("Not invincible");
+		playerShaderMat.SetShaderParameter("is_white", false);
+		//GD.Print("Not invincible");
 
 		// Player is able to dodge again
 		await ToSignal(GetTree().CreateTimer(dodgeCooldown), SceneTreeTimer.SignalName.Timeout);
