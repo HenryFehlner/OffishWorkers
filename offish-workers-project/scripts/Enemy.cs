@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class Enemy : CharacterBody2D
 {	
@@ -12,9 +13,15 @@ public partial class Enemy : CharacterBody2D
 	protected int currentHp;
 	private CharacterBody2D _player;
 	
-	[Export] public Vector2 spawnPosition; 
-	[Export] private string enemyType; 
-	
+	[Export] public Vector2 spawnPosition;
+	[Export] private string enemyType;
+
+	private bool isAttacking = false;
+	[Export] protected int attackRadius = 250;
+	protected bool isInAttackRadius = false;
+	[Export] protected float attackCooldown = 1.5f;
+	protected Timer attackCooldownTimer;
+
 	public string EnemyType
 	{
 		get { return enemyType; }
@@ -34,6 +41,14 @@ public partial class Enemy : CharacterBody2D
 		//set collision layer and masks
 		CollisionLayer = Layers.Bit(Layers.ENEMIES);
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.PLAYER_ATTACKS);
+		//init attack timer
+		attackCooldownTimer = new Timer
+		{
+			OneShot = true,
+			Autostart = false,
+			ProcessMode = ProcessModeEnum.Inherit
+		};
+		AddChild(attackCooldownTimer);
 
 		if (enemyType == null)
 		{
@@ -46,6 +61,22 @@ public partial class Enemy : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		//attack
+		if (GlobalPosition.DistanceTo(_player.GlobalPosition) < attackRadius)
+		{
+			//reset attack timer if entering attack radius for the first time
+			if(!isInAttackRadius)
+            {
+				attackCooldownTimer.Start(attackCooldown);
+				isInAttackRadius = true;
+            }
+			_ = Attack();
+		}
+		else
+        {
+            isInAttackRadius = false;
+        }
+
 		//movement
 		Move(delta);
 	}
@@ -87,12 +118,82 @@ public partial class Enemy : CharacterBody2D
 		//apply knockback
 		GD.Print($"{impulse * knockbackMultiplier}");
 		Velocity += impulse * knockbackMultiplier;
+		//find velocity cap
+		float cap = Math.Max((impulse * knockbackMultiplier).Length(), maxSpeed);
+		//cap velocity to limit knockback stacking
+		Velocity.Clamp(-cap, cap);
 		//check for death
 		if (currentHp <= 0)
 		{
 			//delete enemy
 			QueueFree();
 		}
+
+        //apply interrupt effects (very basic for now, can implement damage thresholds or num hits taken systems later)
+        if (attackCooldownTimer.TimeLeft < .5f)
+        {
+            attackCooldownTimer.Start(.5f);
+        }
 	}
+
+	private async Task Attack()
+	{
+		//based on the issues with numbers, there appear to be two different scaling systems going on
+		//it feels like enemies are being scaled up, but the hitbox sizes might be relative to the base sprite size?
+
+		//dash attack takes priority, then dodge, then regular attack
+		//windup, duration, winddown
+		//player should still be able to turn during windup phase
+		if (isAttacking || attackCooldownTimer.TimeLeft > 0f)
+		{
+			return;
+		}
+		isAttacking = true;
+		//restart cooldown timer
+		attackCooldownTimer.Start(attackCooldown);
+		//else, continue chaining
+		
+		//choose correct attack here
+		Shape2D hitboxShape;
+		AttackHitboxConfig attackConfig;
+
+		//find attack direction (this should probably be calculated at the start of the attack, before the windup)
+		Vector2 attackFacingDirection = _player.GlobalPosition - this.GlobalPosition;
+		
+		//apply impulse
+		//Velocity += attackFacingDirection * 1000;
+		//shape
+		hitboxShape = new RectangleShape2D
+		{
+			Size = new Vector2(150, 100)
+		};
+		//attack config
+		attackConfig = new AttackHitboxConfig
+		{
+			Owner = this,
+			ParentNode = this,
+			LocalOffset = new Vector2(100, 0),
+			HitboxDirection = attackFacingDirection,
+			Damage = 10,
+			Duration = .2f,
+			Shape = hitboxShape,
+			KnockbackDirection = attackFacingDirection,
+			KnockbackStength = 25,
+			AffectsTargets = Targets.PlayerOnly,
+		};
+
+		//to have attacking move the player, add an impulse here
+		AttackHitbox hitbox = AttackHitbox.Create(attackConfig);
+		
+
+		//keep alive for duration
+		await hitbox.Run();
+
+		//attack end delay
+		//await ToSignal(GetTree().CreateTimer(0.8f), SceneTreeTimer.SignalName.Timeout);
+
+		//end attack
+		isAttacking = false;
+    }
 
 }
