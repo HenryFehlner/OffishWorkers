@@ -213,7 +213,7 @@ public partial class Player : CharacterBody2D
 			}
 			
 			// Get right stick input
-			attackFacingDirection = Input.GetVector("face_left", "face_right", "face_up", "face_down");
+			attackFacingDirection = Input.GetVector("face_left", "face_right", "face_up", "face_down").Normalized();
 			//savedFacingDirection = attackFacingDirection;
 		}
 		NoControllerAimInput:
