@@ -19,8 +19,8 @@ public partial class Player : CharacterBody2D
 	[Export] protected float dodgeCooldown = 0.5f;	// Milliseconds
 	private bool isDodging = false;
 	//stats
-	[Export] protected int maxHp = 100;
-	protected int currentHp;
+	[Export] protected float maxHp = 100;
+	protected float currentHp;
 	//primary attack (unused for now)
 	[Export] protected int primaryDamage = 1;
 	[Export] protected float primaryDuration = .2f;
@@ -28,7 +28,8 @@ public partial class Player : CharacterBody2D
 	
 	//Hydration relevant fields
 	[Export] protected ProgressBar hydrationBar;
-	[Export] protected int hydrationTickLoss = 2; 
+	[Export] protected float hydrationLossTickTime = 0.25f; 
+	[Export] protected float hydrationTickLoss = 0.5f; 
 	[Export] protected Timer hydrationTimer; 
 
 	//Able to be get and set
@@ -102,6 +103,7 @@ public partial class Player : CharacterBody2D
 		lowHydrationStyle.BgColor = new Color("e06452"); 
 		
 		hydrationTimer = GetNode<Timer>("HydrationTimer");
+		hydrationTimer.WaitTime = hydrationLossTickTime; 
 		hydrationTimer.Timeout += OnHydrationTimeout;
 		hydrationTimer.Start(); 
 		
