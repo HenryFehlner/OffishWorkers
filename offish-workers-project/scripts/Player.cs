@@ -503,7 +503,7 @@ public partial class Player : CharacterBody2D
 		}
 
 		//Use movement direction for indicator
-		Vector2 facing = movementFacingDirection;
+		Vector2 facing = attackFacingDirection;
 
 		if (!facing.IsZeroApprox())
 		{
