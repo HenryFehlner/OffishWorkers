@@ -25,6 +25,7 @@ public partial class Level : Node2D
 	public List<Enemy> EnemiesList
 	{
 		get { return enemiesList; }
+		set { enemiesList = value; }
 	}
 
 	
@@ -64,6 +65,13 @@ public partial class Level : Node2D
 				}
 			}
 		}
+	}
+	
+	public void UpdateEnemiesList()
+	{
+		enemiesList = new List<Enemy>(); 
+		
+		AddEnemies(); 
 	}
 
 }
