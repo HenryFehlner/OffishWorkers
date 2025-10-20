@@ -125,6 +125,7 @@ public partial class AttackHitbox : Area2D
 		if (target.HasMethod("TakeHit"))
 		{
 			//call TakeHit method
+			hitNodes.Add(target);
 			target.Call("TakeHit", damage, knockbackImpulse, owner);
 			EmitSignal(SignalName.Hit, target);
 		}
