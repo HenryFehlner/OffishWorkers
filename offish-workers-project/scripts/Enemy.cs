@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 public partial class Enemy : CharacterBody2D
 {	
-	[Export] protected int maxSpeed = 1;
-	[Export] protected int acceleration = 1;
+	[Export] protected int maxSpeed = 600;
+	[Export] protected int acceleration = 10;
 	[Export] protected int friction = 20;
 	[Export] protected int maxHp = 15;
 	[Export] protected float knockbackMultiplier = 1.0f;
@@ -108,18 +108,18 @@ public partial class Enemy : CharacterBody2D
 			 return;
 		}
 		// Get the direction from enemy to player
-		Vector2 direction = (_player.GlobalPosition - this.GlobalPosition);
+		Vector2 direction = (_player.GlobalPosition - this.GlobalPosition).Normalized();
 		// Only move towards the player if the player is within the detection radius
 		if(GlobalPosition.DistanceTo(_player.GlobalPosition) < detectionRadius)
 		{
 			// Calculate velocity, accounting for acceleration and max speed
 			Velocity = Velocity.Lerp(direction * maxSpeed, (float)delta * acceleration);
 			// Apply Friction
-			Velocity = Velocity.MoveToward(Vector2.Zero, friction * (float)delta);
+			Velocity = Velocity.Lerp(Vector2.Zero, friction * (float)delta);
 		}
 		else
 		{
-			Velocity = Vector2.Zero;
+			Velocity = Velocity.Lerp(Vector2.Zero, friction * (float)delta);
 		}
 		MoveAndSlide();
 	}

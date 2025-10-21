@@ -289,7 +289,7 @@ public partial class Player : CharacterBody2D
 					Duration = .2f,
 					Shape = hitboxShape,
 					KnockbackDirection = attackFacingDirection,
-					KnockbackStength = 250,
+					KnockbackStength = 4000,
 					AffectsTargets = Targets.EnemiesOnly,
 				};
 				break;
@@ -314,7 +314,7 @@ public partial class Player : CharacterBody2D
 					Duration = .2f,
 					Shape = hitboxShape,
 					KnockbackDirection = attackFacingDirection,
-					KnockbackStength = 250,
+					KnockbackStength = 4000,
 					AffectsTargets = Targets.EnemiesOnly,
 				};
 				break;
@@ -339,7 +339,7 @@ public partial class Player : CharacterBody2D
 					Duration = .4f,
 					Shape = hitboxShape,
 					KnockbackDirection = attackFacingDirection,
-					KnockbackStength = 3000,
+					KnockbackStength = 7000,
 					AffectsTargets = Targets.EnemiesOnly,
 				};
 				break;
@@ -503,7 +503,7 @@ public partial class Player : CharacterBody2D
 		}
 
 		//Use movement direction for indicator
-		Vector2 facing = movementFacingDirection;
+		Vector2 facing = attackFacingDirection;
 
 		if (!facing.IsZeroApprox())
 		{
