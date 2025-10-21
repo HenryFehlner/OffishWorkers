@@ -19,8 +19,8 @@ public partial class Level : Node2D
 	private Node enemyContainer; 
 	private Node hydrationContainer; 
 	
-	public List<Enemy> enemiesList; 
-	
+	public List<Enemy> enemiesList;
+
 	//Enemies List property
 	public List<Enemy> EnemiesList
 	{

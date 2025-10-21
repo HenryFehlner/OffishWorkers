@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic; 
+using GameStateEnums; 
 
 public partial class gameplayController : Node2D
 {
@@ -8,6 +9,8 @@ public partial class gameplayController : Node2D
 	//respawns and spawns enemies
 	//loads levels
 	//manages game state
+	
+	private GameState currentGameState; 
 	
 	[Export] public CharacterBody2D player; 
 	private Player playerScript; 
@@ -24,53 +27,87 @@ public partial class gameplayController : Node2D
 	private List<Enemy> currentEnemiesList; 
 	private List<Enemy> replacementEnemiesList; 
 	
+	
 	private Dictionary<string, PackedScene> enemyPrefabs = new Dictionary<string, PackedScene>(); 
 	private Dictionary<int, PackedScene> levelPrefabs = new Dictionary<int, PackedScene>();
 	
 	public override void _Ready()
 	{
-		LoadEnemyInfo(); 
+		LoadEnemyScenes(); 
 		
-		currentLevelScript = GetNode("../Level") as Level;
+		currentLevelScript = GetNode("../Level Container/Level") as Level;
 		player = GetNode<CharacterBody2D>("../Player");
 		
-		LoadTestLevel(); 
+		currentLevelNumber = 0; 
+		
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Input.IsActionJustPressed("debug_respawn"))
+		switch (currentGameState)
 		{
-			RespawnEnemies(); 
+			case GameState.Gameplay: 					
+				if (Input.IsActionJustPressed("debug_respawn"))
+				{
+					RespawnEnemies(); 
+				}
+				break; 
+			case GameState.PauseMenu: 
+				break;
+			case GameState.Upgrade:
+				break; 
 		}
 	}
 
-	private void LoadLevel(int levelNum)
+	private void LoadNextLevel()
 	{
+		if (currentLevelNumber > levelAmount)
+		{
+			currentGameState = GameState.Finished; 
+			return; 
+		}
+		
 		currentEnemiesList = currentLevelScript.EnemiesList; 
 	
 	}
 	
-	private void LoadTestLevel(){
+	//Loads in the level from the packed scene dictionary 
+	private Level LoadLevelScene()
+	{
+		PackedScene levelScene = levelPrefabs[currentLevelNumber];
+		Node2D levelInstance = (Node2D)levelScene.Instantiate(); 
+		GetNode<Node2D>("../Level Container").AddChild(levelInstance);
 		
+		Level newLevelScript = levelInstance as Level;
+		
+		return newLevelScript; 
 	}
 	
+	private void NextLevelSetup()
+	{
+		//Delete everything in current level
+		//Set up next level loading
+		foreach (Enemy enemyData in currentEnemiesList)
+		{
+			CharacterBody2D enemyBody = (CharacterBody2D)enemyData.GetParent();
+			enemyBody.QueueFree(); 
+		}
+		
+		currentLevelNumber++; 
+		
+		LoadNextLevel(); 
+	}
+
 	//Only touch this when we have new enemies to add
-	private void LoadEnemyInfo()
+	private void LoadEnemyScenes()
 	{
 		enemyPrefabs["punchingBag"] = GD.Load<PackedScene>("res://scenes/Enemies/BaseEnemy.tscn");
 	}
 	
 	//Only touch this when we have new levels to add
-	private void LoadLevelInfo(){
-		//levelPrefabs[0] = GD.Load<PackedScene>("res://scenes/levels/levelX.tscn");
-	}
-	private void NextLevelReached()
+	private void LoadLevelInfo()
 	{
-		currentLevelNumber++; 
-		
-		//Delete old level
-		//Call load level on new one
+		levelPrefabs[0] = GD.Load<PackedScene>("res://scenes/Levels/Sprint3Level.tscn");
 	}
 	
 	//Called when player dies
@@ -129,7 +166,7 @@ public partial class gameplayController : Node2D
 	{
 		PackedScene enemyScene = enemyPrefabs[enemyData.EnemyType];
 		CharacterBody2D enemyInstance = (CharacterBody2D)enemyScene.Instantiate(); 
-		GetNode<Node2D>("../Level/Enemy Container").AddChild(enemyInstance);
+		GetNode<Node2D>("../Level Container/Level/Enemy Container").AddChild(enemyInstance);
 		enemyInstance.GlobalPosition = enemyData.spawnPosition; 
 		
 		Enemy newEnemyScript = enemyInstance as Enemy; 
