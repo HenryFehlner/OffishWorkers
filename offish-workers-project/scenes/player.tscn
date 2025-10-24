@@ -7,7 +7,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
 shader = ExtResource("1_g2els")
-shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_color = Color(1, 1, 1, 0.63529414)
 shader_parameter/is_white = false
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dqkch"]
