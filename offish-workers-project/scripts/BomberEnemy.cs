@@ -10,6 +10,7 @@ public partial class BomberEnemy : Enemy
 		maxHp = 5;
 		//Long attack cooldown to act like a fuse
 		attackCooldown = 5.0f;
+		detectionRadius = 350;
 		//Start the attack as soon as it detects the player
 		attackRadius = detectionRadius;
 		enemyType = "printerBomber";

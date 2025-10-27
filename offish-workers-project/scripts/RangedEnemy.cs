@@ -10,6 +10,7 @@ public partial class RangedEnemy : Enemy
 		// Make this enemy stationary
 		maxSpeed = 0;
 		acceleration = 0;
+		friction = 35;
 		maxHp = 10;
 		// Attack Radius should be the same as the detection radius
 		attackRadius = detectionRadius;
