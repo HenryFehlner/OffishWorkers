@@ -15,7 +15,7 @@ public partial class Enemy : CharacterBody2D
 	[Export] private bool isDead = false;
 	
 	[Export] public Vector2 spawnPosition;
-	[Export] private string enemyType;
+	[Export] protected string enemyType;
 
 	private bool isAttacking = false;
 	[Export] protected int attackRadius = 250;

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://diwx8m12hpinb"]
+
+[ext_resource type="Script" uid="uid://cudnqkipdaqjb" path="res://scripts/RangedEnemy.cs" id="1_0e310"]
+[ext_resource type="Texture2D" uid="uid://6xto0rj1dc0k" path="res://assets/sprites/punching bag.png" id="2_w0jok"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3af6"]
+size = Vector2(20, 54)
+
+[node name="RangedEnemy" type="CharacterBody2D"]
+script = ExtResource("1_0e310")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+scale = Vector2(3, 3)
+texture = ExtResource("2_w0jok")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_i3af6")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -37.0
+offset_top = -97.0
+offset_right = 37.0
+offset_bottom = -84.0
+fill_mode = 1
+show_percentage = false

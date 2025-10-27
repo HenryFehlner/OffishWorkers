@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=4 uid="uid://dnmc1yxx66u8f"]
+[gd_scene load_steps=7 format=4 uid="uid://dnmc1yxx66u8f"]
 
 [ext_resource type="Script" uid="uid://byh6vmbmtd65i" path="res://scripts/Level.cs" id="1_psca3"]
 [ext_resource type="Texture2D" uid="uid://cyxju3g0tggc0" path="res://assets/tiles/graybox_tileset_big.png" id="2_62x0k"]
 [ext_resource type="PackedScene" uid="uid://cjj22ar46xc3m" path="res://scenes/Enemies/BaseEnemy.tscn" id="4_5euty"]
+[ext_resource type="PackedScene" uid="uid://diwx8m12hpinb" path="res://scenes/Enemies/RangedEnemy.tscn" id="4_psca3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_psca3"]
 texture = ExtResource("2_62x0k")
@@ -53,3 +54,6 @@ enemyType = "punchingBag"
 position = Vector2(529, -1948)
 spawnPosition = Vector2(184, 46)
 enemyType = "punchingBag"
+
+[node name="RangedEnemy" parent="Enemy Container" instance=ExtResource("4_psca3")]
+position = Vector2(-15, -226)
