@@ -18,6 +18,7 @@ public partial class Player : CharacterBody2D
 	[Export] protected float invincibilityCooldown = 0.3f;	// Milliseconds
 	[Export] protected float dodgeCooldown = 0.5f;	// Milliseconds
 	private bool isDodging = false;
+	//private Timer hitFlashTimer = new Timer();
 	//stats
 	[Export] protected float maxHp = 100;
 	protected float currentHp;
