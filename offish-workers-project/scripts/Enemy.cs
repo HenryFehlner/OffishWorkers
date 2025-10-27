@@ -183,20 +183,21 @@ public partial class Enemy : CharacterBody2D
 
 		//find attack direction (this should probably be calculated at the start of the attack, before the windup)
 		Vector2 attackFacingDirection = _player.GlobalPosition - this.GlobalPosition;
-		
+
 		//apply impulse
 		//Velocity += attackFacingDirection * 1000;
 		//shape
+		
 		hitboxShape = new RectangleShape2D
 		{
-			Size = new Vector2(150, 100)
+			Size = new Vector2(120/Scale.X, 80/Scale.Y)
 		};
 		//attack config
 		attackConfig = new AttackHitboxConfig
 		{
 			Owner = this,
 			ParentNode = this,
-			LocalOffset = new Vector2(100, 0),
+			LocalOffset = new Vector2(120/Scale.X, 0),
 			HitboxDirection = attackFacingDirection,
 			Damage = 10,
 			Duration = .2f,

@@ -59,7 +59,7 @@ public partial class BomberEnemy : Enemy
 		//shape
 		hitboxShape = new RectangleShape2D
 		{
-			Size = new Vector2(250,250)
+			Size = new Vector2(250/Scale.X,250/Scale.Y)
 		};
 		// attack config
 		// TO FIX: Attack is doing damage multiple times to the player
