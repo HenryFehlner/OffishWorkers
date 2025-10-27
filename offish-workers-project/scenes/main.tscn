@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d1tat4axj1qmg" path="res://scripts/Main.cs" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://mn5jjpdibtdn" path="res://scenes/player.tscn" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://dnmc1yxx66u8f" path="res://scenes/Levels/Sprint3Level.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://cet0lay8i7dcf" path="res://scenes/Levels/tutorial.tscn" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://5b32vrmggbif" path="res://scripts/gameplayController.cs" id="6_tefeu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
@@ -19,12 +19,13 @@ primaryKnockbackAmount = 6000.0
 DirectionIndicatorPath = null
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(0.8, 0.8)
 
 [node name="HydrationBar" type="ProgressBar" parent="Player"]
-offset_left = -110.399994
-offset_top = -58.599995
-offset_right = -104.399994
-offset_bottom = -16.400005
+offset_left = -138.79999
+offset_top = -76.4
+offset_right = -132.79999
+offset_bottom = -34.200012
 theme_override_styles/background = SubResource("StyleBoxFlat_jyhfs")
 theme_override_styles/fill = SubResource("StyleBoxFlat_sugp2")
 fill_mode = 3
@@ -37,5 +38,4 @@ script = ExtResource("6_tefeu")
 
 [node name="Level Container" type="Node2D" parent="."]
 
-[node name="Level" parent="Level Container" instance=ExtResource("3_sugp2")]
-position = Vector2(-2, 2)
+[node name="Level" parent="Level Container" instance=ExtResource("5_tbgi4")]

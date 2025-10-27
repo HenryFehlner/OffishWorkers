@@ -54,22 +54,26 @@ public partial class BomberEnemy : Enemy
 		Shape2D hitboxShape;
 		AttackHitboxConfig attackConfig;
 
+		Vector2 attackFacingDirection = (_player.GlobalPosition - this.GlobalPosition).Normalized();
+
 		//shape
 		hitboxShape = new RectangleShape2D
 		{
 			Size = new Vector2(250/Scale.X,250/Scale.Y)
 		};
 		// attack config
+		// TO FIX: Attack is doing damage multiple times to the player
+		// Tries 11 hits on the player
 		attackConfig = new AttackHitboxConfig
 		{
 			Owner = this,
 			ParentNode = this,
-			LocalOffset = new Vector2(0,0),
-			HitboxDirection = new Vector2(0,0),
-			Damage = 30,
+			LocalOffset = new Vector2(1,0),
+			HitboxDirection = attackFacingDirection,
+			Damage = 3,
 			Duration = .2f,
 			Shape = hitboxShape,
-			KnockbackDirection = (_player.GlobalPosition - this.GlobalPosition).Normalized(),
+			KnockbackDirection = attackFacingDirection,
 			KnockbackStength = 25,
 			AffectsTargets = Targets.PlayerOnly,
 		};
@@ -80,6 +84,7 @@ public partial class BomberEnemy : Enemy
 
 		// end attack
 		isAttacking = false;
+		attackCooldownTimer.Start(attackCooldown);
 
 		// Destroy the enemy after the attack is finished
 		currentHp = 0;
