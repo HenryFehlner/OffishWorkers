@@ -277,14 +277,15 @@ public partial class Player : CharacterBody2D
 				//shape
 				hitboxShape = new RectangleShape2D
 				{
-					Size = new Vector2(20, 15)
+					Size = new Vector2(120/Scale.X, 80/Scale.Y)
 				};
+				GD.Print(Transform.Scale);
 				//attack config
 				attackConfig = new AttackHitboxConfig
 				{
 					Owner = this,
 					ParentNode = this,
-					LocalOffset = new Vector2(15, 0),
+					LocalOffset = new Vector2(75/Scale.X, 0),
 					HitboxDirection = attackFacingDirection,
 					Damage = 1,
 					Duration = .2f,
@@ -302,14 +303,14 @@ public partial class Player : CharacterBody2D
 				//shape
 				hitboxShape = new RectangleShape2D
 				{
-					Size = new Vector2(25, 15)
+					Size = new Vector2(120/Scale.X, 80/Scale.Y)
 				};
 				//attack config
 				attackConfig = new AttackHitboxConfig
 				{
 					Owner = this,
 					ParentNode = this,
-					LocalOffset = new Vector2(15, 0),
+					LocalOffset = new Vector2(75/Scale.X, 0),
 					HitboxDirection = attackFacingDirection,
 					Damage = 1,
 					Duration = .2f,
@@ -327,14 +328,14 @@ public partial class Player : CharacterBody2D
 				//shape
 				hitboxShape = new RectangleShape2D
 				{
-					Size = new Vector2(25, 25)
+					Size = new Vector2(150/Scale.X, 150/Scale.Y)
 				};
 				//attack config
 				attackConfig = new AttackHitboxConfig
 				{
 					Owner = this,
 					ParentNode = this,
-					LocalOffset = new Vector2(15, 0),
+					LocalOffset = new Vector2(80/Scale.X, 0),
 					HitboxDirection = attackFacingDirection,
 					Damage = 1,
 					Duration = .4f,
@@ -373,7 +374,7 @@ public partial class Player : CharacterBody2D
 		//Firing the projectile doesn't really need to lock the player down, so no need for async
 		Shape2D hitboxShape = new RectangleShape2D
 				{
-					Size = new Vector2(50, 50)
+					Size = new Vector2(250/Scale.X, 250/Scale.Y)
 				};
 		Projectile proj = Projectile.Create(new ProjectileConfig
 		{
