@@ -12,12 +12,12 @@ public partial class Enemy : CharacterBody2D
 	[Export] protected int detectionRadius = 500;
 	protected int currentHp;
 	protected CharacterBody2D _player;
-	[Export] private bool isDead = false;
+	[Export] protected bool isDead = false;
 	
 	[Export] public Vector2 spawnPosition;
 	[Export] protected string enemyType;
 
-	private bool isAttacking = false;
+	protected bool isAttacking = false;
 	[Export] protected int attackRadius = 250;
 	protected bool isInAttackRadius = false;
 	[Export] protected float attackCooldown = 1.5f;

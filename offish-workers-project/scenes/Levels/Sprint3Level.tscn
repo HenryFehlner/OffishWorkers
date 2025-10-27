@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://dnmc1yxx66u8f"]
+[gd_scene load_steps=8 format=4 uid="uid://dnmc1yxx66u8f"]
 
 [ext_resource type="Script" uid="uid://byh6vmbmtd65i" path="res://scripts/Level.cs" id="1_psca3"]
 [ext_resource type="Texture2D" uid="uid://cyxju3g0tggc0" path="res://assets/tiles/graybox_tileset_big.png" id="2_62x0k"]
 [ext_resource type="PackedScene" uid="uid://cjj22ar46xc3m" path="res://scenes/Enemies/BaseEnemy.tscn" id="4_5euty"]
 [ext_resource type="PackedScene" uid="uid://diwx8m12hpinb" path="res://scenes/Enemies/RangedEnemy.tscn" id="4_psca3"]
+[ext_resource type="PackedScene" uid="uid://tabhx5sfvsqp" path="res://scenes/Enemies/BomberEnemy.tscn" id="5_175k5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_psca3"]
 texture = ExtResource("2_62x0k")
@@ -45,14 +46,8 @@ position = Vector2(552, -1981)
 spawnPosition = Vector2(184, 46)
 enemyType = "punchingBag"
 
-[node name="BaseEnemy4" parent="Enemy Container" instance=ExtResource("4_5euty")]
-position = Vector2(296, -1346)
-spawnPosition = Vector2(184, 46)
-enemyType = "punchingBag"
-
 [node name="RangedEnemy" parent="Enemy Container" instance=ExtResource("4_psca3")]
-position = Vector2(300, -857)
-maxSpeed = 1
-acceleration = 1
-maxHp = 100
-attackRadius = 80
+position = Vector2(356, -830.00006)
+
+[node name="BomberEnemy" parent="Enemy Container" instance=ExtResource("5_175k5")]
+position = Vector2(293, -1355)

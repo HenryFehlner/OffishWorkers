@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://tabhx5sfvsqp"]
+
+[ext_resource type="Texture2D" uid="uid://6xto0rj1dc0k" path="res://assets/sprites/punching bag.png" id="1_7eman"]
+[ext_resource type="Script" uid="uid://lf373ye80afc" path="res://scripts/BomberEnemy.cs" id="1_yr7j6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yr7j6"]
+size = Vector2(20, 54)
+
+[node name="BomberEnemy" type="CharacterBody2D"]
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_yr7j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+scale = Vector2(3, 3)
+texture = ExtResource("1_7eman")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_yr7j6")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -37.0
+offset_top = -97.0
+offset_right = 37.0
+offset_bottom = -84.0
+fill_mode = 1
+show_percentage = false

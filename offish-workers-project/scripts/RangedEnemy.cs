@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 
 public partial class RangedEnemy : Enemy
 {
-
-
 	public override void _Ready()
 	{
 		base._Ready();
