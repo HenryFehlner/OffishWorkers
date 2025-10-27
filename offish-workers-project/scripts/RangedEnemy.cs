@@ -27,7 +27,7 @@ public partial class RangedEnemy : Enemy
 		//Firing the projectile doesn't really need to lock the player down, so no need for async
 		Shape2D hitboxShape = new RectangleShape2D
 				{
-					Size = new Vector2(50, 50)
+					Size = new Vector2(50/Scale.X, 50/Scale.Y)
 				};
 		Projectile proj = Projectile.Create(new ProjectileConfig
 		{
