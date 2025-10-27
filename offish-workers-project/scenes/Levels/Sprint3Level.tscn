@@ -41,7 +41,7 @@ spawnPosition = Vector2(184, 46)
 enemyType = "punchingBag"
 
 [node name="BaseEnemy3" parent="Enemy Container" instance=ExtResource("4_5euty")]
-position = Vector2(293, -887)
+position = Vector2(552, -1981)
 spawnPosition = Vector2(184, 46)
 enemyType = "punchingBag"
 
@@ -50,10 +50,9 @@ position = Vector2(296, -1346)
 spawnPosition = Vector2(184, 46)
 enemyType = "punchingBag"
 
-[node name="BaseEnemy5" parent="Enemy Container" instance=ExtResource("4_5euty")]
-position = Vector2(529, -1948)
-spawnPosition = Vector2(184, 46)
-enemyType = "punchingBag"
-
 [node name="RangedEnemy" parent="Enemy Container" instance=ExtResource("4_psca3")]
-position = Vector2(-15, -226)
+position = Vector2(300, -857)
+maxSpeed = 1
+acceleration = 1
+maxHp = 100
+attackRadius = 80

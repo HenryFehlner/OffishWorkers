@@ -11,7 +11,7 @@ public partial class Enemy : CharacterBody2D
 	[Export] protected float knockbackMultiplier = 1.0f;
 	[Export] protected int detectionRadius = 500;
 	protected int currentHp;
-	private CharacterBody2D _player;
+	protected CharacterBody2D _player;
 	[Export] private bool isDead = false;
 	
 	[Export] public Vector2 spawnPosition;
@@ -160,7 +160,7 @@ public partial class Enemy : CharacterBody2D
 		}
 	}
 
-	private async Task Attack()
+	protected virtual async Task Attack()
 	{
 		//based on the issues with numbers, there appear to be two different scaling systems going on
 		//it feels like enemies are being scaled up, but the hitbox sizes might be relative to the base sprite size?

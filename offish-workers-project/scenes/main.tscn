@@ -38,3 +38,4 @@ script = ExtResource("6_tefeu")
 [node name="Level Container" type="Node2D" parent="."]
 
 [node name="Level" parent="Level Container" instance=ExtResource("3_sugp2")]
+position = Vector2(-2, 2)
