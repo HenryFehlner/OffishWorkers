@@ -22,10 +22,6 @@ public partial class Player : CharacterBody2D
 	//stats
 	[Export] protected float maxHp = 100;
 	protected float currentHp;
-	//primary attack (unused for now)
-	[Export] protected int primaryDamage = 1;
-	[Export] protected float primaryDuration = .2f;
-	[Export] protected float primaryKnockbackAmount = 4000;
 	
 	//Hydration relevant fields
 	[Export] protected ProgressBar hydrationBar;
@@ -53,11 +49,16 @@ public partial class Player : CharacterBody2D
 	private StyleBoxFlat normalHydrationStyle = new StyleBoxFlat(); 
 	private StyleBoxFlat lowHydrationStyle = new StyleBoxFlat(); 
 
+	// Primary Attacks
 	private bool isAttacking = false;
 	private Timer chainTimerPrimary;
 	private int currentChainPrimary = 0;
 	private Vector2 movementFacingDirection = Vector2.Right; //default value so player can never face Vector2.zero
 	private Vector2 attackFacingDirection = Vector2.Right;
+	private Vector2 lastMoveFacingDirection = Vector2.Right;	// save the last move direction so the player doesn't dodge in place
+	[Export] private int chainDamageOne = 1;
+	[Export] private int chainDamageTwo = 2;
+	[Export] private int chainDamageThree = 3;
 
 	//secondary attack stuff
 	[Export] private float secondaryCooldown = 1;
@@ -190,6 +191,11 @@ public partial class Player : CharacterBody2D
 		// Get move input
 		Vector2 moveDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		movementFacingDirection = moveDirection.Normalized();
+		// Prevent player from dodging in place
+		if (movementFacingDirection != Vector2.Zero)
+		{
+			lastMoveFacingDirection = movementFacingDirection;
+		}
 
 		// Get attack input (either mouse or right stick)
 		if (controlMode == "mouse_and_keyboard")
@@ -224,7 +230,7 @@ public partial class Player : CharacterBody2D
 		// TODO: use attackFacingDirection to visualize the attack direction (probably put it somewhere else)
 
 		// Apply acceleration
-		if (moveDirection != Vector2.Zero && !isAttacking)
+		if (moveDirection != Vector2.Zero && !isAttacking || isDodging)
 		{
 			Velocity = Velocity.Lerp(moveDirection * maxSpeed, (float)delta * acceleration);
 		}
@@ -287,7 +293,7 @@ public partial class Player : CharacterBody2D
 					ParentNode = this,
 					LocalOffset = new Vector2(75/Scale.X, 0),
 					HitboxDirection = attackFacingDirection,
-					Damage = 1,
+					Damage = chainDamageOne,
 					Duration = .2f,
 					Shape = hitboxShape,
 					KnockbackDirection = attackFacingDirection,
@@ -312,7 +318,7 @@ public partial class Player : CharacterBody2D
 					ParentNode = this,
 					LocalOffset = new Vector2(75/Scale.X, 0),
 					HitboxDirection = attackFacingDirection,
-					Damage = 1,
+					Damage = chainDamageTwo,
 					Duration = .2f,
 					Shape = hitboxShape,
 					KnockbackDirection = attackFacingDirection,
@@ -337,7 +343,7 @@ public partial class Player : CharacterBody2D
 					ParentNode = this,
 					LocalOffset = new Vector2(80/Scale.X, 0),
 					HitboxDirection = attackFacingDirection,
-					Damage = 1,
+					Damage = chainDamageThree,
 					Duration = .4f,
 					Shape = hitboxShape,
 					KnockbackDirection = attackFacingDirection,
@@ -409,7 +415,7 @@ public partial class Player : CharacterBody2D
 		// Player becomes invincible and is pushed forwards
 		CollisionMask = Layers.Bit(Layers.ENVIRONMENT);
 		CollisionLayer = Layers.Bit(Layers.DODGE);
-		Velocity += movementFacingDirection * dodgeForce;
+		Velocity = lastMoveFacingDirection * dodgeForce;
 		playerShaderMat.SetShaderParameter("is_white", true);
 		//GD.Print("Invincible");
 
