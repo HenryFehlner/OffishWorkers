@@ -5,9 +5,19 @@
 [ext_resource type="Texture2D" uid="uid://bml8quh8esr3w" path="res://assets/sprites/playerAnimation/placeholder-fish.png" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://cfyk8u7tf5ksj" path="res://assets/sprites/Arrow.png" id="4_dqkch"]
 
+[sub_resource type="SphereMesh" id="SphereMesh_sh265"]
+
+[sub_resource type="Gradient" id="Gradient_3vyb7"]
+colors = PackedColorArray(8.5432083e-07, 0.3515507, 0, 1, 0.14201754, 0.35088515, 0.18740037, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g2els"]
+gradient = SubResource("Gradient_3vyb7")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4flbx"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
 shader = ExtResource("1_g2els")
-shader_parameter/flash_color = Color(1, 1, 1, 0.63529414)
+shader_parameter/flash_color = Color(1, 1, 1, 0.7607843)
 shader_parameter/is_white = false
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dqkch"]
@@ -21,16 +31,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="SphereMesh" id="SphereMesh_sh265"]
-
-[sub_resource type="Gradient" id="Gradient_3vyb7"]
-colors = PackedColorArray(8.5432083e-07, 0.3515507, 0, 1, 0.14201754, 0.35088515, 0.18740037, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_g2els"]
-gradient = SubResource("Gradient_3vyb7")
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_4flbx"]
-
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 scale = Vector2(5, 5)
@@ -38,12 +38,6 @@ collision_layer = 2
 collision_mask = 21
 script = ExtResource("1_3vyb7")
 DirectionIndicatorPath = NodePath("DirectionIndicator")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_qlg0r")
-scale = Vector2(0.231, 0.231)
-sprite_frames = SubResource("SpriteFrames_dqkch")
-frame_progress = 0.79793316
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 visible = false
@@ -59,3 +53,9 @@ shape = SubResource("CircleShape2D_4flbx")
 position = Vector2(16.800001, 3.8146976e-07)
 scale = Vector2(0.06, 0.06)
 texture = ExtResource("4_dqkch")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_qlg0r")
+scale = Vector2(0.23099998, 0.23099998)
+sprite_frames = SubResource("SpriteFrames_dqkch")
+frame_progress = 0.79793316

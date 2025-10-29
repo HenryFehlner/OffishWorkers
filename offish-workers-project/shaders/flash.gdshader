@@ -5,18 +5,16 @@ uniform bool is_white = false;
 
 // Called for every pixel the material is visible on.
 void fragment() {
-	vec4 color = texture(TEXTURE, UV);
-	//color.r = flash_color.r;
-	//color.g = flash_color.g;
-	//color.b = flash_color.b;
-	//color.a = color.a * flash_color.a;
-	color.r = flash_color.a;
-	color.g = flash_color.a;
-	color.b = flash_color.a;
-	
+	vec4 tex_color = texture(TEXTURE, UV);
+
 	if (is_white)
 	{
-		COLOR += color;
+		// Apply the flash color and use mix to apply the alpha, gives control of the color intensity
+		COLOR = mix(tex_color, vec4(flash_color.rgb, tex_color.a), flash_color.a);
+	}
+	else
+	{
+		COLOR = tex_color;
 	}
 }
 

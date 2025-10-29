@@ -37,3 +37,6 @@ position = Vector2(5943, -2668)
 
 [node name="hydrationRestoreObject4" parent="Enemy Container" instance=ExtResource("5_84v0n")]
 position = Vector2(6018, -1908)
+
+[node name="BaseEnemy" parent="." instance=ExtResource("4_drydf")]
+position = Vector2(817, -6)

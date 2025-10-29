@@ -5,14 +5,15 @@ public partial class exitTile : CollisionShape2D
 {
 	[Signal] public delegate void EndTileReachedEventHandler();
 	
-	private GameplayController gameplayControllerScript; 
+	//private GameplayController gameplayControllerScript;
 	
 	public override void _Ready()
 	{
-		if (gameplayControllerScript == null)
-		{
-		gameplayControllerScript = GetNode("../../Gameplay Controller") as GameplayController;
-		}
+		// This was giving a build error so I commented it -henry
+		//if (gameplayControllerScript == null)
+		//{
+			//gameplayControllerScript = GetNode("../../Gameplay Controller") as GameplayController;
+		//}
 	}
 		
 	//Sends the end tile event reached signal once the player enters it

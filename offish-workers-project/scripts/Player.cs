@@ -18,7 +18,6 @@ public partial class Player : CharacterBody2D
 	[Export] protected float invincibilityCooldown = 0.3f;	// Milliseconds
 	[Export] protected float dodgeCooldown = 0.5f;	// Milliseconds
 	private bool isDodging = false;
-	//private Timer hitFlashTimer = new Timer();
 	//stats
 	[Export] protected float maxHp = 100;
 	protected float currentHp;
@@ -67,6 +66,7 @@ public partial class Player : CharacterBody2D
 	// Player sprite and its shader material
 	private AnimatedSprite2D playerSprite;
 	private ShaderMaterial playerShaderMat;
+	private bool isFlashing = false;
 
 	public override void _Ready()
 	{
@@ -442,8 +442,14 @@ public partial class Player : CharacterBody2D
 	/// <param name="attacker">source of the attack</param>
 	public void TakeHit(int damage, Vector2 impulse, Node attacker)
 	{	
+		// Make the player flash white
+		if (!isFlashing)
+		{
+			FlashWhite(3, 0.06f);
+		}
+		
 		//prevent negative damage from healing
-		Math.Max(damage, 0);
+		damage = Math.Max(damage, 0);
 		//reduce health
 		currentHp -= damage;
 		//apply knockback
@@ -452,7 +458,22 @@ public partial class Player : CharacterBody2D
 		float cap = Math.Max(impulse.Length(), maxSpeed);
 		//cap velocity to limit knockback stacking
 		Velocity.Clamp(-cap, cap);
+	}
+	
+	private async void FlashWhite(int count, float duration)
+	{
+		isFlashing = true;
 		
+		for (int i = 0; i < count; ++i)
+		{
+			playerShaderMat.SetShaderParameter("is_white", true);
+			await ToSignal(GetTree().CreateTimer(duration), "timeout");
+			
+			playerShaderMat.SetShaderParameter("is_white", false);
+			await ToSignal(GetTree().CreateTimer(duration), "timeout");
+		}
+		
+		isFlashing = false;
 	}
 	
 	//Reduces hydration by a specific amount every tick
