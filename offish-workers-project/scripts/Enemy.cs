@@ -28,9 +28,9 @@ public partial class Enemy : CharacterBody2D
 	private ProgressBar healthBar; 
 	
 	// Sprite/sprite flashing
-	private AnimatedSprite2D enemySprite;
-	private ShaderMaterial enemyShaderMat;
-	private bool isFlashing = false;
+	protected AnimatedSprite2D enemySprite;
+	protected ShaderMaterial enemyShaderMat;
+	protected bool isFlashing = false;
 
 	public string EnemyType
 	{
@@ -73,6 +73,7 @@ public partial class Enemy : CharacterBody2D
 		healthBar = GetNode<ProgressBar>("HealthBar");
 		healthBar.MaxValue = maxHp; 
 		healthBar.Value = currentHp;
+		GD.Print(maxHp);
 		
 		healthStyle.BgColor = new Color("e06452"); 
 		healthBar.AddThemeStyleboxOverride("fill", healthStyle);
@@ -83,6 +84,7 @@ public partial class Enemy : CharacterBody2D
 
 		// Get enemy sprite and shader material
 		enemySprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		enemySprite.Material = (ShaderMaterial)enemySprite.Material.Duplicate();	// Duplicate the material so it only applies to this enemy
 		enemyShaderMat = (ShaderMaterial)enemySprite.Material;
 	}
 
@@ -100,18 +102,15 @@ public partial class Enemy : CharacterBody2D
 			_ = Attack();
 			
 			// Start flash charge sequence
-			//GD.Print("Enemy attack charging");
 			FlashCharge(attackCooldown);
 		}
 		else
 		{
-			//GD.Print("out of radius");
 			isInAttackRadius = false;
-			//enemyShaderMat.SetShaderParameter("is_white", false);
+			
+			// Cancel flash chargeup
+			enemyShaderMat.SetShaderParameter("is_white", false);
 		}
-		//GD.Print(GlobalPosition.DistanceTo(_player.GlobalPosition));
-		GD.Print($"{Name} parent: {GetParent().Name}, Player parent: {_player.GetParent().Name}");
-
 
 		//movement
 		Move(delta);
@@ -247,7 +246,7 @@ public partial class Enemy : CharacterBody2D
 		healthBar.Value = currentHp; 
 	}
 
-	private async void FlashCharge(float duration)
+	protected async void FlashCharge(float duration)
 	{
 		if (isFlashing)
 		{

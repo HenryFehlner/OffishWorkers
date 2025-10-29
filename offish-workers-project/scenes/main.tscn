@@ -35,6 +35,6 @@ show_percentage = false
 [node name="Gameplay Controller" type="Node2D" parent="."]
 script = ExtResource("6_tefeu")
 
-[node name="Level Container" type="Node2D" parent="."]
+[node name="Level Container" type="Node" parent="."]
 
 [node name="Level" parent="Level Container" instance=ExtResource("5_tbgi4")]

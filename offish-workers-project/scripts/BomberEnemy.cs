@@ -32,10 +32,16 @@ public partial class BomberEnemy : Enemy
 			}
 			
 			_ = Attack();
+			
+			// Start flash charge
+			FlashCharge(attackCooldown);
 		}
 		else
 		{
 			isInAttackRadius = false;
+			
+			// Cancel flash charge
+			enemyShaderMat.SetShaderParameter("is_white", false);
 		}
 
 		// movement

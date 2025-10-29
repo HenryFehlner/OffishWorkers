@@ -46,6 +46,7 @@ public partial class RangedEnemy : Enemy
 			Pierce = 0,
 			stopsOnEnvironment = true
 		});
+		proj.ZIndex = 1;
 		//add projectile to scene
 		GetTree().CurrentScene.AddChild(proj);
 	}

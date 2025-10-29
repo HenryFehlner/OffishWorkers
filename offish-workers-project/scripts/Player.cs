@@ -58,6 +58,7 @@ public partial class Player : CharacterBody2D
 	[Export] private int chainDamageOne = 1;
 	[Export] private int chainDamageTwo = 2;
 	[Export] private int chainDamageThree = 3;
+	[Export] private int rangedDamage = 3;
 
 	//secondary attack stuff
 	[Export] private float secondaryCooldown = 1;
@@ -387,7 +388,7 @@ public partial class Player : CharacterBody2D
 			Owner = this,
 			ParentNode = this,
 			HitboxDirection = attackFacingDirection,
-			Damage = 1,
+			Damage = rangedDamage,
 			Duration = 5,
 			Shape = hitboxShape,
 			KnockbackDirection = attackFacingDirection,
@@ -483,7 +484,7 @@ public partial class Player : CharacterBody2D
 		{
 			currentHp -= hydrationTickLoss; 
 			hydrationBar.Value = currentHp; 
-			GD.Print("Lost hydration!");
+			//GD.Print("Lost hydration!");
 			
 			if (((float)currentHp / (float)maxHp) <= 0.25){
 				hydrationBar.AddThemeStyleboxOverride("fill", lowHydrationStyle);
