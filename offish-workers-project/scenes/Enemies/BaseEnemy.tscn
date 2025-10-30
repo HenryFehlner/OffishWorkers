@@ -1,21 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjj22ar46xc3m"]
+[gd_scene load_steps=7 format=3 uid="uid://cjj22ar46xc3m"]
 
 [ext_resource type="Script" uid="uid://doemapkog4fh1" path="res://scripts/Enemy.cs" id="1_s6kgn"]
 [ext_resource type="Texture2D" uid="uid://6xto0rj1dc0k" path="res://assets/sprites/punching bag.png" id="2_nqnxh"]
+[ext_resource type="Shader" uid="uid://bx5bqlm4lu1tr" path="res://shaders/flash.gdshader" id="3_nqnxh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7k27h"]
 size = Vector2(20, 54)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nqnxh"]
+shader = ExtResource("3_nqnxh")
+shader_parameter/flash_color = Color(1, 1, 1, 0.7607843)
+shader_parameter/is_white = false
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s6kgn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_nqnxh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="BaseEnemy" type="CharacterBody2D"]
 scale = Vector2(0.75, 0.75)
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_s6kgn")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -12)
-scale = Vector2(3, 3)
-texture = ExtResource("2_nqnxh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(3, 3)
@@ -28,3 +40,9 @@ offset_right = 37.0
 offset_bottom = -84.0
 fill_mode = 1
 show_percentage = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_nqnxh")
+position = Vector2(0, -12)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_s6kgn")

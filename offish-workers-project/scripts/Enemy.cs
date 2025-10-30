@@ -26,6 +26,11 @@ public partial class Enemy : CharacterBody2D
 	private StyleBoxFlat healthStyle = new StyleBoxFlat(); 
 	
 	private ProgressBar healthBar; 
+	
+	// Sprite/sprite flashing
+	protected AnimatedSprite2D enemySprite;
+	protected ShaderMaterial enemyShaderMat;
+	protected bool isFlashing = false;
 
 	public string EnemyType
 	{
@@ -68,6 +73,7 @@ public partial class Enemy : CharacterBody2D
 		healthBar = GetNode<ProgressBar>("HealthBar");
 		healthBar.MaxValue = maxHp; 
 		healthBar.Value = currentHp;
+		GD.Print(maxHp);
 		
 		healthStyle.BgColor = new Color("e06452"); 
 		healthBar.AddThemeStyleboxOverride("fill", healthStyle);
@@ -76,6 +82,10 @@ public partial class Enemy : CharacterBody2D
 		currentHp = maxHp;
 		isDead = false;
 
+		// Get enemy sprite and shader material
+		enemySprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		enemySprite.Material = (ShaderMaterial)enemySprite.Material.Duplicate();	// Duplicate the material so it only applies to this enemy
+		enemyShaderMat = (ShaderMaterial)enemySprite.Material;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -90,10 +100,16 @@ public partial class Enemy : CharacterBody2D
 				isInAttackRadius = true;
 			}
 			_ = Attack();
+			
+			// Start flash charge sequence
+			FlashCharge(attackCooldown);
 		}
 		else
 		{
 			isInAttackRadius = false;
+			
+			// Cancel flash chargeup
+			enemyShaderMat.SetShaderParameter("is_white", false);
 		}
 
 		//movement
@@ -230,4 +246,33 @@ public partial class Enemy : CharacterBody2D
 		healthBar.Value = currentHp; 
 	}
 
+	protected async void FlashCharge(float duration)
+	{
+		if (isFlashing)
+		{
+			return;
+		}
+		
+		isFlashing = true;
+		enemyShaderMat.SetShaderParameter("is_white", true);
+		
+		// Get the flash color
+		Color flashColor = (Color)enemyShaderMat.GetShaderParameter("flash_color");
+		
+		float startAlpha = 0.0f;
+		float endAlpha = flashColor.A;
+		float currentTime = 0.0f;
+		
+		while (currentTime < duration)
+		{
+			currentTime += (float)GetProcessDeltaTime();
+			float t = Mathf.Clamp(currentTime / duration, 0.0f, 1.0f);
+			flashColor.A = Mathf.Lerp(startAlpha, endAlpha, t);
+			enemyShaderMat.SetShaderParameter("flash_color", flashColor);
+			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+		}
+		
+		isFlashing = false;
+		enemyShaderMat.SetShaderParameter("is_white", false);
+	}
 }
