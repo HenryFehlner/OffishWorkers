@@ -21,18 +21,29 @@ public partial class Level : Node2D
 	
 	public List<Enemy> enemiesList;
 
+	public Vector2 spawnPosition; 
+	
 	//Enemies List property
 	public List<Enemy> EnemiesList
 	{
 		get { return enemiesList; }
 		set { enemiesList = value; }
 	}
-
+	
+	public Vector2 SpawnPosition
+	{
+		get { return spawnPosition; }
+	}
 	
 	public override void _Ready()
 	{
 		enemyContainer = GetNode<Node>("Enemy Container");
 		enemiesList = new List<Enemy>(); 
+		
+		if (spawnPosition == null)
+		{
+			spawnPosition = Vector2(0,0);
+		}
 		
 		AddEnemies(); 
 	}

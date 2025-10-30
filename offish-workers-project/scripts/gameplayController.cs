@@ -39,7 +39,6 @@ public partial class gameplayController : Node2D
 		player = GetNode<CharacterBody2D>("../Player");
 		
 		currentLevelNumber = 0; 
-		
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -59,8 +58,16 @@ public partial class gameplayController : Node2D
 		}
 	}
 
+	//Loads in a new level when the end tile of a level is reached
 	private void LoadNextLevel()
 	{
+		//Increase level number
+		//If the level number > level amount, the game is over
+		//Destroy all of the enemies
+		//Destroy the current scene
+		//Load new scene in 
+		currentLevelNumber++; 
+		
 		if (currentLevelNumber > levelAmount)
 		{
 			currentGameState = GameState.Finished; 
@@ -68,14 +75,23 @@ public partial class gameplayController : Node2D
 		}
 		
 		currentEnemiesList = currentLevelScript.EnemiesList; 
-	
+		
+		foreach (Enemy enemyData in currentEnemiesList)
+		{
+			CharacterBody2D enemyBody = (CharacterBody2D)enemyData.GetParent();
+			enemyBody.QueueFree(); 
+		}
+
+		currentLevelScript = LoadLevelScene(); 	
+		//playerScript.moveTo(currentLevelScript.SpawnPosition);
 	}
 	
 	//Loads in the level from the packed scene dictionary 
+	//Called when actually instantiating the new scene
 	private Level LoadLevelScene()
 	{
-		PackedScene levelScene = levelPrefabs[currentLevelNumber];
-		Node2D levelInstance = (Node2D)levelScene.Instantiate(); 
+		currentLevel = levelPrefabs[currentLevelNumber];
+		Node2D levelInstance = (Node2D)currentLevel.Instantiate(); 
 		GetNode<Node2D>("../Level Container").AddChild(levelInstance);
 		
 		Level newLevelScript = levelInstance as Level;
@@ -83,20 +99,6 @@ public partial class gameplayController : Node2D
 		return newLevelScript; 
 	}
 	
-	private void NextLevelSetup()
-	{
-		//Delete everything in current level
-		//Set up next level loading
-		foreach (Enemy enemyData in currentEnemiesList)
-		{
-			CharacterBody2D enemyBody = (CharacterBody2D)enemyData.GetParent();
-			enemyBody.QueueFree(); 
-		}
-		
-		currentLevelNumber++; 
-		
-		LoadNextLevel(); 
-	}
 
 	//Only touch this when we have new enemies to add
 	private void LoadEnemyScenes()

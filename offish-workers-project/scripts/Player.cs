@@ -521,4 +521,9 @@ public partial class Player : CharacterBody2D
 			directionIndicator.Position = facing * offset;
 		}
 	}
+	
+	public void MoveTo(Vector2 position)
+	{
+		
+	}
 }

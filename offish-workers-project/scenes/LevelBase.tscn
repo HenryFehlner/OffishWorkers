@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://dfyolb4wpuhy5"]
+[gd_scene load_steps=6 format=4 uid="uid://dfyolb4wpuhy5"]
 
 [ext_resource type="Script" uid="uid://byh6vmbmtd65i" path="res://scripts/Level.cs" id="1_5vqh1"]
 [ext_resource type="TileSet" uid="uid://cswugdc2q4w3h" path="res://assets/tilesets/office_bigger.tres" id="2_jguw4"]
+[ext_resource type="PackedScene" uid="uid://2o5tbyqdbvmd" path="res://scenes/Other Entities/endTile.tscn" id="3_thxwb"]
 [ext_resource type="PackedScene" uid="uid://motp06sj1kia" path="res://scenes/testHydrationRestoreObject.tscn" id="3_w66m8"]
 [ext_resource type="PackedScene" uid="uid://cjj22ar46xc3m" path="res://scenes/Enemies/BaseEnemy.tscn" id="4_w66m8"]
 
@@ -13,6 +14,9 @@ tile_map_data = PackedByteArray("AAD9//3/AgABAAEAAAD9//7/AgABAAEAAAD9////AgABAAE
 tile_set = ExtResource("2_jguw4")
 
 [node name="Special Tile Container" type="Node2D" parent="."]
+
+[node name="endTile" parent="Special Tile Container" instance=ExtResource("3_thxwb")]
+position = Vector2(3, -589)
 
 [node name="Hydration Container" type="Node2D" parent="."]
 

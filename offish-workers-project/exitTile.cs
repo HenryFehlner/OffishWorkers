@@ -5,7 +5,7 @@ public partial class exitTile : CollisionShape2D
 {
 	[Signal] public delegate void EndTileReachedEventHandler();
 	
-	private GameplayController gameplayControllerScript; 
+	private gameplayController gameplayControllerScript; 
 	
 	public override void _Ready()
 	{
@@ -20,7 +20,7 @@ public partial class exitTile : CollisionShape2D
 	{				
 		if (body is CharacterBody2D player)
 		{
-			
+			ChangeLevel(); 
 		}
 	}
 	
