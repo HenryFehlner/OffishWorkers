@@ -59,7 +59,7 @@ public partial class gameplayController : Node2D
 	}
 
 	//Loads in a new level when the end tile of a level is reached
-	private void LoadNextLevel()
+	public void LoadNextLevel()
 	{
 		//Increase level number
 		//If the level number > level amount, the game is over
@@ -83,7 +83,7 @@ public partial class gameplayController : Node2D
 		}
 
 		currentLevelScript = LoadLevelScene(); 	
-		//playerScript.moveTo(currentLevelScript.SpawnPosition);
+		playerScript.MoveTo(currentLevelScript.SpawnPosition);
 	}
 	
 	//Loads in the level from the packed scene dictionary 

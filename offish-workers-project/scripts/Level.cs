@@ -40,10 +40,7 @@ public partial class Level : Node2D
 		enemyContainer = GetNode<Node>("Enemy Container");
 		enemiesList = new List<Enemy>(); 
 		
-		if (spawnPosition == null)
-		{
-			spawnPosition = Vector2(0,0);
-		}
+		spawnPosition = new Vector2(0,0);
 		
 		AddEnemies(); 
 	}

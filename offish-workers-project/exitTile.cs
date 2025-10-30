@@ -11,10 +11,10 @@ public partial class exitTile : CollisionShape2D
 	public override void _Ready()
 	{
 		// This was giving a build error so I commented it -henry
-		//if (gameplayControllerScript == null)
-		//{
-			//gameplayControllerScript = GetNode("../../Gameplay Controller") as GameplayController;
-		//}
+		if (gameplayControllerScript == null)
+		{
+			gameplayControllerScript = GetNode("../../Gameplay Controller") as gameplayController;
+		}
 	}
 		
 	//Sends the end tile event reached signal once the player enters it
@@ -28,6 +28,6 @@ public partial class exitTile : CollisionShape2D
 	
 	private void ChangeLevel()
 	{
-		
+		gameplayControllerScript.LoadNextLevel(); 
 	}
 }
