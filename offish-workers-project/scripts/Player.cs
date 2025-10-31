@@ -380,9 +380,9 @@ public partial class Player : CharacterBody2D
 		secondaryCooldownTimer.Start(secondaryCooldown);
 		//Firing the projectile doesn't really need to lock the player down, so no need for async
 		Shape2D hitboxShape = new RectangleShape2D
-				{
-					Size = new Vector2(250/Scale.X, 250/Scale.Y)
-				};
+			{
+				Size = new Vector2(250/Scale.X, 250/Scale.Y)
+			};
 		Projectile proj = Projectile.Create(new ProjectileConfig
 		{
 			Owner = this,
@@ -400,6 +400,7 @@ public partial class Player : CharacterBody2D
 			Pierce = 0,
 			stopsOnEnvironment = true
 		});
+		proj.ZIndex = 1;
 		//add projectile to scene
 		GetTree().CurrentScene.AddChild(proj);
 	}
