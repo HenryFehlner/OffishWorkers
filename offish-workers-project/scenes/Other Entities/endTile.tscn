@@ -7,7 +7,6 @@
 size = Vector2(38, 66)
 
 [node name="endTile" type="Area2D"]
-script = ExtResource("2_1hci7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_tv1cu")
@@ -15,3 +14,4 @@ texture = ExtResource("1_tv1cu")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_d27ok")
 disabled = true
+script = ExtResource("2_1hci7")
