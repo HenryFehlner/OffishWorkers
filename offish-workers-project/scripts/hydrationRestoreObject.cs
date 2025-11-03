@@ -25,13 +25,16 @@ public partial class hydrationRestoreObject : Area2D
 	
 	public override void _Ready()
 	{
-		base._Ready(); 
-		
+		base._Ready();
+
 		if (isBlood)
 		{
 			isReusable = false;
 		}
-		
+
+		CollisionLayer = Layers.Bit(Layers.ENVIRONMENT);
+		CollisionMask = Layers.Bit(Layers.PLAYER) | Layers.Bit(Layers.DODGE);
+
 		//Setup all timers and signal events
 		restoreTimer = GetNode<Timer>("RestoreTimer");
 		restoreTimer.Timeout += RestoreOnTimeout; 

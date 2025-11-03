@@ -57,6 +57,8 @@ position = Vector2(6104, -2300)
 
 [node name="hydrationRestoreObject" parent="Hydration Container" instance=ExtResource("3_uqtm7")]
 position = Vector2(2142, -446)
+collision_layer = 33
+collision_mask = 35
 
 [node name="hydrationRestoreObject2" parent="Hydration Container" instance=ExtResource("5_84v0n")]
 position = Vector2(5254, -2559)
