@@ -1,11 +1,25 @@
-[gd_scene format=3 uid="uid://b0q3q6qrmwjmk"]
+[gd_scene load_steps=2 format=3 uid="uid://b0q3q6qrmwjmk"]
+
+[ext_resource type="Script" uid="uid://vtivey2kd84d" path="res://scripts/GameOverMenu.cs" id="1_biyii"]
 
 [node name="DeathScreen" type="Node2D"]
+script = ExtResource("1_biyii")
 
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "You died.
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -253.0
+offset_top = 1.0
+offset_right = 253.0
+offset_bottom = 129.0
+grow_horizontal = 2
 
+[node name="DeathLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "You died."
+horizontal_alignment = 1
 
-:/"
+[node name="GameOverMainMenuButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"

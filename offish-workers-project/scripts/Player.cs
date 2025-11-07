@@ -169,7 +169,10 @@ public partial class Player : CharacterBody2D
 		{
 			// Player dies and enters some game over state
 			GD.Print("DEAD");
-			EmitDeathSignal(); 
+			EmitDeathSignal();
+			StateManager.CurrentState = GameStateEnums.GameState.Dead;
+			GD.Print(GetTree());
+			GetTree().ChangeSceneToFile("res://scenes/DeathScreen.tscn");
 		}
 		
 		
