@@ -46,6 +46,7 @@ public partial class MainMenu : Control
 		PackedScene gameplayScene = GD.Load<PackedScene>("res://scenes/main.tscn");
 		Node instance = gameplayScene.Instantiate();
 		GetParent().AddChild(instance);
+		GetTree().ChangeSceneToFile("res://scenes/main.tscn");
 		//removes the menu
 		QueueFree();
 	}

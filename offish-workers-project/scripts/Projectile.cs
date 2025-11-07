@@ -44,7 +44,7 @@ public partial class Projectile : Node2D
             KnockbackStength = config.KnockbackStength,
             AffectsTargets = config.AffectsTargets,
         });
-        AddChild(hitbox);
+        //AddChild(hitbox);
 
         //subscribe to hitbox handler
         hitbox.Hit += OnHit;

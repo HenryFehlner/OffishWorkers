@@ -402,6 +402,8 @@ public partial class Player : CharacterBody2D
 		});
 		proj.ZIndex = 1;
 		//add projectile to scene
+		GD.Print(GetTree());
+		GD.Print(GetTree().CurrentScene);
 		GetTree().CurrentScene.AddChild(proj);
 	}
 	private async Task DodgeRoll()

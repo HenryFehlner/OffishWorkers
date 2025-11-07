@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 public enum Targets { EnemiesOnly, PlayerOnly, AllButParent, All }
@@ -61,7 +62,7 @@ public partial class AttackHitbox : Area2D
 		{
 			Color = new Color(1, 1, 1, .3f),
 			Size = config.Shape.GetRect().Size,
-			Position = config.Shape.GetRect().Size/-2f
+			Position = config.Shape.GetRect().Size / -2f
 		};
 		AddChild(visRect);
 
@@ -76,7 +77,6 @@ public partial class AttackHitbox : Area2D
 		{
 			CollisionLayer = Layers.Bit(Layers.ENEMY_ATTACKS);
 		}
-
 		//masks
 		CollisionMask = affectsTargets switch
 		{
@@ -84,7 +84,6 @@ public partial class AttackHitbox : Area2D
 			Targets.EnemiesOnly => Layers.Bit(Layers.ENEMIES),
 			_ => Layers.Bit(Layers.PLAYER) | Layers.Bit(Layers.ENEMIES),
 		};
-
 		//position and rotation
 		Rotation = config.HitboxDirection.Angle();
 		Position = config.LocalOffset.Rotated(Rotation);
