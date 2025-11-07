@@ -11,6 +11,9 @@ public partial class hydrationRestoreObject : Area2D
 	//Restore amount should be very small if "reusable"
 	[Export] protected int restoreAmount = 3; 
 	
+	// I just added this for refactoring to a continuous restore system
+	[Export] protected float continuousRestoreRate = 8.0f;
+	
 	//Is the restore object a blood puddle from bloodbath, false default for now
 	[Export] protected bool isBlood = false;
 	

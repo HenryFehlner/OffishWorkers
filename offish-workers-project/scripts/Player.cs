@@ -27,6 +27,8 @@ public partial class Player : CharacterBody2D
 	[Export] protected float hydrationLossTickTime = 0.25f; 
 	[Export] protected float hydrationTickLoss = 0.5f; 
 	[Export] protected Timer hydrationTimer; 
+	
+	[Export] protected float hydrationLossRate = 6.0f;
 
 	//Able to be get and set
 	[Export] private bool onHydrationRestore = false;
@@ -107,7 +109,7 @@ public partial class Player : CharacterBody2D
 		
 		hydrationTimer = GetNode<Timer>("HydrationTimer");
 		hydrationTimer.WaitTime = hydrationLossTickTime; 
-		hydrationTimer.Timeout += OnHydrationTimeout;
+		//hydrationTimer.Timeout += OnHydrationTimeout;
 		hydrationTimer.Start(); 
 		
 		directionIndicator = GetNode<Sprite2D>("DirectionIndicator");
@@ -169,6 +171,9 @@ public partial class Player : CharacterBody2D
 			GD.Print("DEAD");
 			EmitDeathSignal(); 
 		}
+		
+		
+		SmoothHydrationDrain(delta);
 	}
 	
 	// Called on every frame with an input
@@ -494,6 +499,36 @@ public partial class Player : CharacterBody2D
 				hydrationBar.AddThemeStyleboxOverride("fill", normalHydrationStyle);
 			}
 		}
+	}
+	
+	private void SmoothHydrationDrain(double delta)
+	{
+		currentHp -= hydrationLossRate * (float)delta;
+		hydrationBar.Value = currentHp;
+		//GD.Print(currentHp);
+		
+		if (((float)currentHp / (float)maxHp) <= 0.25)
+		{
+			hydrationBar.AddThemeStyleboxOverride("fill", lowHydrationStyle);
+		}
+		else 
+		{
+			hydrationBar.AddThemeStyleboxOverride("fill", normalHydrationStyle);
+		}
+	}
+	
+	// Not yet used but useful for continuous restore
+	public void SmoothHydrationRestore(float amount, double delta)
+	{
+		GD.Print("smooth restore");
+		currentHp += amount * (float)delta;
+		
+		if (currentHp > maxHp)
+		{
+			currentHp = maxHp; 
+		}
+		
+		hydrationBar.Value = currentHp; 
 	}
 	
 	//Restores hydration by a specified amount, usually called when
