@@ -8,10 +8,15 @@
 
 config_version=5
 
+[accessibility]
+
+general/autoload_on_startup=false
+general/main_scene="uid://c3h7ftnp27g3q"
+
 [application]
 
 config/name="OffishWorkersProject"
-run/main_scene="uid://c3h7ftnp27g3q"
+run/main_scene="uid://bynq33yb6ha3w"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -45,7 +45,7 @@ public partial class gameplayController : Node2D
 	{
 		switch (currentGameState)
 		{
-			case GameState.Gameplay: 					
+			case GameState.GamePlay: 					
 				if (Input.IsActionJustPressed("debug_respawn"))
 				{
 					RespawnEnemies(); 

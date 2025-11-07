@@ -16,7 +16,6 @@ script = ExtResource("1_jyhfs")
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 DirectionIndicatorPath = null
-rangedDamage = 3
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.8, 0.8)

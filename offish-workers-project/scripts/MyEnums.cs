@@ -4,8 +4,9 @@ using System;
 namespace GameStateEnums
 {
 	public enum GameState{
+		MainMenu,
 		PauseMenu, 
-		Gameplay,
+		GamePlay,
 		Upgrade,
 		Loading,
 		StartMenu,
