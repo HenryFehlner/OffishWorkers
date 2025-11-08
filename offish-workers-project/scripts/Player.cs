@@ -52,6 +52,7 @@ public partial class Player : CharacterBody2D
 	
 	private StyleBoxFlat normalHydrationStyle = new StyleBoxFlat(); 
 	private StyleBoxFlat lowHydrationStyle = new StyleBoxFlat(); 
+	private StyleBoxFlat dynamicHydrationStyle = new StyleBoxFlat();
 
 	// Primary Attacks
 	private bool isAttacking = false;
@@ -103,12 +104,13 @@ public partial class Player : CharacterBody2D
 		currentHp = maxHp;
 				
 		//Setting up hydration relevant stuff
-		hydrationBar = GetNode<ProgressBar>("/root/Node2D/UI/HydrationBar");
 		hydrationBar.MaxValue = maxHp; 
 		hydrationBar.Value = currentHp;
 		
 		normalHydrationStyle.BgColor = new Color("51b5e6"); 
-		lowHydrationStyle.BgColor = new Color("e06452"); 
+		lowHydrationStyle.BgColor = new Color("e06452");
+		dynamicHydrationStyle.BgColor = normalHydrationStyle.BgColor;
+		hydrationBar.AddThemeStyleboxOverride("fill", dynamicHydrationStyle);
 		
 		hydrationTimer = GetNode<Timer>("HydrationTimer");
 		hydrationTimer.WaitTime = hydrationLossTickTime; 
@@ -186,6 +188,7 @@ public partial class Player : CharacterBody2D
 		{
 			SmoothHydrationDrain(delta);
 		}
+		HydrationBarColorUpdate();
 	}
 	
 	// Called on every frame with an input
@@ -499,19 +502,7 @@ public partial class Player : CharacterBody2D
 	private void SmoothHydrationDrain(double delta)
 	{
 		currentHp -= hydrationLossRate * (float)delta;
-		GD.Print(hydrationBar.Value + ", " + currentHp + ", " + delta);
 		hydrationBar.Value = currentHp;
-		//hydrationBar.Value = Mathf.Lerp(hydrationBar.Value, currentHp, delta * 20.0f);
-		GD.Print("uhh hello?");
-		
-		if (((float)currentHp / (float)maxHp) <= 0.25)
-		{
-			hydrationBar.AddThemeStyleboxOverride("fill", lowHydrationStyle);
-		}
-		else 
-		{
-			hydrationBar.AddThemeStyleboxOverride("fill", normalHydrationStyle);
-		}
 	}
 	
 	// Active when the player is standing in a reusable restore object
@@ -526,6 +517,31 @@ public partial class Player : CharacterBody2D
 		
 		hydrationBar.Value = currentHp; 
 	}
+	
+	private void HydrationBarColorUpdate()
+	{
+		float percent = currentHp / maxHp;
+		
+		//// Option A, a little hard to get the colors right
+		//Color newColor = lowHydrationStyle.BgColor.Lerp(normalHydrationStyle.BgColor, percent);
+		//newColor.G = 0.3f;
+		//dynamicHydrationStyle.BgColor = newColor;
+		
+		// Option B with HSV, looks better but colors are all over the place
+		// Convert to HSV
+		float h1, s1, v1;
+		float h2, s2, v2;
+		lowHydrationStyle.BgColor.ToHsv(out h1, out s1, out v1);
+		normalHydrationStyle.BgColor.ToHsv(out h2, out s2, out v2);
+		
+		// Lerp the colors
+		float h = Mathf.LerpAngle(h1, h2, percent);
+		float s = Mathf.Lerp(s1, s2, percent);
+		float v = Mathf.Lerp(v1, v2, percent);
+		
+		dynamicHydrationStyle.BgColor = Color.FromHsv(h, s, v);
+	}
+	
 	
 	// vvv Deprecated vvv
 	//Reduces hydration by a specific amount every tick
@@ -546,6 +562,7 @@ public partial class Player : CharacterBody2D
 		}
 	}
 	// ^^^ Deprecated ^^^
+	
 	
 	//Restores hydration by a specified amount, usually called when
 	//interacting with breakable hydration object
