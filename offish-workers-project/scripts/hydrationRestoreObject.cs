@@ -11,7 +11,7 @@ public partial class hydrationRestoreObject : Area2D
 	//Restore amount should be very small if "reusable"
 	[Export] protected int restoreAmount = 3; 
 	
-	// I just added this for refactoring to a continuous restore system
+	// For reusable pools
 	[Export] protected float continuousRestoreRate = 8.0f;
 	
 	//Is the restore object a blood puddle from bloodbath, false default for now
@@ -65,10 +65,33 @@ public partial class hydrationRestoreObject : Area2D
 	//and disappears if it isn't tagged as reusable
 	private void OnBodyEntered(Node body)
 	{				
+		//if (body is CharacterBody2D player)
+		//{
+			////GD.Print("Player entered restore object");
+			//playerScript = player as Player; 
+			//
+			//if (isReusable == false)
+			//{
+			//
+				//if (playerScript != null)
+				//{
+					//playerScript.RestoreHydration(restoreAmount);
+				//}
+				//
+				//RemoveSelf(); 
+			//}
+			//else 
+			//{
+			////GD.Print("In reusable object");
+				//restoreTimer.Start(); 
+				//playerScript.OnHydrationRestore = true; 
+			//}
+		//}
+		
+		// ^ Refactored this to work with smooth hydraton restore
 		if (body is CharacterBody2D player)
 		{
-			//GD.Print("Player entered restore object");
-			playerScript = player as Player; 
+			playerScript = player as Player;
 			
 			if (isReusable == false)
 			{
@@ -80,11 +103,9 @@ public partial class hydrationRestoreObject : Area2D
 				
 				RemoveSelf(); 
 			}
-			else 
+			else
 			{
-			//GD.Print("In reusable object");
-				restoreTimer.Start(); 
-				playerScript.OnHydrationRestore = true; 
+				playerScript.IsHealing = true;
 			}
 		}
 	}
@@ -92,9 +113,11 @@ public partial class hydrationRestoreObject : Area2D
 	private void OnBodyExited(Node body)
 	{
 		if (body is CharacterBody2D player){
-			restoreTimer.Stop();
 			//GD.Print("Player left restore object"); 
-			playerScript.OnHydrationRestore = false; 
+			restoreTimer.Stop();
+			playerScript.OnHydrationRestore = false;
+			
+			playerScript.IsHealing = false;
 		}
 	}
 	

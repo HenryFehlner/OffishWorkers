@@ -29,6 +29,9 @@ public partial class Player : CharacterBody2D
 	[Export] protected Timer hydrationTimer; 
 	
 	[Export] protected float hydrationLossRate = 6.0f;
+	[Export] protected float hydrationRestoreRate = 8.0f;
+	private bool isHealing = false;
+	public bool IsHealing { get { return isHealing; } set { isHealing = value; } }
 
 	//Able to be get and set
 	[Export] private bool onHydrationRestore = false;
@@ -100,7 +103,7 @@ public partial class Player : CharacterBody2D
 		currentHp = maxHp;
 				
 		//Setting up hydration relevant stuff
-		hydrationBar = GetNode<ProgressBar>("HydrationBar");
+		hydrationBar = GetNode<ProgressBar>("/root/Node2D/UI/HydrationBar");
 		hydrationBar.MaxValue = maxHp; 
 		hydrationBar.Value = currentHp;
 		
@@ -174,9 +177,15 @@ public partial class Player : CharacterBody2D
 			GD.Print(GetTree());
 			GetTree().ChangeSceneToFile("res://scenes/DeathScreen.tscn");
 		}
-		
-		
-		SmoothHydrationDrain(delta);
+		// Drain or gain hydration
+		if (IsHealing)
+		{
+			SmoothHydrationRestore(hydrationRestoreRate, delta);
+		}
+		else
+		{
+			SmoothHydrationDrain(delta);
+		}
 	}
 	
 	// Called on every frame with an input
@@ -235,8 +244,6 @@ public partial class Player : CharacterBody2D
 			//savedFacingDirection = attackFacingDirection;
 		}
 		NoControllerAimInput:
-		
-		// TODO: use attackFacingDirection to visualize the attack direction (probably put it somewhere else)
 
 		// Apply acceleration
 		if (moveDirection != Vector2.Zero && !isAttacking || isDodging)
@@ -488,6 +495,39 @@ public partial class Player : CharacterBody2D
 		isFlashing = false;
 	}
 	
+	// Passively drains the hydration of the player
+	private void SmoothHydrationDrain(double delta)
+	{
+		currentHp -= hydrationLossRate * (float)delta;
+		GD.Print(hydrationBar.Value + ", " + currentHp + ", " + delta);
+		hydrationBar.Value = currentHp;
+		//hydrationBar.Value = Mathf.Lerp(hydrationBar.Value, currentHp, delta * 20.0f);
+		GD.Print("uhh hello?");
+		
+		if (((float)currentHp / (float)maxHp) <= 0.25)
+		{
+			hydrationBar.AddThemeStyleboxOverride("fill", lowHydrationStyle);
+		}
+		else 
+		{
+			hydrationBar.AddThemeStyleboxOverride("fill", normalHydrationStyle);
+		}
+	}
+	
+	// Active when the player is standing in a reusable restore object
+	public void SmoothHydrationRestore(float amount, double delta)
+	{
+		currentHp += amount * (float)delta;
+		
+		if (currentHp > maxHp)
+		{
+			currentHp = maxHp; 
+		}
+		
+		hydrationBar.Value = currentHp; 
+	}
+	
+	// vvv Deprecated vvv
 	//Reduces hydration by a specific amount every tick
 	private void OnHydrationTimeout()
 	{
@@ -505,36 +545,7 @@ public partial class Player : CharacterBody2D
 			}
 		}
 	}
-	
-	private void SmoothHydrationDrain(double delta)
-	{
-		currentHp -= hydrationLossRate * (float)delta;
-		hydrationBar.Value = currentHp;
-		//GD.Print(currentHp);
-		
-		if (((float)currentHp / (float)maxHp) <= 0.25)
-		{
-			hydrationBar.AddThemeStyleboxOverride("fill", lowHydrationStyle);
-		}
-		else 
-		{
-			hydrationBar.AddThemeStyleboxOverride("fill", normalHydrationStyle);
-		}
-	}
-	
-	// Not yet used but useful for continuous restore
-	public void SmoothHydrationRestore(float amount, double delta)
-	{
-		GD.Print("smooth restore");
-		currentHp += amount * (float)delta;
-		
-		if (currentHp > maxHp)
-		{
-			currentHp = maxHp; 
-		}
-		
-		hydrationBar.Value = currentHp; 
-	}
+	// ^^^ Deprecated ^^^
 	
 	//Restores hydration by a specified amount, usually called when
 	//interacting with breakable hydration object
