@@ -13,7 +13,8 @@ colors = PackedColorArray(8.5432083e-07, 0.3515507, 0, 1, 0.14201754, 0.35088515
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_g2els"]
 gradient = SubResource("Gradient_3vyb7")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4flbx"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
+size = Vector2(18, 18)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
 shader = ExtResource("1_g2els")
@@ -46,8 +47,8 @@ mesh = SubResource("SphereMesh_sh265")
 texture = SubResource("GradientTexture2D_g2els")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(0.75, 0.75)
-shape = SubResource("CircleShape2D_4flbx")
+scale = Vector2(0.74999994, 0.74999994)
+shape = SubResource("RectangleShape2D_dqkch")
 
 [node name="DirectionIndicator" type="Sprite2D" parent="."]
 position = Vector2(16.800001, 3.8146976e-07)

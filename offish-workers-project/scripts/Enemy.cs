@@ -50,7 +50,7 @@ public partial class Enemy : CharacterBody2D
 	public override void _Ready()
 	{
 		base._Ready();
-		
+		MotionMode = MotionModeEnum.Floating;
 		//add to group for registering attacks
 		AddToGroup("enemies");
 		//set collision layer and masks

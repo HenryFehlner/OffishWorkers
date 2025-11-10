@@ -78,6 +78,7 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		base._Ready();
+		MotionMode = MotionModeEnum.Floating;
 		//add to group for registering attacks
 		AddToGroup("player");
 		//set collision layer and masks
