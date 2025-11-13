@@ -96,18 +96,23 @@ scale = Vector2(34.105, 2.46)
 
 [node name="hydrationRestoreObject8" parent="Hydration Container/hydration big box" instance=ExtResource("9_66ia6")]
 visible = false
-position = Vector2(-29.999998, -160)
-scale = Vector2(1.25, 1.07)
+position = Vector2(-31.000002, -117)
+scale = Vector2(1.245, 2.36)
 
 [node name="hydrationRestoreObject2" parent="Hydration Container/hydration big box" instance=ExtResource("9_66ia6")]
 visible = false
-position = Vector2(3316.0002, 0)
-scale = Vector2(16.623, 2.46)
+position = Vector2(3357.895, 0)
+scale = Vector2(18.393, 2.46)
 
 [node name="hydrationRestoreObject7" parent="Hydration Container/hydration big box" instance=ExtResource("9_66ia6")]
 visible = false
-position = Vector2(4431.0005, -2273)
-scale = Vector2(9.133, 1.22)
+position = Vector2(4223.0005, -2270)
+scale = Vector2(16.963, 1.22)
+
+[node name="hydrationRestoreObject9" parent="Hydration Container/hydration big box" instance=ExtResource("9_66ia6")]
+visible = false
+position = Vector2(4640, -2334)
+scale = Vector2(1.205, 1.22)
 
 [node name="hydrationRestoreObject4" parent="Hydration Container/hydration big box" instance=ExtResource("9_66ia6")]
 visible = false
@@ -121,13 +126,13 @@ scale = Vector2(4.932, 4.845)
 
 [node name="hydrationRestoreObject3" parent="Hydration Container/hydration big box" instance=ExtResource("9_66ia6")]
 visible = false
-position = Vector2(3968.0002, -685)
-scale = Vector2(2.46, 17.99)
+position = Vector2(3968.0002, -482)
+scale = Vector2(2.46, 25.705)
 
 [node name="hydrationRestoreObject5" parent="Hydration Container/hydration big box" instance=ExtResource("9_66ia6")]
 visible = false
-position = Vector2(3967, -1714)
-scale = Vector2(2.46, 14.249)
+position = Vector2(3969, -1920.9998)
+scale = Vector2(2.46, 22.149)
 
 [node name="Enemy Container" type="Node" parent="."]
 

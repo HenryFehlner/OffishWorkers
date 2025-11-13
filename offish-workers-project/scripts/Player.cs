@@ -166,7 +166,7 @@ public partial class Player : CharacterBody2D
 		// PRESS 0: DEBUG HEALING
 		if (Input.IsActionJustPressed("debug_heal"))
 		{
-			RestoreHydration(30);
+			RestoreHydrationOnce(30);
 			GD.Print("Debug: Healing 30 hp");
 		}
 		
@@ -543,31 +543,9 @@ public partial class Player : CharacterBody2D
 		dynamicHydrationStyle.BgColor = Color.FromHsv(h, s, v);
 	}
 	
-	
-	// vvv Deprecated vvv
-	//Reduces hydration by a specific amount every tick
-	private void OnHydrationTimeout()
-	{
-		if (onHydrationRestore == false)
-		{
-			currentHp -= hydrationTickLoss; 
-			hydrationBar.Value = currentHp; 
-			//GD.Print("Lost hydration!");
-			
-			if (((float)currentHp / (float)maxHp) <= 0.25){
-				hydrationBar.AddThemeStyleboxOverride("fill", lowHydrationStyle);
-			}
-			else {
-				hydrationBar.AddThemeStyleboxOverride("fill", normalHydrationStyle);
-			}
-		}
-	}
-	// ^^^ Deprecated ^^^
-	
-	
 	//Restores hydration by a specified amount, usually called when
 	//interacting with breakable hydration object
-	public void RestoreHydration(int amount)
+	public void RestoreHydrationOnce(int amount)
 	{
 		currentHp += amount;
 		

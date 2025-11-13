@@ -51,12 +51,14 @@ public partial class hydrationRestoreObject : Area2D
 	//Checks if it needs to heal every frame
 	public override void _PhysicsProcess(double delta)
 	{
-		if (timeToHeal == true)
+		// Continuous healing if reusable
+		if (playerScript != null && isReusable)
 		{
-			if (playerScript != null)
+			var overlappingBodies = GetOverlappingBodies();
+			
+			if (overlappingBodies.Count != 0)
 			{
-				playerScript.RestoreHydration(restoreAmount);
-				timeToHeal = false;
+				playerScript.IsHealing = true;
 			}
 		}
 	}
@@ -64,60 +66,30 @@ public partial class hydrationRestoreObject : Area2D
 	//Restores a player's health once they enter the object
 	//and disappears if it isn't tagged as reusable
 	private void OnBodyEntered(Node body)
-	{				
-		//if (body is CharacterBody2D player)
-		//{
-			////GD.Print("Player entered restore object");
-			//playerScript = player as Player; 
-			//
-			//if (isReusable == false)
-			//{
-			//
-				//if (playerScript != null)
-				//{
-					//playerScript.RestoreHydration(restoreAmount);
-				//}
-				//
-				//RemoveSelf(); 
-			//}
-			//else 
-			//{
-			////GD.Print("In reusable object");
-				//restoreTimer.Start(); 
-				//playerScript.OnHydrationRestore = true; 
-			//}
-		//}
-		
-		// ^ Refactored this to work with smooth hydraton restore
+	{
+		// Single use restore
 		if (body is CharacterBody2D player)
 		{
 			playerScript = player as Player;
 			
-			if (isReusable == false)
+			if (isReusable == false && playerScript != null)
 			{
-			
-				if (playerScript != null)
-				{
-					playerScript.RestoreHydration(restoreAmount);
-				}
-				
+				playerScript.RestoreHydrationOnce(restoreAmount);
 				RemoveSelf(); 
-			}
-			else
-			{
-				playerScript.IsHealing = true;
 			}
 		}
 	}
 	
 	private void OnBodyExited(Node body)
 	{
+		// Set stop healing and set player script to null
 		if (body is CharacterBody2D player){
 			//GD.Print("Player left restore object"); 
-			restoreTimer.Stop();
-			playerScript.OnHydrationRestore = false;
+			//restoreTimer.Stop();
+			//playerScript.OnHydrationRestore = false;
 			
 			playerScript.IsHealing = false;
+			playerScript = null;
 		}
 	}
 	
