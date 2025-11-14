@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://cet0lay8i7dcf"]
+[gd_scene load_steps=22 format=4 uid="uid://cet0lay8i7dcf"]
 
 [ext_resource type="Script" uid="uid://byh6vmbmtd65i" path="res://scripts/Level.cs" id="1_drydf"]
 [ext_resource type="TileSet" uid="uid://cswugdc2q4w3h" path="res://assets/tilesets/office_bigger.tres" id="2_84v0n"]
@@ -12,6 +12,11 @@
 [ext_resource type="Texture2D" uid="uid://by8c02y76o05d" path="res://assets/tiles/Fishy Business Hydration Tiles.png" id="7_66ia6"]
 [ext_resource type="PackedScene" uid="uid://di3byu7o37wy" path="res://scenes/Other Entities/hydrationRestoreObjectReusable.tscn" id="9_66ia6"]
 [ext_resource type="TileSet" uid="uid://b50hgt4uq8fh8" path="res://assets/tilesets/sewer_base.tres" id="9_kvmro"]
+[ext_resource type="Texture2D" uid="uid://nin7imutl2am" path="res://assets/temporary instructions/Instruction Move.png" id="13_ht328"]
+[ext_resource type="Texture2D" uid="uid://dcf7d2khr71cs" path="res://assets/temporary instructions/Instruction Hydration.png" id="14_pxjks"]
+[ext_resource type="Texture2D" uid="uid://baudx10vu1h5u" path="res://assets/temporary instructions/Instruction Dodge.png" id="15_d04n5"]
+[ext_resource type="Texture2D" uid="uid://drj6kn3ahcmaa" path="res://assets/temporary instructions/Instruction Attack.png" id="16_3axmw"]
+[ext_resource type="Texture2D" uid="uid://27gt5reacviw" path="res://assets/temporary instructions/Instruction Ranged.png" id="17_foowk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_612vr"]
 texture = ExtResource("7_66ia6")
@@ -144,3 +149,30 @@ position = Vector2(5805, -2034)
 
 [node name="BomberEnemy" parent="Enemy Container" instance=ExtResource("6_72fly")]
 position = Vector2(5790, -2521)
+
+[node name="Temp Instruction Container" type="Node2D" parent="."]
+
+[node name="InstructionMove" type="Sprite2D" parent="Temp Instruction Container"]
+position = Vector2(106.00001, -214.00002)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("13_ht328")
+
+[node name="InstructionHydration" type="Sprite2D" parent="Temp Instruction Container"]
+position = Vector2(2144, -536)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("14_pxjks")
+
+[node name="InstructionDodge" type="Sprite2D" parent="Temp Instruction Container"]
+position = Vector2(3517, -214)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("15_d04n5")
+
+[node name="InstructionAttack" type="Sprite2D" parent="Temp Instruction Container"]
+position = Vector2(4443, -2393)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("16_3axmw")
+
+[node name="InstructionRanged" type="Sprite2D" parent="Temp Instruction Container"]
+position = Vector2(4828, -2391)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("17_foowk")
