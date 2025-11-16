@@ -1,0 +1,39 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://18xhruajdhj1"]
+
+[ext_resource type="Texture2D" uid="uid://bs30n3yp5450c" path="res://assets/new tiles/tileset_sewer.png" id="1_tfr7v"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tfr7v"]
+texture = ExtResource("1_tfr7v")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/next_alternative_id = 2
+5:0/0 = 0
+5:0/1 = 1
+5:0/1/flip_h = true
+7:0/next_alternative_id = 3
+7:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/next_alternative_id = 2
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+
+[resource]
+tile_size = Vector2i(64, 64)
+sources/1 = SubResource("TileSetAtlasSource_tfr7v")
