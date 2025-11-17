@@ -18,7 +18,8 @@ public partial class RangedEnemy : Enemy
 	}
 	protected override void SpawnDeathDrops()
     {
-		Node hydrationContainer = GetTree().CurrentScene.GetNode(new NodePath("Level/Hydration_Container"));
+		Node hydrationContainer = GetNode<Node>("../../Hydration Container");
+		hydrationContainer.AddChild(hydrationRestoreObject.Create());
     }
 
 	protected override async Task Attack()

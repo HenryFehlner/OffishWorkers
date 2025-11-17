@@ -180,7 +180,8 @@ public partial class Enemy : CharacterBody2D
 	
 	protected virtual void SpawnDeathDrops()
     {
-        
+        Node hydrationContainer = GetNode<Node>("../../Hydration Container");
+		hydrationContainer.CallDeferred(Node.MethodName.AddChild, hydrationRestoreObject.Create());
     }
 
 	protected virtual async Task Attack()

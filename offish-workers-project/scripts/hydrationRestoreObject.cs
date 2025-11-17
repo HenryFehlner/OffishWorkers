@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Runtime.CompilerServices;
 
 public partial class hydrationRestoreObject : Area2D
 {	
@@ -26,6 +27,24 @@ public partial class hydrationRestoreObject : Area2D
 	//Storage for player's Player.cs
 	private Player playerScript;
 	
+	public static hydrationRestoreObject Create(
+		bool isReusable = false,
+		int restoreAmount = 30,
+		string filePath = "res://scenes/Other Entities/hydrationRestoreObjectSingleUse.tscn"
+		)
+    {
+		//create object
+		PackedScene prefab = GD.Load<PackedScene>(filePath);
+        hydrationRestoreObject obj = prefab.Instantiate<hydrationRestoreObject>();
+
+		//set values
+		obj.isReusable = isReusable;
+		obj.restoreAmount = restoreAmount;
+		
+		//return object
+		return obj;
+    }
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -47,7 +66,7 @@ public partial class hydrationRestoreObject : Area2D
 		this.BodyExited += OnBodyExited;
 		
 	}
-	
+
 	//Checks if it needs to heal every frame
 	public override void _PhysicsProcess(double delta)
 	{

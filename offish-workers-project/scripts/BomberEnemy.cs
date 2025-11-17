@@ -14,6 +14,8 @@ public partial class BomberEnemy : Enemy
 		//Start the attack as soon as it detects the player
 		attackRadius = detectionRadius;
 		enemyType = "printerBomber";
+		GD.Print(GetTree().CurrentScene.Name);
+		GD.Print(GetTree().CurrentScene.GetPath());
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -51,7 +53,8 @@ public partial class BomberEnemy : Enemy
 
     protected override void SpawnDeathDrops()
     {
-		Node hydrationContainer = GetTree().CurrentScene.GetNode(new NodePath("Level/Hydration_Container"));
+		Node hydrationContainer = GetNode<Node>("../../Hydration Container");
+		hydrationContainer.AddChild(hydrationRestoreObject.Create());
     }
 
 
