@@ -16,6 +16,10 @@ public partial class RangedEnemy : Enemy
 		attackRadius = detectionRadius;
 		enemyType = "staplerThrower";
 	}
+	protected override void SpawnDeathDrops()
+    {
+		Node hydrationContainer = GetTree().CurrentScene.GetNode(new NodePath("Level/Hydration_Container"));
+    }
 
 	protected override async Task Attack()
 	{

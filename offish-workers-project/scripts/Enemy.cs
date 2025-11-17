@@ -164,8 +164,10 @@ public partial class Enemy : CharacterBody2D
 		//check for death
 		if (currentHp <= 0)
 		{
+			//spawn drops
+			SpawnDeathDrops();
 			//delete enemy
-			isDead = true; 
+			isDead = true;
 			QueueFree();
 		}
 
@@ -175,6 +177,11 @@ public partial class Enemy : CharacterBody2D
 			attackCooldownTimer.Start(.5f);
 		}
 	}
+	
+	protected virtual void SpawnDeathDrops()
+    {
+        
+    }
 
 	protected virtual async Task Attack()
 	{

@@ -22,7 +22,7 @@ public partial class BomberEnemy : Enemy
 		if (GlobalPosition.DistanceTo(_player.GlobalPosition) < attackRadius)
 		{
 			// only start the timer when entering attack radius for the first time
-			if(!isInAttackRadius)
+			if (!isInAttackRadius)
 			{
 				attackCooldownTimer.Start(attackCooldown);
 				// Prevent the player form just leaving the detection radius
@@ -30,16 +30,16 @@ public partial class BomberEnemy : Enemy
 				attackRadius = 1000;
 				isInAttackRadius = true;
 			}
-			
+
 			_ = Attack();
-			
+
 			// Start flash charge
 			FlashCharge(attackCooldown);
 		}
 		else
 		{
 			isInAttackRadius = false;
-			
+
 			// Cancel flash charge
 			enemyShaderMat.SetShaderParameter("is_white", false);
 		}
@@ -48,6 +48,12 @@ public partial class BomberEnemy : Enemy
 		Move(delta);
 		UpdateHealthBar();
 	}
+
+    protected override void SpawnDeathDrops()
+    {
+		Node hydrationContainer = GetTree().CurrentScene.GetNode(new NodePath("Level/Hydration_Container"));
+    }
+
 
 	protected override async Task Attack()
 	{
