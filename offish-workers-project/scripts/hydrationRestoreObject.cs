@@ -28,6 +28,7 @@ public partial class hydrationRestoreObject : Area2D
 	private Player playerScript;
 	
 	public static hydrationRestoreObject Create(
+		Vector2 pos,
 		bool isReusable = false,
 		int restoreAmount = 30,
 		string filePath = "res://scenes/Other Entities/hydrationRestoreObjectSingleUse.tscn"
@@ -40,6 +41,7 @@ public partial class hydrationRestoreObject : Area2D
 		//set values
 		obj.isReusable = isReusable;
 		obj.restoreAmount = restoreAmount;
+		obj.GlobalPosition = pos;
 		
 		//return object
 		return obj;

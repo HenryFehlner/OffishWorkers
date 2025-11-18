@@ -19,7 +19,7 @@ public partial class RangedEnemy : Enemy
 	protected override void SpawnDeathDrops()
     {
 		Node hydrationContainer = GetNode<Node>("../../Hydration Container");
-		hydrationContainer.AddChild(hydrationRestoreObject.Create());
+		hydrationContainer.CallDeferred(Node.MethodName.AddChild, hydrationRestoreObject.Create(GlobalPosition));
     }
 
 	protected override async Task Attack()

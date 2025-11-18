@@ -54,7 +54,7 @@ public partial class BomberEnemy : Enemy
     protected override void SpawnDeathDrops()
     {
 		Node hydrationContainer = GetNode<Node>("../../Hydration Container");
-		hydrationContainer.AddChild(hydrationRestoreObject.Create());
+		hydrationContainer.CallDeferred(Node.MethodName.AddChild, hydrationRestoreObject.Create(GlobalPosition));
     }
 
 
