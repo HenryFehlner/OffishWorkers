@@ -112,6 +112,7 @@ debug_respawn={
 2d_physics/layer_4="Player Attacks"
 2d_physics/layer_5="Enemy Attacks"
 2d_physics/layer_6="Dodge"
+2d_physics/layer_7="Doors"
 
 [rendering]
 

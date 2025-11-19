@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://cet0lay8i7dcf"]
+[gd_scene load_steps=25 format=4 uid="uid://cet0lay8i7dcf"]
 
 [ext_resource type="Script" uid="uid://byh6vmbmtd65i" path="res://scripts/Level.cs" id="1_drydf"]
 [ext_resource type="TileSet" uid="uid://cswugdc2q4w3h" path="res://assets/tilesets/office_bigger.tres" id="2_84v0n"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://baudx10vu1h5u" path="res://assets/temporary instructions/Instruction Dodge.png" id="15_d04n5"]
 [ext_resource type="Texture2D" uid="uid://drj6kn3ahcmaa" path="res://assets/temporary instructions/Instruction Attack.png" id="16_3axmw"]
 [ext_resource type="Texture2D" uid="uid://27gt5reacviw" path="res://assets/temporary instructions/Instruction Ranged.png" id="17_foowk"]
+[ext_resource type="PackedScene" uid="uid://cbhrll0reau4y" path="res://scenes/Other Entities/automaticDoor.tscn" id="20_3axmw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3axmw"]
 texture = ExtResource("10_d04n5")
@@ -201,3 +202,8 @@ texture = ExtResource("16_3axmw")
 position = Vector2(4828, -2391)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("17_foowk")
+
+[node name="AutomaticDoorContainer" type="Node2D" parent="."]
+
+[node name="AutomaticDoor" parent="AutomaticDoorContainer" instance=ExtResource("20_3axmw")]
+position = Vector2(2000, -448)

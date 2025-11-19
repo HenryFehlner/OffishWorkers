@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbhrll0reau4y"]
+
+[ext_resource type="Script" uid="uid://bnjokobuu6rbg" path="res://scripts/AutomaticDoor.cs" id="1_y30ls"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w1c3u"]
+size = Vector2(32, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y30ls"]
+size = Vector2(20, 154)
+
+[node name="AutomaticDoor" type="Node2D" node_paths=PackedStringArray("doorRigidBody", "closeTriggerArea")]
+script = ExtResource("1_y30ls")
+doorRigidBody = NodePath("RigidBody2DDoor")
+closeTriggerArea = NodePath("Area2DCloseTrigger")
+
+[node name="RigidBody2DDoor" type="RigidBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2DDoor" type="CollisionShape2D" parent="RigidBody2DDoor"]
+shape = SubResource("RectangleShape2D_w1c3u")
+
+[node name="Area2DCloseTrigger" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DCloseTrigger"]
+position = Vector2(60.4, 0)
+shape = SubResource("RectangleShape2D_y30ls")
+debug_color = Color(0.9905632, 0, 0.30895695, 0.41960785)

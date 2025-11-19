@@ -33,10 +33,10 @@ public partial class hydrationRestoreObject : Area2D
 		int restoreAmount = 30,
 		string filePath = "res://scenes/Other Entities/hydrationRestoreObjectSingleUse.tscn"
 		)
-    {
+	{
 		//create object
 		PackedScene prefab = GD.Load<PackedScene>(filePath);
-        hydrationRestoreObject obj = prefab.Instantiate<hydrationRestoreObject>();
+		hydrationRestoreObject obj = prefab.Instantiate<hydrationRestoreObject>();
 
 		//set values
 		obj.isReusable = isReusable;
@@ -45,7 +45,7 @@ public partial class hydrationRestoreObject : Area2D
 		
 		//return object
 		return obj;
-    }
+	}
 
 	public override void _Ready()
 	{

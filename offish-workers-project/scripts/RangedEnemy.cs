@@ -17,10 +17,10 @@ public partial class RangedEnemy : Enemy
 		enemyType = "staplerThrower";
 	}
 	protected override void SpawnDeathDrops()
-    {
+	{
 		Node hydrationContainer = GetNode<Node>("../../Hydration Container");
 		hydrationContainer.CallDeferred(Node.MethodName.AddChild, hydrationRestoreObject.Create(GlobalPosition));
-    }
+	}
 
 	protected override async Task Attack()
 	{
