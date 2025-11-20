@@ -5,6 +5,7 @@ public partial class AutomaticDoor : Node2D
 {
 	[Export] protected RigidBody2D doorRigidBody;
 	[Export] protected Area2D closeTriggerArea;
+	[Export] protected Sprite2D doorSprite;
 	private bool closed = false;
 	
 	public override void _Ready()
@@ -20,6 +21,7 @@ public partial class AutomaticDoor : Node2D
 		{
 			// Activate door collision
 			doorRigidBody.CollisionLayer = Layers.Bit(Layers.ENVIRONMENT);
+			doorSprite.Visible = true;
 		}
 	}
 	

@@ -1,14 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://cbhrll0reau4y"]
+[gd_scene load_steps=4 format=3 uid="uid://cbhrll0reau4y"]
 
 [ext_resource type="Script" uid="uid://bnjokobuu6rbg" path="res://scripts/AutomaticDoor.cs" id="1_y30ls"]
+[ext_resource type="Texture2D" uid="uid://cpx7j6xww8dra" path="res://assets/new tiles/tile_traffic_cone.png" id="2_6ha2d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w1c3u"]
 size = Vector2(30, 252)
 
-[node name="AutomaticDoor" type="Node2D" node_paths=PackedStringArray("doorRigidBody", "closeTriggerArea")]
+[node name="AutomaticDoor" type="Node2D" node_paths=PackedStringArray("doorRigidBody", "closeTriggerArea", "doorSprite")]
 script = ExtResource("1_y30ls")
 doorRigidBody = NodePath("RigidBody2DDoor")
 closeTriggerArea = NodePath("Area2DCloseTrigger")
+doorSprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_6ha2d")
 
 [node name="RigidBody2DDoor" type="RigidBody2D" parent="."]
 collision_layer = 64
