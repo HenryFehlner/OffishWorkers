@@ -9,7 +9,7 @@ public static class Layers
 	public const int PLAYER_ATTACKS = 3;
 	public const int ENEMY_ATTACKS = 4;
 	public const int DODGE = 5;
-	public const int DOORS = 6;
+	public const int INACTIVE_DOORS = 6;
 
 	public static uint Bit(int layerIndex) => 1u << layerIndex;
 }

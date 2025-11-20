@@ -91,10 +91,10 @@ collision_layer = 33
 collision_mask = 35
 
 [node name="hydrationRestoreObject2" parent="Hydration Container" instance=ExtResource("5_84v0n")]
-position = Vector2(5254, -2559)
+position = Vector2(5464, -2591)
 
 [node name="hydrationRestoreObject3" parent="Hydration Container" instance=ExtResource("5_84v0n")]
-position = Vector2(5308, -1894)
+position = Vector2(5545, -1910)
 
 [node name="hydrationRestoreObject4" parent="Hydration Container" instance=ExtResource("5_84v0n")]
 position = Vector2(5943, -2668)
@@ -206,4 +206,4 @@ texture = ExtResource("17_foowk")
 [node name="AutomaticDoorContainer" type="Node2D" parent="."]
 
 [node name="AutomaticDoor" parent="AutomaticDoorContainer" instance=ExtResource("20_3axmw")]
-position = Vector2(2000, -448)
+position = Vector2(5104, -2272)

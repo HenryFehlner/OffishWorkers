@@ -4,29 +4,22 @@ using System;
 public partial class AutomaticDoor : Node2D
 {
 	[Export] protected RigidBody2D doorRigidBody;
-	//[Export] protected CollisionShape2D doorCollisionShape;
 	[Export] protected Area2D closeTriggerArea;
+	private bool closed = false;
 	
 	public override void _Ready()
 	{
 		// Start with door inactive
-		//doorRigidBody.CollisionMask = Layers.Bit(Layers.ENVIRONMENT);
-		//doorCollisionShape.SetDeferred(doorCollisionShape.PropertyName.Disabled, true);
-		//doorCollisionShape.Disabled = true;
+		doorRigidBody.CollisionLayer = Layers.Bit(Layers.INACTIVE_DOORS);
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		//if (doorCollisionShape.Disabled == true && closeTriggerArea.HasOverlappingBodies())
-		if (closeTriggerArea.HasOverlappingBodies())
+		// Check if player enters close trigger
+		if (!closed && closeTriggerArea.HasOverlappingBodies())
 		{
 			// Activate door collision
-			GD.Print("player entered door trigger");
-			//doorCollisionShape.SetDeferred(doorCollisionShape.PropertyName.Disabled, false);
-			//doorCollisionShape.Disabled = false;
-			
-			//doorRigidBody.CollisionMask = Layers.Bit(Layers.ENVIRONMENT | Layers.PLAYER | Layers.ENEMIES | Layers.DODGE);
-			doorRigidBody.CollisionMask = Layers.Bit(Layers.DOORS);
+			doorRigidBody.CollisionLayer = Layers.Bit(Layers.ENVIRONMENT);
 		}
 	}
 	

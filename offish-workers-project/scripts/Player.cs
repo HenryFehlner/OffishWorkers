@@ -6,7 +6,7 @@ public partial class Player : CharacterBody2D
 {
 	//masks
 	private uint defaultCollisionLayer = Layers.Bit(Layers.PLAYER);
-	private uint defaultCollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS) | Layers.Bit(Layers.DOORS);
+	private uint defaultCollisionMask = Layers.Bit(Layers.ENVIRONMENT) | Layers.Bit(Layers.ENEMIES) | Layers.Bit(Layers.ENEMY_ATTACKS);
 
 	//movement
 	private string controlMode = "mouse_and_keyboard";
@@ -437,7 +437,7 @@ public partial class Player : CharacterBody2D
 
 		// Player becomes invincible and is pushed forwards
 		CollisionLayer = Layers.Bit(Layers.DODGE);
-		CollisionMask = Layers.Bit(Layers.ENVIRONMENT | Layers.DOORS);
+		CollisionMask = Layers.Bit(Layers.ENVIRONMENT);
 		Velocity = lastMoveFacingDirection * dodgeForce;
 		playerShaderMat.SetShaderParameter("is_white", true);
 		//GD.Print("Invincible");

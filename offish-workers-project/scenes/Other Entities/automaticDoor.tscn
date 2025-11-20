@@ -1,12 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cbhrll0reau4y"]
+[gd_scene load_steps=3 format=3 uid="uid://cbhrll0reau4y"]
 
 [ext_resource type="Script" uid="uid://bnjokobuu6rbg" path="res://scripts/AutomaticDoor.cs" id="1_y30ls"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w1c3u"]
-size = Vector2(32, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_y30ls"]
-size = Vector2(20, 154)
+size = Vector2(30, 252)
 
 [node name="AutomaticDoor" type="Node2D" node_paths=PackedStringArray("doorRigidBody", "closeTriggerArea")]
 script = ExtResource("1_y30ls")
@@ -14,7 +11,9 @@ doorRigidBody = NodePath("RigidBody2DDoor")
 closeTriggerArea = NodePath("Area2DCloseTrigger")
 
 [node name="RigidBody2DDoor" type="RigidBody2D" parent="."]
+collision_layer = 64
 collision_mask = 0
+freeze = true
 
 [node name="CollisionShape2DDoor" type="CollisionShape2D" parent="RigidBody2DDoor"]
 shape = SubResource("RectangleShape2D_w1c3u")
@@ -22,7 +21,6 @@ shape = SubResource("RectangleShape2D_w1c3u")
 [node name="Area2DCloseTrigger" type="Area2D" parent="."]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DCloseTrigger"]
-position = Vector2(60.4, 0)
-shape = SubResource("RectangleShape2D_y30ls")
-debug_color = Color(0.9905632, 0, 0.30895695, 0.41960785)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2DCloseTrigger"]
+scale = Vector2(0.835, 1)
+polygon = PackedVector2Array(58.682632, -107.99999, 105.38922, -107.99999, 105.38922, 106.99999, 59.880238, 106.99999, 59.880238, 124.99999, 129.34131, 124.99999, 129.34131, -125.99999, 58.682632, -125.99999)
