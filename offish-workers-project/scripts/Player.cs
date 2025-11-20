@@ -177,7 +177,7 @@ public partial class Player : CharacterBody2D
 			GD.Print("DEAD");
 			EmitDeathSignal();
 			StateManager.CurrentState = GameStateEnums.GameState.Dead;
-			GD.Print(GetTree());
+			//GD.Print(GetTree());
 			GetTree().ChangeSceneToFile("res://scenes/DeathScreen.tscn");
 		}
 		// Drain or gain hydration
@@ -305,7 +305,7 @@ public partial class Player : CharacterBody2D
 				{
 					Size = new Vector2(120/Scale.X, 80/Scale.Y)
 				};
-				GD.Print(Transform.Scale);
+				//GD.Print(Transform.Scale);
 				//attack config
 				attackConfig = new AttackHitboxConfig
 				{
@@ -421,8 +421,8 @@ public partial class Player : CharacterBody2D
 		});
 		proj.ZIndex = 1;
 		//add projectile to scene
-		GD.Print(GetTree());
-		GD.Print(GetTree().CurrentScene);
+		//GD.Print(GetTree());
+		//GD.Print(GetTree().CurrentScene);
 		GetTree().CurrentScene.AddChild(proj);
 	}
 	private async Task DodgeRoll()

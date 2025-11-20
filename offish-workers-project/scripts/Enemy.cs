@@ -165,7 +165,6 @@ public partial class Enemy : CharacterBody2D
 		float cap = Math.Max((impulse * knockbackMultiplier).Length(), maxSpeed);
 		//cap velocity to limit knockback stacking
 		Velocity.Clamp(-cap, cap);
-		GD.Print("Enemy should be dead now ", currentHp <= 0);
 		//check for death
 		if (currentHp <= 0)
 		{

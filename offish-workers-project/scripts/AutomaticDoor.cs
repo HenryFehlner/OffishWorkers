@@ -8,6 +8,7 @@ public partial class AutomaticDoor : Node2D
 	[Export] protected Sprite2D doorSprite;
 	[Export] protected Node enemyContainer;
 	private bool closed = false;
+	private bool triggerable = true;
 	
 	public override void _Ready()
 	{
@@ -17,17 +18,27 @@ public partial class AutomaticDoor : Node2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		// Check if player enters close trigger
-		if (!closed && closeTriggerArea.HasOverlappingBodies())
+		if (!closed && triggerable)
 		{
-			// Activate door collision
-			doorRigidBody.CollisionLayer = Layers.Bit(Layers.ENVIRONMENT);
-			doorSprite.Visible = true;
-			closed = true;
+			if (closeTriggerArea.HasOverlappingBodies())
+			{
+				// Activate door
+				doorRigidBody.CollisionLayer = Layers.Bit(Layers.ENVIRONMENT);
+				doorSprite.Visible = true;
+				closed = true;
+			}
 		}
-		else if (closed && enemyContainer.GetChildren().Count == 0)
+		else if (closed && triggerable)
 		{
-			GD.Print("Reopen door");
+			if (enemyContainer.GetChildren().Count == 0)
+			{
+				// Deactivate door
+				GD.Print("Opening door");
+				doorRigidBody.CollisionLayer = Layers.Bit(Layers.INACTIVE_DOORS);
+				doorSprite.Visible = false;
+				closed = false;
+				triggerable = false;	// no longer change state if closed and reopened
+			}
 		}
 	}
 	

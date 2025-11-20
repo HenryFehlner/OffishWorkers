@@ -210,4 +210,4 @@ texture = ExtResource("17_foowk")
 
 [node name="AutomaticDoor" parent="AutomaticDoorContainer" node_paths=PackedStringArray("enemyContainer") instance=ExtResource("20_3axmw")]
 position = Vector2(5104, -2272)
-enemyContainer = NodePath("../../Enemy Container")
+enemyContainer = NodePath("../../Enemy Container/Final Room")
