@@ -24,8 +24,9 @@ public partial class Enemy : CharacterBody2D
 	protected Timer attackCooldownTimer;
 	
 	private StyleBoxFlat healthStyle = new StyleBoxFlat(); 
-	
 	private ProgressBar healthBar; 
+	
+	protected Node hydrationContainer;
 	
 	// Sprite/sprite flashing
 	protected AnimatedSprite2D enemySprite;
@@ -86,6 +87,9 @@ public partial class Enemy : CharacterBody2D
 		enemySprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		enemySprite.Material = (ShaderMaterial)enemySprite.Material.Duplicate();	// Duplicate the material so it only applies to this enemy
 		enemyShaderMat = (ShaderMaterial)enemySprite.Material;
+		
+		// Get hydration container to place bloodbath objects in
+		hydrationContainer = GetNode<Node>("../../../Hydration Container");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -167,6 +171,7 @@ public partial class Enemy : CharacterBody2D
 		{
 			//spawn drops
 			SpawnDeathDrops();
+			
 			//delete enemy
 			isDead = true;
 			QueueFree();
@@ -181,7 +186,6 @@ public partial class Enemy : CharacterBody2D
 	
 	protected virtual void SpawnDeathDrops()
 	{
-		Node hydrationContainer = GetNode<Node>("../../Hydration Container");
 		hydrationContainer.CallDeferred(Node.MethodName.AddChild, hydrationRestoreObject.Create(GlobalPosition));
 	}
 

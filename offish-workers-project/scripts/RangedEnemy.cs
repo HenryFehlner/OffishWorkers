@@ -18,7 +18,7 @@ public partial class RangedEnemy : Enemy
 	}
 	protected override void SpawnDeathDrops()
 	{
-		Node hydrationContainer = GetNode<Node>("../../Hydration Container");
+		//Node hydrationContainer = GetNode<Node>("../../../Hydration Container");
 		hydrationContainer.CallDeferred(Node.MethodName.AddChild, hydrationRestoreObject.Create(GlobalPosition));
 	}
 
