@@ -33,8 +33,10 @@ zoom = Vector2(0.8, 0.8)
 
 [node name="HydrationTimer" type="Timer" parent="Player"]
 
-[node name="Gameplay Controller" type="Node2D" parent="."]
+[node name="Gameplay Controller" type="Node2D" parent="." node_paths=PackedStringArray("player", "currentLevelScript")]
 script = ExtResource("6_tefeu")
+player = NodePath("../Player")
+currentLevelScript = NodePath("../Level Container/Level")
 
 [node name="Level Container" type="Node" parent="."]
 

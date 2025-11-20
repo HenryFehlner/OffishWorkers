@@ -35,8 +35,8 @@ public partial class gameplayController : Node2D
 	{
 		LoadEnemyScenes(); 
 		
-		currentLevelScript = GetNode("../Level Container/Level") as Level;
-		player = GetNode<CharacterBody2D>("../Player");
+		//currentLevelScript = GetNode("../Level Container/Level") as Level;
+		//player = GetNode<CharacterBody2D>("../Player");
 		
 		currentLevelNumber = 0; 
 	}
@@ -123,6 +123,7 @@ public partial class gameplayController : Node2D
 		
 	}
 	
+	// This probably doesn't work anymore with new sub enemy containers
 	//Called to respawn all enemies in a level
 	public void RespawnEnemies()
 	{

@@ -16,9 +16,11 @@ public partial class Level : Node2D
 	Hydration items
 	*/
 	
-	private Node enemyContainer; 
+	[Export] protected Node mainEnemyContainer;
+	private Node enemyContainer;
 	private Node hydrationContainer; 
 	
+	public Godot.Collections.Array<Godot.Node> enemyContainerList;
 	public List<Enemy> enemiesList;
 
 	public Vector2 spawnPosition; 
@@ -37,7 +39,7 @@ public partial class Level : Node2D
 	
 	public override void _Ready()
 	{
-		enemyContainer = GetNode<Node>("Enemy Container");
+		//enemyContainer = GetNode<Node>("Enemy Container");
 		enemiesList = new List<Enemy>(); 
 		
 		spawnPosition = new Vector2(0,0);
@@ -45,31 +47,63 @@ public partial class Level : Node2D
 		AddEnemies(); 
 	}
 	
+	////Adds the list of enemies in the enemy container
+	//public void AddEnemies()
+	//{
+		//if(enemyContainer != null)
+		//{
+			//GD.Print("Looking for children");
+			//Godot.Collections.Array<Node> children = enemyContainer.GetChildren(); 
+	//
+			//foreach (Node child in children)
+			//{
+				//GD.Print("Found children");
+				//
+				//if (child is CharacterBody2D enemyBody)
+				//{
+					//Enemy enemyScript = child as Enemy;
+//
+					//if (enemyScript != null)
+					//{
+						//GD.Print("Enemy script found on: " + child.Name);
+						//enemiesList.Add(enemyScript);
+					//}
+					//else
+					//{
+						//GD.PrintErr("No Enemy script found on: " + child.Name);
+					//}	
+				//}
+			//}
+		//}
+	//}
+	
 	//Adds the list of enemies in the enemy container
 	public void AddEnemies()
 	{
-		if(enemyContainer != null)
+		if(mainEnemyContainer != null)
 		{
-			GD.Print("Looking for children");
-			Godot.Collections.Array<Node> children = enemyContainer.GetChildren(); 
+			GD.Print("Looking for enemy containers");
+			enemyContainerList = mainEnemyContainer.GetChildren();
 	
-			foreach (Node child in children)
+			// Iterate through sub enemy containers
+			foreach (Node container in enemyContainerList)
 			{
-				GD.Print("Found children");
-				
-				if (child is CharacterBody2D enemyBody)
+				foreach (Node child in container.GetChildren())
 				{
-					Enemy enemyScript = child as Enemy;
+					if (child is CharacterBody2D enemyBody)
+					{
+						Enemy enemyScript = child as Enemy;
 
-					if (enemyScript != null)
-					{
-						GD.Print("Enemy script found on: " + child.Name);
-						enemiesList.Add(enemyScript);
+						if (enemyScript != null)
+						{
+							GD.Print("Enemy script found on: " + child.Name);
+							enemiesList.Add(enemyScript);
+						}
+						else
+						{
+							GD.PrintErr("No Enemy script found on: " + child.Name);
+						}	
 					}
-					else
-					{
-						GD.PrintErr("No Enemy script found on: " + child.Name);
-					}	
 				}
 			}
 		}

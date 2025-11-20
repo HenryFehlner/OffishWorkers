@@ -155,12 +155,13 @@ public partial class Enemy : CharacterBody2D
 		currentHp -= damage;
 		GD.Print($"Enemy took {damage} damage from {attacker}! Enemy has {currentHp} HP remaining!");
 		//apply knockback
-		GD.Print($"{impulse * knockbackMultiplier}");
+		//GD.Print($"{impulse * knockbackMultiplier}");
 		Velocity += impulse * knockbackMultiplier;
 		//find velocity cap
 		float cap = Math.Max((impulse * knockbackMultiplier).Length(), maxSpeed);
 		//cap velocity to limit knockback stacking
 		Velocity.Clamp(-cap, cap);
+		GD.Print("Enemy should be dead now ", currentHp <= 0);
 		//check for death
 		if (currentHp <= 0)
 		{
