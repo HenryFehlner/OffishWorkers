@@ -15,6 +15,11 @@ public partial class AutomaticDoor : Node2D
 	{
 		// Start with door inactive
 		doorRigidBody.CollisionLayer = Layers.Bit(Layers.INACTIVE_DOORS);
+		
+		if (closed)
+		{
+			CloseDoor();
+		}
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -25,9 +30,11 @@ public partial class AutomaticDoor : Node2D
 			if (closeTriggerArea.HasOverlappingBodies())
 			{
 				// Activate door
-				doorRigidBody.CollisionLayer = Layers.Bit(Layers.ENVIRONMENT);
-				doorSprite.Visible = true;
-				closed = true;
+				//doorRigidBody.CollisionLayer = Layers.Bit(Layers.ENVIRONMENT);
+				//doorSprite.Visible = true;
+				//closed = true;
+				
+				CloseDoor();
 			}
 		}
 		// Check for the assigned enemy container to be empty
@@ -41,7 +48,15 @@ public partial class AutomaticDoor : Node2D
 				doorSprite.Visible = false;
 				closed = false;
 				triggerable = false;
+				GD.Print(doorRigidBody.CollisionLayer);
 			}
 		}
+	}
+	
+	private void CloseDoor()
+	{
+		doorRigidBody.CollisionLayer = Layers.Bit(Layers.ENVIRONMENT);
+		doorSprite.Visible = true;
+		closed = true;
 	}
 }
