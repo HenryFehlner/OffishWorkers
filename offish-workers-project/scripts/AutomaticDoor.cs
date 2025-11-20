@@ -3,12 +3,13 @@ using System;
 
 public partial class AutomaticDoor : Node2D
 {
-	[Export] protected RigidBody2D doorRigidBody;
-	[Export] protected Area2D closeTriggerArea;
-	[Export] protected Sprite2D doorSprite;
-	[Export] protected Node enemyContainer;
-	private bool closed = false;
-	private bool triggerable = true;
+	[Export] private RigidBody2D doorRigidBody;
+	[Export] private Area2D closeTriggerArea;
+	[Export] private Sprite2D doorSprite;
+	[Export] private Node enemyContainer;
+	
+	[Export] private bool closed = false;	// Determines the starting state of the door
+	private bool triggerable = true;		// Allows the door to only close and reopen once
 	
 	public override void _Ready()
 	{
@@ -18,6 +19,7 @@ public partial class AutomaticDoor : Node2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		// Check for player entering the close trigger
 		if (!closed && triggerable)
 		{
 			if (closeTriggerArea.HasOverlappingBodies())
@@ -28,6 +30,7 @@ public partial class AutomaticDoor : Node2D
 				closed = true;
 			}
 		}
+		// Check for the assigned enemy container to be empty
 		else if (closed && triggerable)
 		{
 			if (enemyContainer.GetChildren().Count == 0)
@@ -37,17 +40,8 @@ public partial class AutomaticDoor : Node2D
 				doorRigidBody.CollisionLayer = Layers.Bit(Layers.INACTIVE_DOORS);
 				doorSprite.Visible = false;
 				closed = false;
-				triggerable = false;	// no longer change state if closed and reopened
+				triggerable = false;
 			}
 		}
 	}
-	
-	//private void OnBodyEntered(Node body)
-	//{
-		//// Check for player in the close trigger
-		//if (body is CharacterBody2D player)
-		//{
-			//GD.Print("player in area");
-		//}
-	//}
 }
