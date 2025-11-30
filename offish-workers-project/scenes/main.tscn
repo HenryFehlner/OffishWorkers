@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c3h7ftnp27g3q"]
+[gd_scene load_steps=12 format=3 uid="uid://c3h7ftnp27g3q"]
 
 [ext_resource type="Script" uid="uid://d1tat4axj1qmg" path="res://scripts/Main.cs" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://mn5jjpdibtdn" path="res://scenes/player.tscn" id="1_o5qli"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cet0lay8i7dcf" path="res://scenes/Levels/tutorial.tscn" id="5_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://cumbtahbbaruw" path="res://assets/audio/Punch3.ogg" id="5_tipki"]
 [ext_resource type="Script" uid="uid://5b32vrmggbif" path="res://scripts/gameplayController.cs" id="6_tefeu"]
+[ext_resource type="AudioStream" uid="uid://c7w2p0kecghq1" path="res://assets/audio/SecondaryAttack.ogg" id="6_tipki"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbgi4"]
 
@@ -35,6 +36,7 @@ DirectionIndicatorPath = null
 punchOneAudio = ExtResource("3_tbgi4")
 punchTwoAudio = ExtResource("4_o6xl0")
 punchThreeAudio = ExtResource("5_tipki")
+secondaryAudio = ExtResource("6_tipki")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.8, 0.8)

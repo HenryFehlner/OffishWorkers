@@ -79,6 +79,7 @@ public partial class Player : CharacterBody2D
 	[Export] private AudioStream punchOneAudio;
 	[Export] private AudioStream punchTwoAudio;
 	[Export] private AudioStream punchThreeAudio;
+	[Export] private AudioStream secondaryAudio;
 	private AudioStreamPlayer audio;
 
 	public override void _Ready()
@@ -439,6 +440,8 @@ public partial class Player : CharacterBody2D
 		//GD.Print(GetTree());
 		//GD.Print(GetTree().CurrentScene);
 		GetTree().CurrentScene.AddChild(proj);
+		audio.Stream = secondaryAudio;
+		audio.Play();
 	}
 	private async Task DodgeRoll()
 	{
