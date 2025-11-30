@@ -75,6 +75,12 @@ public partial class Player : CharacterBody2D
 	private ShaderMaterial playerShaderMat;
 	private bool isFlashing = false;
 
+	// Audio fields
+	[Export] private AudioStream punchOneAudio;
+	[Export] private AudioStream punchTwoAudio;
+	[Export] private AudioStream punchThreeAudio;
+	private AudioStreamPlayer audio;
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -134,6 +140,9 @@ public partial class Player : CharacterBody2D
 		// Get the player sprite and its material for use with flashing
 		playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		playerShaderMat = (ShaderMaterial)playerSprite.Material;
+
+		// Setup Audio node
+		audio = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 	}
 
 
@@ -319,7 +328,9 @@ public partial class Player : CharacterBody2D
 					KnockbackDirection = attackFacingDirection,
 					KnockbackStength = 4000,
 					AffectsTargets = Targets.EnemiesOnly,
-				};
+				};				
+				audio.Stream = punchOneAudio;
+				audio.Play();
 				break;
 			case 1:
 				//start chain timer
@@ -345,6 +356,8 @@ public partial class Player : CharacterBody2D
 					KnockbackStength = 4000,
 					AffectsTargets = Targets.EnemiesOnly,
 				};
+				audio.Stream = punchTwoAudio;
+				audio.Play();
 				break;
 			case 2:
 				//start chain timer
@@ -370,6 +383,8 @@ public partial class Player : CharacterBody2D
 					KnockbackStength = 7000,
 					AffectsTargets = Targets.EnemiesOnly,
 				};
+				audio.Stream = punchThreeAudio;
+				audio.Play();
 				break;
 		}
 
