@@ -80,6 +80,8 @@ public partial class Player : CharacterBody2D
 	[Export] private AudioStream punchTwoAudio;
 	[Export] private AudioStream punchThreeAudio;
 	[Export] private AudioStream secondaryAudio;
+	[Export] private AudioStream damageAudio;
+	[Export] private AudioStream dashAudio;
 	private AudioStreamPlayer audio;
 
 	public override void _Ready()
@@ -459,7 +461,9 @@ public partial class Player : CharacterBody2D
 		Velocity = lastMoveFacingDirection * dodgeForce;
 		playerShaderMat.SetShaderParameter("is_white", true);
 		//GD.Print("Invincible");
-
+		//Dodge audio
+		audio.Stream = dashAudio;
+		audio.Play();
 		// Wait for invincibility cooldown
 		await ToSignal(GetTree().CreateTimer(invincibilityCooldown), SceneTreeTimer.SignalName.Timeout);
 
@@ -473,6 +477,8 @@ public partial class Player : CharacterBody2D
 		await ToSignal(GetTree().CreateTimer(dodgeCooldown), SceneTreeTimer.SignalName.Timeout);
 
 		isDodging = false;
+
+		
 	}
 
 	/// <summary>
@@ -499,6 +505,9 @@ public partial class Player : CharacterBody2D
 		float cap = Math.Max(impulse.Length(), maxSpeed);
 		//cap velocity to limit knockback stacking
 		Velocity.Clamp(-cap, cap);
+		//damage sound effect
+		audio.Stream = damageAudio;
+		audio.Play();
 	}
 	
 	private async void FlashWhite(int count, float duration)
