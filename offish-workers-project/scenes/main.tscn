@@ -41,6 +41,7 @@ punchThreeAudio = ExtResource("5_tipki")
 secondaryAudio = ExtResource("6_tipki")
 damageAudio = ExtResource("7_85g3d")
 dashAudio = ExtResource("8_choun")
+deathAudio = ExtResource("7_85g3d")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.8, 0.8)
