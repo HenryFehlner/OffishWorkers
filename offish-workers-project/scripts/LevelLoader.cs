@@ -3,7 +3,8 @@ using System;
 
 public partial class LevelLoader : Area2D
 {
-    [Export] protected PackedScene targetScene;
+    [Export] protected PackedScene targetLevel;
+    protected Node levelNode;
 
     public override void _Ready()
     {
@@ -13,6 +14,12 @@ public partial class LevelLoader : Area2D
 		Monitoring = true;
         CollisionLayer = Layers.Bit(Layers.ENEMIES);
         CollisionMask = Layers.Bit(Layers.PLAYER) | Layers.Bit(Layers.DODGE);
+        levelNode = GetNode<Node>("/root/Node2D/Level Container/Level");
+        GD.Print("levelNode: "+levelNode);
+        if(levelNode==null)
+        {
+            GD.Print("its null");
+        }
         GD.Print("end of ready");
     }
 
@@ -22,9 +29,13 @@ public partial class LevelLoader : Area2D
     private void NextScene(Node target)
     {
         GD.Print("In NextScene: player=="+target.IsInGroup("player"));
-        if(target.IsInGroup("player") && targetScene!=null)
+        if(target.IsInGroup("player") && targetLevel!=null)
         {
-            GetTree().ChangeSceneToPacked(targetScene);
+            GD.Print("in if statement");//this isnt printing!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //GetTree().ChangeSceneToPacked(targetLevel);
+            levelNode = targetLevel.Instantiate();
+            levelNode.AddChild(new Level());
+            levelNode.QueueFree();
         }
     }
 }
