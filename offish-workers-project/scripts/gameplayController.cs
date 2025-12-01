@@ -17,7 +17,7 @@ public partial class gameplayController : Node2D
 	
 
 	[Export] private PackedScene currentLevel;
-	[Export] private int currentLevelNumber; 
+	[Export] private int currentLevelNumber;
 	
 	//Number of levels we have implemented
 	private int levelAmount = 1;
@@ -28,9 +28,9 @@ public partial class gameplayController : Node2D
 	private List<Enemy> replacementEnemiesList; 
 	
 	
-	private Dictionary<string, PackedScene> enemyPrefabs = new Dictionary<string, PackedScene>(); 
-	private Dictionary<int, PackedScene> levelPrefabs = new Dictionary<int, PackedScene>();
-	
+	private Dictionary<string, PackedScene> enemyPrefabs = new Dictionary<string, PackedScene>();
+	private Dictionary<int, PackedScene> levelPrefabs = new Dictionary<int, PackedScene>();//need to set up
+
 	public override void _Ready()
 	{
 		LoadEnemyScenes(); 
@@ -40,6 +40,11 @@ public partial class gameplayController : Node2D
 		
 		currentLevelNumber = 0; 
 	}
+
+	public void Reset()
+    {
+        currentLevelNumber = 0;
+    }
 	
 	public override void _PhysicsProcess(double delta)
 	{

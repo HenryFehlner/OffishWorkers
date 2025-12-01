@@ -83,7 +83,7 @@ tile_set = ExtResource("5_3axmw")
 
 [node name="endTile" parent="Special Tile Container" instance=ExtResource("3_vqkqv")]
 position = Vector2(400, -102)
-targetScene = ExtResource("8_foowk")
+targetLevel = ExtResource("8_foowk")
 
 [node name="Hydration Container" type="Node2D" parent="."]
 
