@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0q3q6qrmwjmk"]
+[gd_scene load_steps=3 format=3 uid="uid://b0q3q6qrmwjmk"]
 
 [ext_resource type="Script" uid="uid://vtivey2kd84d" path="res://scripts/GameOverMenu.cs" id="1_biyii"]
+[ext_resource type="AudioStream" uid="uid://bv8rd5x5y66xx" path="res://assets/audio/Tom_Scream.ogg" id="2_5034k"]
 
 [node name="DeathScreen" type="Node2D"]
 script = ExtResource("1_biyii")
@@ -23,3 +24,8 @@ horizontal_alignment = 1
 [node name="GameOverMainMenuButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Main Menu"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_5034k")
+volume_db = -4.77
+autoplay = true
