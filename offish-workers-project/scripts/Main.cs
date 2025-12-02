@@ -11,14 +11,14 @@ public partial class Main : Node2D
 		// Get all enemies in the "enemies" group
 		var enemies = GetTree().GetNodesInGroup("enemies");
 
-		foreach (Node enemyNode in enemies)
-		{
-			Enemy enemyScript = enemyNode as Enemy;
-			if (enemyScript != null)
-			{
-				enemyScript.SetPlayer(player);
-			}
-		}   
+		// foreach (Node enemyNode in enemies)
+		// {
+		// 	Enemy enemyScript = enemyNode as Enemy;
+		// 	if (enemyScript != null)
+		// 	{
+		// 		enemyScript.SetPlayer(player);
+		// 	}
+		// }   
 	}
 	
 }

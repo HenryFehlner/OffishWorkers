@@ -1,12 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://c3h7ftnp27g3q"]
+[gd_scene load_steps=13 format=3 uid="uid://c3h7ftnp27g3q"]
 
 [ext_resource type="Script" uid="uid://d1tat4axj1qmg" path="res://scripts/Main.cs" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://mn5jjpdibtdn" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://5b32vrmggbif" path="res://scripts/GameplayController.cs" id="3_jyhfs"]
 [ext_resource type="AudioStream" uid="uid://bn3gdguiryd8" path="res://assets/audio/Punch1.ogg" id="3_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://bflijmfogqhiw" path="res://assets/audio/Punch2.ogg" id="4_o6xl0"]
-[ext_resource type="PackedScene" uid="uid://cet0lay8i7dcf" path="res://scenes/Levels/tutorial.tscn" id="5_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://cumbtahbbaruw" path="res://assets/audio/Punch3.ogg" id="5_tipki"]
-[ext_resource type="Script" uid="uid://5b32vrmggbif" path="res://scripts/gameplayController.cs" id="6_tefeu"]
 [ext_resource type="AudioStream" uid="uid://c7lxw5e2b8a6v" path="res://assets/audio/SecondaryAttack.ogg" id="6_tipki"]
 [ext_resource type="AudioStream" uid="uid://1hk0viket618" path="res://assets/audio/Damage.ogg" id="7_85g3d"]
 [ext_resource type="AudioStream" uid="uid://cgsmgkovb5c6e" path="res://assets/audio/Dash.ogg" id="8_choun"]
@@ -41,7 +40,6 @@ punchThreeAudio = ExtResource("5_tipki")
 secondaryAudio = ExtResource("6_tipki")
 damageAudio = ExtResource("7_85g3d")
 dashAudio = ExtResource("8_choun")
-deathAudio = ExtResource("7_85g3d")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.8, 0.8)
@@ -52,11 +50,8 @@ zoom = Vector2(0.8, 0.8)
 stream = SubResource("AudioStream_jyhfs")
 volume_db = -6.679
 
-[node name="Gameplay Controller" type="Node2D" parent="." node_paths=PackedStringArray("player", "currentLevelScript")]
-script = ExtResource("6_tefeu")
+[node name="Gameplay Controller" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("3_jyhfs")
 player = NodePath("../Player")
-currentLevelScript = NodePath("../Level Container/Level")
 
 [node name="Level Container" type="Node" parent="."]
-
-[node name="Level" parent="Level Container" instance=ExtResource("5_tbgi4")]

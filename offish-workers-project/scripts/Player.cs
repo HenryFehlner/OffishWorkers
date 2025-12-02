@@ -621,6 +621,6 @@ public partial class Player : CharacterBody2D
 	
 	public void MoveTo(Vector2 position)
 	{
-		
+		Position = position;
 	}
 }

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic; 
 using GameStateEnums; 
 
-public partial class gameplayController : Node2D
+public partial class GameplayController : Node2D
 {
 	//PURPOSE OF GAMEPLAY CONTROLLER
 	//respawns and spawns enemies
@@ -12,15 +12,15 @@ public partial class gameplayController : Node2D
 	
 	private GameState currentGameState; 
 	
-	[Export] public CharacterBody2D player; 
-	private Player playerScript; 
+	[Export] public Player player; 
 	
 
-	[Export] private PackedScene currentLevel;
+	private PackedScene currentLevel;//current level should be set in the loadLevel methods
+	private Node2D currentLevelNode;
 	[Export] private int currentLevelNumber;
 	
 	//Number of levels we have implemented
-	private int levelAmount = 1;
+	private int levelAmount = 2;
 	
 	[Export] private Level currentLevelScript;
 
@@ -33,18 +33,16 @@ public partial class gameplayController : Node2D
 
 	public override void _Ready()
 	{
-		LoadEnemyScenes(); 
+		LoadEnemyScenes();
+		LoadLevelInfo();
 		
 		//currentLevelScript = GetNode("../Level Container/Level") as Level;
 		//player = GetNode<CharacterBody2D>("../Player");
 		
-		currentLevelNumber = 0; 
+		currentLevelNumber = 0;
+		//load first level
+		LoadFirstLevel();
 	}
-
-	public void Reset()
-    {
-        currentLevelNumber = 0;
-    }
 	
 	public override void _PhysicsProcess(double delta)
 	{
@@ -63,6 +61,26 @@ public partial class gameplayController : Node2D
 		}
 	}
 
+	private void LoadFirstLevel()
+    {
+        //Increase level number
+		//If the level number > level amount, the game is over
+		//Destroy all of the enemies
+		//Destroy the current scene
+		//Load new scene in 
+		currentLevelNumber++;
+		
+		if (currentLevelNumber > levelAmount)
+		{
+			currentGameState = GameState.Finished; 
+			return; 
+		}
+		
+		currentLevelScript = LoadLevelScene(); 	
+		//playerScript.MoveTo(currentLevelScript.SpawnPosition);
+		player.MoveTo(Vector2.Zero);
+    }
+
 	//Loads in a new level when the end tile of a level is reached
 	public void LoadNextLevel()
 	{
@@ -71,7 +89,7 @@ public partial class gameplayController : Node2D
 		//Destroy all of the enemies
 		//Destroy the current scene
 		//Load new scene in 
-		currentLevelNumber++; 
+		currentLevelNumber++;
 		
 		if (currentLevelNumber > levelAmount)
 		{
@@ -79,16 +97,20 @@ public partial class gameplayController : Node2D
 			return; 
 		}
 		
-		currentEnemiesList = currentLevelScript.EnemiesList; 
-		
-		foreach (Enemy enemyData in currentEnemiesList)
-		{
-			CharacterBody2D enemyBody = (CharacterBody2D)enemyData.GetParent();
-			enemyBody.QueueFree(); 
-		}
+		//i dont think this is neccessary, the whole level is unloaded
+		// if(currentLevelScript.EnemiesList!=null)
+		// {
+		// 	currentEnemiesList = currentLevelScript.EnemiesList; 
+			
+		// 	foreach (Enemy enemyData in currentEnemiesList)
+		// 	{
+		// 		CharacterBody2D enemyBody = (CharacterBody2D)enemyData.GetParent();
+		// 		enemyBody.QueueFree(); 
+		// 	}
+		// }
 
 		currentLevelScript = LoadLevelScene(); 	
-		playerScript.MoveTo(currentLevelScript.SpawnPosition);
+		player.MoveTo(currentLevelScript.SpawnPosition);
 	}
 	
 	//Loads in the level from the packed scene dictionary 
@@ -96,13 +118,25 @@ public partial class gameplayController : Node2D
 	private Level LoadLevelScene()
 	{
 		currentLevel = levelPrefabs[currentLevelNumber];
+
+		//remove old level
+		if(currentLevelNode != null && currentLevelNode.IsInsideTree())
+        {
+            currentLevelNode.QueueFree();
+        }		
+
 		Node2D levelInstance = (Node2D)currentLevel.Instantiate(); 
-		GetNode<Node2D>("../Level Container").AddChild(levelInstance);
+		GetNode<Node>("../Level Container").AddChild(levelInstance);
+
+		//need to give each enemy a ref to the player
+		//enemy.SetPlayer(player)
+
+		currentLevelNode = levelInstance;
 		
 		Level newLevelScript = levelInstance as Level;
-		
-		return newLevelScript; 
+		return newLevelScript;
 	}
+
 	
 
 	//Only touch this when we have new enemies to add
@@ -114,7 +148,9 @@ public partial class gameplayController : Node2D
 	//Only touch this when we have new levels to add
 	private void LoadLevelInfo()
 	{
-		levelPrefabs[0] = GD.Load<PackedScene>("res://scenes/Levels/Sprint3Level.tscn");
+		//the first level is index 1, second is index 2, and so on
+		levelPrefabs[1] = GD.Load<PackedScene>("res://scenes/Levels/tutorial.tscn");
+		levelPrefabs[2] = GD.Load<PackedScene>("res://scenes/Levels/Sprint3Level.tscn");
 	}
 	
 	//Called when player dies
@@ -179,7 +215,6 @@ public partial class gameplayController : Node2D
 		
 		Enemy newEnemyScript = enemyInstance as Enemy; 
 		GD.Print("Enemy Script: " + newEnemyScript);
-		newEnemyScript.SetPlayer(player);
 		
 		return newEnemyScript; 
 	}

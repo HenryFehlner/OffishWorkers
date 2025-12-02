@@ -5,7 +5,7 @@ public partial class exitTile : CollisionShape2D
 {
 	[Signal] public delegate void EndTileReachedEventHandler();
 	
-	private gameplayController gameplayControllerScript; 
+	private GameplayController gameplayControllerScript; 
 	//private GameplayController gameplayControllerScript;
 	
 	public override void _Ready()
@@ -13,7 +13,7 @@ public partial class exitTile : CollisionShape2D
 		// This was giving a build error so I commented it -henry
 		if (gameplayControllerScript == null)
 		{
-			gameplayControllerScript = GetNode("../../Gameplay Controller") as gameplayController;
+			gameplayControllerScript = GetNode("/root/Node2D/Gameplay Controller") as GameplayController;
 		}
 	}
 		

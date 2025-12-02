@@ -43,9 +43,9 @@ public partial class Enemy : CharacterBody2D
 		get { return isDead; }
 	}
 	
-	public void SetPlayer(CharacterBody2D player)
+	private void SetPlayer()
 	{
-		_player = player;
+		_player = GetNode<CharacterBody2D>("/root/Node2D/Player");
 	}
 
 	public override void _Ready()
@@ -70,6 +70,9 @@ public partial class Enemy : CharacterBody2D
 		{
 			enemyType = "punchingBag";
 		}
+
+		//find player
+		SetPlayer();
 		
 		healthBar = GetNode<ProgressBar>("HealthBar");
 		healthBar.MaxValue = maxHp; 

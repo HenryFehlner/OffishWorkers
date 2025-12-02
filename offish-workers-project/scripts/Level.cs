@@ -23,7 +23,7 @@ public partial class Level : Node2D
 	public Godot.Collections.Array<Godot.Node> enemyContainerList;
 	public List<Enemy> enemiesList;
 
-	public Vector2 spawnPosition; 
+	public Vector2 spawnPosition = Vector2.Zero;
 	
 	//Enemies List property
 	public List<Enemy> EnemiesList
