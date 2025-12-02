@@ -15,7 +15,9 @@ public partial class AutomaticDoor : Node2D
 	{
 		// Start with door inactive
 		doorRigidBody.CollisionLayer = Layers.Bit(Layers.INACTIVE_DOORS);
-		
+		//prevent dashing through trigger
+		closeTriggerArea.CollisionMask = Layers.Bit(Layers.PLAYER) | Layers.Bit(Layers.DODGE);
+
 		if (closed)
 		{
 			CloseDoor();

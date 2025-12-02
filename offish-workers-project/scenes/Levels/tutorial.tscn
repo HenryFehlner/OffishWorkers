@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dfhrolpisuj4x" path="res://scenes/Other Entities/hydrationRestoreObjectSingleUse.tscn" id="5_84v0n"]
 [ext_resource type="PackedScene" uid="uid://tabhx5sfvsqp" path="res://scenes/Enemies/BomberEnemy.tscn" id="6_72fly"]
 [ext_resource type="Script" uid="uid://bou5nvbr6rsg1" path="res://scripts/hydrationRestoreObject.cs" id="6_xlhf3"]
-[ext_resource type="PackedScene" uid="uid://dnmc1yxx66u8f" path="res://scenes/Levels/Sprint3Level.tscn" id="8_foowk"]
+[ext_resource type="Script" uid="uid://y0gbwrdbpkmy" path="res://scripts/LevelLoader.cs" id="8_foowk"]
 [ext_resource type="PackedScene" uid="uid://di3byu7o37wy" path="res://scenes/Other Entities/hydrationRestoreObjectReusable.tscn" id="9_66ia6"]
 [ext_resource type="TileSet" uid="uid://b50hgt4uq8fh8" path="res://assets/tilesets/sewer_base.tres" id="9_kvmro"]
 [ext_resource type="Texture2D" uid="uid://x7ua7tfwxep6" path="res://assets/new tiles/tileset_hydration.png" id="10_d04n5"]
@@ -82,8 +82,8 @@ tile_set = ExtResource("5_3axmw")
 [node name="Special Tile Container" type="Node" parent="."]
 
 [node name="endTile" parent="Special Tile Container" instance=ExtResource("3_vqkqv")]
-position = Vector2(400, -102)
-targetLevel = ExtResource("8_foowk")
+position = Vector2(6878, -2277)
+script = ExtResource("8_foowk")
 
 [node name="Hydration Container" type="Node2D" parent="."]
 
@@ -105,6 +105,7 @@ position = Vector2(5943, -2668)
 position = Vector2(6018, -1908)
 
 [node name="hydration big box" type="Area2D" parent="Hydration Container"]
+position = Vector2(-1, 0)
 script = ExtResource("6_xlhf3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hydration Container/hydration big box"]
