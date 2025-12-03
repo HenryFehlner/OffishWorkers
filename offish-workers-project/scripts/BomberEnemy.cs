@@ -22,9 +22,9 @@ public partial class BomberEnemy : Enemy
 	{
 		// attack
 		if(_player==null)
-        {
-            GD.Print("player is null");
-        }
+		{
+			GD.Print("player is null");
+		}
 		if (GlobalPosition.DistanceTo(_player.GlobalPosition) < attackRadius)
 		{
 			// only start the timer when entering attack radius for the first time
