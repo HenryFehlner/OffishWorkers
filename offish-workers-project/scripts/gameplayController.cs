@@ -62,8 +62,8 @@ public partial class GameplayController : Node2D
 	}
 
 	private void LoadFirstLevel()
-    {
-        //Increase level number
+	{
+		//Increase level number
 		//If the level number > level amount, the game is over
 		//Destroy all of the enemies
 		//Destroy the current scene
@@ -79,7 +79,7 @@ public partial class GameplayController : Node2D
 		currentLevelScript = LoadLevelScene(); 	
 		//playerScript.MoveTo(currentLevelScript.SpawnPosition);
 		player.MoveTo(Vector2.Zero);
-    }
+	}
 
 	//Loads in a new level when the end tile of a level is reached
 	public void LoadNextLevel()
@@ -121,9 +121,9 @@ public partial class GameplayController : Node2D
 
 		//remove old level
 		if(currentLevelNode != null && currentLevelNode.IsInsideTree())
-        {
-            currentLevelNode.QueueFree();
-        }		
+		{
+			currentLevelNode.QueueFree();
+		}		
 
 		Node2D levelInstance = (Node2D)currentLevel.Instantiate(); 
 		GetNode<Node>("../Level Container").AddChild(levelInstance);
