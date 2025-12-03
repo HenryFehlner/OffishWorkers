@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d1tat4axj1qmg" path="res://scripts/Main.cs" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://mn5jjpdibtdn" path="res://scenes/player.tscn" id="1_o5qli"]
-[ext_resource type="Script" uid="uid://5b32vrmggbif" path="res://scripts/GameplayController.cs" id="3_jyhfs"]
+[ext_resource type="Script" uid="uid://0f2u5j8lufbn" path="res://scripts/gameplayController.cs" id="3_jyhfs"]
 [ext_resource type="AudioStream" uid="uid://bn3gdguiryd8" path="res://assets/audio/Punch1.ogg" id="3_tbgi4"]
 [ext_resource type="AudioStream" uid="uid://bflijmfogqhiw" path="res://assets/audio/Punch2.ogg" id="4_o6xl0"]
 [ext_resource type="AudioStream" uid="uid://cumbtahbbaruw" path="res://assets/audio/Punch3.ogg" id="5_tipki"]

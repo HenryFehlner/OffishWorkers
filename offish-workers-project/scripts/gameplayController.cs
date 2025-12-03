@@ -1,16 +1,16 @@
 using Godot;
 using System;
-using System.Collections.Generic; 
-using GameStateEnums; 
+using System.Collections.Generic;
+using GameStateEnums;
 
-public partial class GameplayController : Node2D
+public partial class gameplayController : Node2D
 {
-	//PURPOSE OF GAMEPLAY CONTROLLER
+    //PURPOSE OF GAMEPLAY CONTROLLER
 	//respawns and spawns enemies
 	//loads levels
 	//manages game state
 	
-	private GameState currentGameState; 
+	private GameState currentGameState;
 	
 	[Export] public Player player; 
 	
@@ -218,6 +218,4 @@ public partial class GameplayController : Node2D
 		
 		return newEnemyScript; 
 	}
-	
-
 }

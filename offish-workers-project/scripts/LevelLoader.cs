@@ -4,7 +4,7 @@ using System;
 public partial class LevelLoader : Area2D
 {
 	protected Node levelNode;
-	protected GameplayController gameplayController;
+	protected gameplayController gameplayController;
 
 	public override void _Ready()
 	{
@@ -19,7 +19,7 @@ public partial class LevelLoader : Area2D
 		CollisionMask = Layers.Bit(Layers.PLAYER) | Layers.Bit(Layers.DODGE);
 
 		levelNode = GetNode<Node>("/root/Node2D/Level Container/Level");
-		gameplayController = GetNode<GameplayController>("/root/Node2D/Gameplay Controller");
+		gameplayController = GetNode<gameplayController>("/root/Node2D/Gameplay Controller");
 		GD.Print("levelNode: "+levelNode);
 		GD.Print("gameplayController: "+gameplayController);
 
@@ -39,6 +39,6 @@ public partial class LevelLoader : Area2D
 
 		GD.Print("In NextScene: player=="+target.IsInGroup("player"));
 		
-		gameplayController.CallDeferred(nameof(GameplayController.LoadNextLevel));
+		gameplayController.CallDeferred(nameof(gameplayController.LoadNextLevel));
 	}
 }
