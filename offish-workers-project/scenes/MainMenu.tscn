@@ -39,6 +39,10 @@ text = "Start Game"
 layout_mode = 2
 text = "Settings"
 
+[node name="CreditsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Credits"
+
 [node name="ExitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Exit"
@@ -56,6 +60,25 @@ text = "Movement:  W, A, S, D / Left Stick
 Primary Attack: LMB / RT
 Secondary Attack: RMB / RB
 Dodge: Space / LT"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="CreditsPopup" type="AcceptDialog" parent="."]
+title = "Credits"
+
+[node name="CreditsInfoLabel" type="Label" parent="CreditsPopup"]
+custom_minimum_size = Vector2(400, 300)
+offset_right = 400.0
+offset_bottom = 312.0
+theme_override_font_sizes/font_size = 30
+text = "Offish Workers:
+
+Emma Wood
+Mateo Alves
+Henry Fehlner
+Thomas Anderson
+Nate Goff"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
