@@ -20,7 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://baudx10vu1h5u" path="res://assets/temporary instructions/Instruction Dodge.png" id="15_d04n5"]
 [ext_resource type="Texture2D" uid="uid://drj6kn3ahcmaa" path="res://assets/temporary instructions/Instruction Attack.png" id="16_3axmw"]
 [ext_resource type="Texture2D" uid="uid://27gt5reacviw" path="res://assets/temporary instructions/Instruction Ranged.png" id="17_foowk"]
-[ext_resource type="PackedScene" uid="uid://cbhrll0reau4y" path="res://scenes/Other Entities/automaticDoor.tscn" id="20_3axmw"]
+[ext_resource type="PackedScene" path="res://scenes/Other Entities/automaticDoor.tscn" id="20_3axmw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lm3gn"]
 texture = ExtResource("5_foowk")
@@ -238,28 +238,28 @@ position = Vector2(5790, -2521)
 [node name="Temp Instruction Container" type="Node2D" parent="."]
 
 [node name="InstructionMove" type="Sprite2D" parent="Temp Instruction Container"]
-position = Vector2(106.00001, -214.00002)
-scale = Vector2(1.5, 1.5)
+position = Vector2(335, -322.00003)
+scale = Vector2(5, 5)
 texture = ExtResource("13_ht328")
 
 [node name="InstructionHydration" type="Sprite2D" parent="Temp Instruction Container"]
-position = Vector2(2144, -536)
-scale = Vector2(1.5, 1.5)
+position = Vector2(2167.0002, -775)
+scale = Vector2(5, 5)
 texture = ExtResource("14_pxjks")
 
 [node name="InstructionDodge" type="Sprite2D" parent="Temp Instruction Container"]
-position = Vector2(3517, -214)
-scale = Vector2(1.5, 1.5)
+position = Vector2(3512.0002, -321.00003)
+scale = Vector2(5, 5)
 texture = ExtResource("15_d04n5")
 
 [node name="InstructionAttack" type="Sprite2D" parent="Temp Instruction Container"]
-position = Vector2(4443, -2393)
-scale = Vector2(1.5, 1.5)
+position = Vector2(4368.0005, -2488.0002)
+scale = Vector2(5, 5)
 texture = ExtResource("16_3axmw")
 
 [node name="InstructionRanged" type="Sprite2D" parent="Temp Instruction Container"]
-position = Vector2(4828, -2391)
-scale = Vector2(1.5, 1.5)
+position = Vector2(4909, -2484.0002)
+scale = Vector2(5, 5)
 texture = ExtResource("17_foowk")
 
 [node name="AutomaticDoorContainer" type="Node" parent="."]
@@ -270,5 +270,5 @@ enemyContainer = NodePath("../../Enemy Container/Final Room")
 
 [node name="finalRoomExit" parent="AutomaticDoorContainer" node_paths=PackedStringArray("enemyContainer") instance=ExtResource("20_3axmw")]
 position = Vector2(6158, -2272)
-enemyContainer = NodePath("../../Enemy Container/Final Room")
 closed = true
+enemyContainer = NodePath("../../Enemy Container/Final Room")
