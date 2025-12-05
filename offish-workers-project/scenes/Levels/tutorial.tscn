@@ -236,10 +236,6 @@ position = Vector2(5805, -2034)
 [node name="BomberEnemy" parent="Enemy Container/Final Room" instance=ExtResource("6_72fly")]
 position = Vector2(5790, -2521)
 
-[node name="PlaceholderFish" type="Sprite2D" parent="Enemy Container/Final Room"]
-position = Vector2(3964, -2635)
-texture = ExtResource("16_lm3gn")
-
 [node name="Temp Instruction Container" type="Node2D" parent="."]
 
 [node name="InstructionMove" type="Sprite2D" parent="Temp Instruction Container"]
@@ -277,3 +273,7 @@ enemyContainer = NodePath("../../Enemy Container/Final Room")
 position = Vector2(6158, -2272)
 enemyContainer = NodePath("../../Enemy Container/Final Room")
 closed = true
+
+[node name="PlaceholderFish" type="Sprite2D" parent="."]
+position = Vector2(3964, -2635)
+texture = ExtResource("16_lm3gn")
