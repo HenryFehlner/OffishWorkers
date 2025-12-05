@@ -28,9 +28,12 @@ public partial class Projectile : Node2D
 		//add sprite
 		if(config.Texture!=null)
 		{
+			GD.Print("Displaying projectile.");
 			sprite = new Sprite2D();
+			sprite.Position = Position;
 			sprite.Texture = config.Texture;
 			sprite.Rotation = 0f;//might need to change?
+			sprite.Scale = config.TextureScale;
 			AddChild(sprite);
 		}
 
@@ -53,6 +56,7 @@ public partial class Projectile : Node2D
 			KnockbackDirection = movementDirection,
 			KnockbackStength = config.KnockbackStength,
 			AffectsTargets = config.AffectsTargets,
+			DrawHitBox = false,
 		});
 		//AddChild(hitbox);
 
@@ -135,6 +139,8 @@ public struct ProjectileConfig
 	public Vector2 HitboxDirection;
 	//sprite
 	public Texture2D Texture;
+	//sprite scale
+	public Vector2 TextureScale;
 	//how much damage is inflicted
 	public int Damage;
 	//how many seconds the projectile persists (negative to avoid despawns)

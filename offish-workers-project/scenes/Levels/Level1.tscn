@@ -116,31 +116,33 @@ position = Vector2(801, 241)
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
-[node name="BaseEnemy" parent="Enemy Container" instance=ExtResource("7_8nqap")]
+[node name="Room Placeholder" type="Node" parent="Enemy Container"]
+
+[node name="BaseEnemy" parent="Enemy Container/Room Placeholder" instance=ExtResource("7_8nqap")]
 position = Vector2(758, -77)
 
-[node name="BomberEnemy" parent="Enemy Container" instance=ExtResource("8_u4ox6")]
+[node name="BomberEnemy" parent="Enemy Container/Room Placeholder" instance=ExtResource("8_u4ox6")]
 position = Vector2(518, -706)
 
-[node name="BomberEnemy2" parent="Enemy Container" instance=ExtResource("8_u4ox6")]
+[node name="BomberEnemy2" parent="Enemy Container/Room Placeholder" instance=ExtResource("8_u4ox6")]
 position = Vector2(-866, -691)
 
-[node name="BaseEnemy2" parent="Enemy Container" instance=ExtResource("7_8nqap")]
+[node name="BaseEnemy2" parent="Enemy Container/Room Placeholder" instance=ExtResource("7_8nqap")]
 position = Vector2(-1112, -195)
 
-[node name="RangedEnemy" parent="Enemy Container" instance=ExtResource("9_o8yur")]
+[node name="RangedEnemy" parent="Enemy Container/Room Placeholder" instance=ExtResource("9_o8yur")]
 position = Vector2(-352, -137)
 
-[node name="RangedEnemy2" parent="Enemy Container" instance=ExtResource("9_o8yur")]
+[node name="RangedEnemy2" parent="Enemy Container/Room Placeholder" instance=ExtResource("9_o8yur")]
 position = Vector2(558, 991)
 
-[node name="BomberEnemy3" parent="Enemy Container" instance=ExtResource("8_u4ox6")]
+[node name="BomberEnemy3" parent="Enemy Container/Room Placeholder" instance=ExtResource("8_u4ox6")]
 position = Vector2(-873, 585)
 
-[node name="BaseEnemy3" parent="Enemy Container" instance=ExtResource("7_8nqap")]
+[node name="BaseEnemy3" parent="Enemy Container/Room Placeholder" instance=ExtResource("7_8nqap")]
 position = Vector2(626, 319)
 
-[node name="BaseEnemy4" parent="Enemy Container" instance=ExtResource("7_8nqap")]
+[node name="BaseEnemy4" parent="Enemy Container/Room Placeholder" instance=ExtResource("7_8nqap")]
 position = Vector2(998, 374)
 
 [node name="Misc Objects" type="Node2D" parent="."]

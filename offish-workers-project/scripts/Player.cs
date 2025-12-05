@@ -331,6 +331,7 @@ public partial class Player : CharacterBody2D
 					KnockbackDirection = attackFacingDirection,
 					KnockbackStength = 4000,
 					AffectsTargets = Targets.EnemiesOnly,
+					DrawHitBox = true,
 				};				
 				audio.Stream = punchOneAudio;
 				audio.Play();
@@ -358,6 +359,7 @@ public partial class Player : CharacterBody2D
 					KnockbackDirection = attackFacingDirection,
 					KnockbackStength = 4000,
 					AffectsTargets = Targets.EnemiesOnly,
+					DrawHitBox = true,
 				};
 				audio.Stream = punchTwoAudio;
 				audio.Play();
@@ -385,6 +387,7 @@ public partial class Player : CharacterBody2D
 					KnockbackDirection = attackFacingDirection,
 					KnockbackStength = 7000,
 					AffectsTargets = Targets.EnemiesOnly,
+					DrawHitBox = true,
 				};
 				audio.Stream = punchThreeAudio;
 				audio.Play();
@@ -425,6 +428,8 @@ public partial class Player : CharacterBody2D
 			Owner = this,
 			ParentNode = this,
 			HitboxDirection = attackFacingDirection,
+			Texture = GD.Load<Texture2D>("res://assets/sprites/sprite-puddle.png"),
+			TextureScale = new Vector2(2f, 2f),
 			Damage = rangedDamage,
 			Duration = 5,
 			Shape = hitboxShape,

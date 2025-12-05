@@ -236,6 +236,7 @@ public partial class Enemy : CharacterBody2D
 			KnockbackDirection = attackFacingDirection,
 			KnockbackStength = 25,
 			AffectsTargets = Targets.PlayerOnly,
+			DrawHitBox = true,
 		};
 
 		//to have attacking move the player, add an impulse here

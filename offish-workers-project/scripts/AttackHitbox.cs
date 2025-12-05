@@ -58,13 +58,16 @@ public partial class AttackHitbox : Area2D
 		knockbackImpulse = config.KnockbackDirection * config.KnockbackStength;
 
 		//visible rectangle for attack feedback during playtest (this will only work correctly with rectangles)
-		ColorRect visRect = new ColorRect
+		if(config.DrawHitBox)
 		{
-			Color = new Color(1, 1, 1, .3f),
-			Size = config.Shape.GetRect().Size,
-			Position = config.Shape.GetRect().Size / -2f
-		};
-		AddChild(visRect);
+			ColorRect visRect = new ColorRect
+			{
+				Color = new Color(1, 1, 1, .3f),
+				Size = config.Shape.GetRect().Size,
+				Position = config.Shape.GetRect().Size / -2f
+			};
+			AddChild(visRect);
+		}
 
 		//add collision shape
 		AddChild(new CollisionShape2D { Shape = (Shape2D)config.Shape.Duplicate(true) });
@@ -168,4 +171,5 @@ public struct AttackHitboxConfig
 	public float KnockbackStength;
 	//what kind of entities can be hit
 	public Targets AffectsTargets;
+	public bool DrawHitBox;
 }

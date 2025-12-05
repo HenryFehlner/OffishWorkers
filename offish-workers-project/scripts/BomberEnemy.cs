@@ -95,6 +95,7 @@ public partial class BomberEnemy : Enemy
 			KnockbackDirection = attackFacingDirection,
 			KnockbackStength = 25,
 			AffectsTargets = Targets.PlayerOnly,
+			DrawHitBox = true,
 		};
 
 		AttackHitbox hitbox = AttackHitbox.Create(attackConfig);
