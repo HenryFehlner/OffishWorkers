@@ -116,35 +116,35 @@ position = Vector2(801, 241)
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
-[node name="Misc Objects" type="Node2D" parent="."]
-
-[node name="ToiletEnterTile" type="Sprite2D" parent="."]
-position = Vector2(1, -168)
-texture = ExtResource("5_7orvs")
-
-[node name="BaseEnemy" parent="." instance=ExtResource("7_8nqap")]
+[node name="BaseEnemy" parent="Enemy Container" instance=ExtResource("7_8nqap")]
 position = Vector2(758, -77)
 
-[node name="BomberEnemy" parent="." instance=ExtResource("8_u4ox6")]
+[node name="BomberEnemy" parent="Enemy Container" instance=ExtResource("8_u4ox6")]
 position = Vector2(518, -706)
 
-[node name="BomberEnemy2" parent="." instance=ExtResource("8_u4ox6")]
+[node name="BomberEnemy2" parent="Enemy Container" instance=ExtResource("8_u4ox6")]
 position = Vector2(-866, -691)
 
-[node name="BaseEnemy2" parent="." instance=ExtResource("7_8nqap")]
+[node name="BaseEnemy2" parent="Enemy Container" instance=ExtResource("7_8nqap")]
 position = Vector2(-1112, -195)
 
-[node name="RangedEnemy" parent="." instance=ExtResource("9_o8yur")]
+[node name="RangedEnemy" parent="Enemy Container" instance=ExtResource("9_o8yur")]
 position = Vector2(-352, -137)
 
-[node name="RangedEnemy2" parent="." instance=ExtResource("9_o8yur")]
+[node name="RangedEnemy2" parent="Enemy Container" instance=ExtResource("9_o8yur")]
 position = Vector2(558, 991)
 
-[node name="BomberEnemy3" parent="." instance=ExtResource("8_u4ox6")]
+[node name="BomberEnemy3" parent="Enemy Container" instance=ExtResource("8_u4ox6")]
 position = Vector2(-873, 585)
 
-[node name="BaseEnemy3" parent="." instance=ExtResource("7_8nqap")]
+[node name="BaseEnemy3" parent="Enemy Container" instance=ExtResource("7_8nqap")]
 position = Vector2(626, 319)
 
-[node name="BaseEnemy4" parent="." instance=ExtResource("7_8nqap")]
+[node name="BaseEnemy4" parent="Enemy Container" instance=ExtResource("7_8nqap")]
 position = Vector2(998, 374)
+
+[node name="Misc Objects" type="Node2D" parent="."]
+
+[node name="ToiletEnterTile" type="Sprite2D" parent="Misc Objects"]
+position = Vector2(1, -168)
+texture = ExtResource("5_7orvs")

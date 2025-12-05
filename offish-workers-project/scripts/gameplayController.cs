@@ -150,7 +150,7 @@ public partial class gameplayController : Node2D
 	{
 		//the first level is index 1, second is index 2, and so on
 		levelPrefabs[1] = GD.Load<PackedScene>("res://scenes/Levels/tutorial.tscn");
-		levelPrefabs[2] = GD.Load<PackedScene>("res://scenes/Levels/Sprint3Level.tscn");
+		levelPrefabs[2] = GD.Load<PackedScene>("res://scenes/Levels/Level1.tscn");
 	}
 	
 	//Called when player dies
