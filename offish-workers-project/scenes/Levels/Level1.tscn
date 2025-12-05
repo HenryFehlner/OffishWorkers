@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://b25emqiku41yc"]
+[gd_scene load_steps=12 format=4 uid="uid://b25emqiku41yc"]
 
 [ext_resource type="Script" uid="uid://byh6vmbmtd65i" path="res://scripts/Level.cs" id="1_lrl65"]
 [ext_resource type="Texture2D" uid="uid://c1v1og5mfhh7l" path="res://assets/tiles/New Office Tiles.png" id="2_7orvs"]
@@ -6,6 +6,9 @@
 [ext_resource type="TileSet" uid="uid://bxrwfcfl1il53" path="res://assets/tilesets/hydration_tileset.tres" id="3_vfbtg"]
 [ext_resource type="PackedScene" uid="uid://motp06sj1kia" path="res://scenes/testHydrationRestoreObject.tscn" id="4_ecr63"]
 [ext_resource type="Texture2D" uid="uid://b1re4v3ssa6kc" path="res://assets/tiles/Toilet Enter Tile.png" id="5_7orvs"]
+[ext_resource type="PackedScene" uid="uid://cjj22ar46xc3m" path="res://scenes/Enemies/BaseEnemy.tscn" id="7_8nqap"]
+[ext_resource type="PackedScene" uid="uid://tabhx5sfvsqp" path="res://scenes/Enemies/BomberEnemy.tscn" id="8_u4ox6"]
+[ext_resource type="PackedScene" uid="uid://diwx8m12hpinb" path="res://scenes/Enemies/RangedEnemy.tscn" id="9_o8yur"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vfbtg"]
 texture = ExtResource("2_7orvs")
@@ -113,8 +116,35 @@ position = Vector2(801, 241)
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
+[node name="BaseEnemy" parent="Enemy Container" instance=ExtResource("7_8nqap")]
+position = Vector2(758, -77)
+
+[node name="BomberEnemy" parent="Enemy Container" instance=ExtResource("8_u4ox6")]
+position = Vector2(518, -706)
+
+[node name="BomberEnemy2" parent="Enemy Container" instance=ExtResource("8_u4ox6")]
+position = Vector2(-866, -691)
+
+[node name="BaseEnemy2" parent="Enemy Container" instance=ExtResource("7_8nqap")]
+position = Vector2(-1112, -195)
+
+[node name="RangedEnemy" parent="Enemy Container" instance=ExtResource("9_o8yur")]
+position = Vector2(-352, -137)
+
+[node name="RangedEnemy2" parent="Enemy Container" instance=ExtResource("9_o8yur")]
+position = Vector2(558, 991)
+
+[node name="BomberEnemy3" parent="Enemy Container" instance=ExtResource("8_u4ox6")]
+position = Vector2(-873, 585)
+
+[node name="BaseEnemy3" parent="Enemy Container" instance=ExtResource("7_8nqap")]
+position = Vector2(626, 319)
+
+[node name="BaseEnemy4" parent="Enemy Container" instance=ExtResource("7_8nqap")]
+position = Vector2(998, 374)
+
 [node name="Misc Objects" type="Node2D" parent="."]
 
-[node name="ToiletEnterTile" type="Sprite2D" parent="."]
+[node name="ToiletEnterTile" type="Sprite2D" parent="Misc Objects"]
 position = Vector2(1, -168)
 texture = ExtResource("5_7orvs")
