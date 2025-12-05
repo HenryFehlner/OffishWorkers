@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public partial class Projectile : Node2D
 {
 	//set from projectile config
+	protected Sprite2D sprite;
 	protected float speed;
 	protected Vector2 movementDirection;
 	protected int pierce;//0 stops at first hit, 1 pierces through the first target and is removed on hitting the second, etc.
@@ -24,6 +25,15 @@ public partial class Projectile : Node2D
 	}
 	public void Configure(ProjectileConfig config)
 	{
+		//add sprite
+		if(config.Texture!=null)
+		{
+			sprite = new Sprite2D();
+			sprite.Texture = config.Texture;
+			sprite.Rotation = 0f;//might need to change?
+			AddChild(sprite);
+		}
+
 		timeRemaining = config.Duration;
 
 		speed = config.Speed;
@@ -123,6 +133,8 @@ public struct ProjectileConfig
 	public Node ParentNode;
 	//the direction the hitbox is facing
 	public Vector2 HitboxDirection;
+	//sprite
+	public Texture2D Texture;
 	//how much damage is inflicted
 	public int Damage;
 	//how many seconds the projectile persists (negative to avoid despawns)
