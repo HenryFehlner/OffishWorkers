@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c0i11isk21cbo" path="res://scripts/Player.cs" id="1_3vyb7"]
 [ext_resource type="Shader" uid="uid://bx5bqlm4lu1tr" path="res://shaders/flash.gdshader" id="1_g2els"]
-[ext_resource type="Texture2D" uid="uid://bml8quh8esr3w" path="res://assets/sprites/playerAnimation/placeholder-fish.png" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://cfyk8u7tf5ksj" path="res://assets/sprites/Arrow.png" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://dcvo5m6ard5is" path="res://assets/sprites/Fish Sprite.png" id="4_qlg0r"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_sh265"]
 
@@ -25,7 +25,7 @@ shader_parameter/is_white = false
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_qhqgy")
+"texture": ExtResource("4_qlg0r")
 }],
 "loop": true,
 "name": &"default",
@@ -47,7 +47,7 @@ mesh = SubResource("SphereMesh_sh265")
 texture = SubResource("GradientTexture2D_g2els")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(0.74999994, 0.74999994)
+scale = Vector2(0.7499999, 0.7499999)
 shape = SubResource("RectangleShape2D_dqkch")
 
 [node name="DirectionIndicator" type="Sprite2D" parent="."]
@@ -57,6 +57,7 @@ texture = ExtResource("4_dqkch")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_qlg0r")
-scale = Vector2(0.23099998, 0.23099998)
+position = Vector2(-0.20000002, -2.0000002)
+scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_dqkch")
 frame_progress = 0.79793316

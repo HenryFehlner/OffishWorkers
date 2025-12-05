@@ -31,7 +31,8 @@ public partial class hydrationRestoreObject : Area2D
 		Vector2 pos,
 		bool isReusable = false,
 		int restoreAmount = 30,
-		string filePath = "res://scenes/Other Entities/hydrationRestoreObjectSingleUse.tscn"
+		string filePath = "res://scenes/Other Entities/hydrationRestoreObjectSingleUse.tscn",
+		bool isBlood = true
 		)
 	{
 		//create object
@@ -42,6 +43,7 @@ public partial class hydrationRestoreObject : Area2D
 		obj.isReusable = isReusable;
 		obj.restoreAmount = restoreAmount;
 		obj.GlobalPosition = pos;
+		obj.isBlood = isBlood;
 		
 		//return object
 		return obj;
@@ -53,7 +55,12 @@ public partial class hydrationRestoreObject : Area2D
 
 		if (isBlood)
 		{
-			isReusable = false;
+			Sprite2D sprite2D = GetNode<Sprite2D>("Sprite2D");
+			Texture2D texture = GD.Load<Texture2D>("res://assets/sprites/Blood Puddle.png");
+			
+			if (texture != null){
+				sprite2D.Texture = texture; 
+			}
 		}
 
 		CollisionLayer = Layers.Bit(Layers.ENVIRONMENT);
