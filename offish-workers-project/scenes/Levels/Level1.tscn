@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://b25emqiku41yc"]
+[gd_scene load_steps=13 format=4 uid="uid://b25emqiku41yc"]
 
 [ext_resource type="Script" uid="uid://byh6vmbmtd65i" path="res://scripts/Level.cs" id="1_lrl65"]
 [ext_resource type="Texture2D" uid="uid://c1v1og5mfhh7l" path="res://assets/tiles/New Office Tiles.png" id="2_7orvs"]
@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://bxrwfcfl1il53" path="res://assets/tilesets/hydration_tileset.tres" id="3_vfbtg"]
 [ext_resource type="PackedScene" uid="uid://motp06sj1kia" path="res://scenes/testHydrationRestoreObject.tscn" id="4_ecr63"]
 [ext_resource type="Texture2D" uid="uid://b1re4v3ssa6kc" path="res://assets/tiles/Toilet Enter Tile.png" id="5_7orvs"]
+[ext_resource type="PackedScene" uid="uid://di3byu7o37wy" path="res://scenes/Other Entities/hydrationRestoreObjectReusable.tscn" id="6_u4ox6"]
 [ext_resource type="PackedScene" uid="uid://cjj22ar46xc3m" path="res://scenes/Enemies/BaseEnemy.tscn" id="7_8nqap"]
 [ext_resource type="PackedScene" uid="uid://tabhx5sfvsqp" path="res://scenes/Enemies/BomberEnemy.tscn" id="8_u4ox6"]
 [ext_resource type="PackedScene" uid="uid://diwx8m12hpinb" path="res://scenes/Enemies/RangedEnemy.tscn" id="9_o8yur"]
@@ -113,6 +114,31 @@ position = Vector2(286, 885)
 
 [node name="hydrationRestoreObject10" parent="Hydration Container" instance=ExtResource("4_ecr63")]
 position = Vector2(801, 241)
+
+[node name="hydrationRestoreObject11" parent="Hydration Container" instance=ExtResource("6_u4ox6")]
+visible = false
+position = Vector2(96, -672)
+scale = Vector2(13, 3)
+
+[node name="hydrationRestoreObject12" parent="Hydration Container" instance=ExtResource("6_u4ox6")]
+visible = false
+position = Vector2(161, -33)
+scale = Vector2(5.5, 3)
+
+[node name="hydrationRestoreObject13" parent="Hydration Container" instance=ExtResource("6_u4ox6")]
+visible = false
+position = Vector2(928.00006, 994)
+scale = Vector2(3, 3)
+
+[node name="hydrationRestoreObject14" parent="Hydration Container" instance=ExtResource("6_u4ox6")]
+visible = false
+position = Vector2(-1118, 416)
+scale = Vector2(3, 5.5)
+
+[node name="hydrationRestoreObject15" parent="Hydration Container" instance=ExtResource("6_u4ox6")]
+visible = false
+position = Vector2(131, 353)
+scale = Vector2(6.5, 3)
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
