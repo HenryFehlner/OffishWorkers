@@ -8,6 +8,7 @@ public partial class MainMenu : Control
 		//Connect button signals
 		GetNode<Button>("VBoxContainer/StartButton").Pressed += OnStartPressed;
 		GetNode<Button>("VBoxContainer/SettingsButton").Pressed += OnSettingsPressed;
+		GetNode<Button>("VBoxContainer/CreditsButton").Pressed += OnCreditsPressed;
 		GetNode<Button>("VBoxContainer/ExitButton").Pressed += OnExitPressed;
 
 		//This following section centerizes the mainmenu based on the viewpoint size
@@ -55,6 +56,12 @@ public partial class MainMenu : Control
 	{
 		var popup = GetNode<AcceptDialog>("ControlsPopup");
 		//Centers and shows it
+		popup.PopupCentered();
+	}
+	
+	private void OnCreditsPressed()
+	{
+		var popup = GetNode<AcceptDialog>("CreditsPopup");
 		popup.PopupCentered();
 	}
 
