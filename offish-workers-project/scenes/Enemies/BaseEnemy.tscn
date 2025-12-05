@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://cjj22ar46xc3m"]
 
 [ext_resource type="Script" uid="uid://doemapkog4fh1" path="res://scripts/Enemy.cs" id="1_s6kgn"]
-[ext_resource type="Texture2D" uid="uid://6xto0rj1dc0k" path="res://assets/sprites/punching bag.png" id="2_nqnxh"]
+[ext_resource type="Texture2D" uid="uid://bxti2gcphcpde" path="res://assets/sprites/Night Guard.png" id="2_s6kgn"]
 [ext_resource type="Shader" uid="uid://bx5bqlm4lu1tr" path="res://shaders/flash.gdshader" id="3_nqnxh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7k27h"]
-size = Vector2(20, 54)
+size = Vector2(37.333336, 59.88889)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nqnxh"]
 shader = ExtResource("3_nqnxh")
@@ -16,7 +16,7 @@ shader_parameter/is_white = false
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_nqnxh")
+"texture": ExtResource("2_s6kgn")
 }],
 "loop": true,
 "name": &"default",
@@ -30,19 +30,20 @@ collision_mask = 0
 script = ExtResource("1_s6kgn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.6666656, -8.833334)
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_7k27h")
-
-[node name="HealthBar" type="ProgressBar" parent="."]
-offset_left = -37.0
-offset_top = -97.0
-offset_right = 37.0
-offset_bottom = -84.0
-fill_mode = 1
-show_percentage = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_nqnxh")
 position = Vector2(0, -12)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_s6kgn")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -36.0
+offset_top = -114.66667
+offset_right = 38.0
+offset_bottom = -101.66667
+fill_mode = 1
+show_percentage = false

@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cudnqkipdaqjb" path="res://scripts/RangedEnemy.cs" id="1_0e310"]
 [ext_resource type="Shader" uid="uid://bx5bqlm4lu1tr" path="res://shaders/flash.gdshader" id="2_i3af6"]
-[ext_resource type="Texture2D" uid="uid://6xto0rj1dc0k" path="res://assets/sprites/punching bag.png" id="2_w0jok"]
+[ext_resource type="Texture2D" uid="uid://16voudo81iyb" path="res://assets/sprites/NonShield Rat.png" id="2_w0jok"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3af6"]
-size = Vector2(20, 54)
+size = Vector2(43.555557, 54)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bnmcc"]
 shader = ExtResource("2_i3af6")
@@ -31,6 +31,7 @@ acceleration = 1
 attackRadius = 80
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, 0)
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_i3af6")
 
